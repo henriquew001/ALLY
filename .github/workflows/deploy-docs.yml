@@ -3,7 +3,7 @@ name: Deploy Sphinx Docs to GitHub Pages
 on:
   push:
     branches:
-      - main # oder master, je nach deinem Branch-Namen
+      - main
 
 jobs:
   deploy:
@@ -21,6 +21,11 @@ jobs:
         run: |
           pip install sphinx sphinx-rtd-theme myst-parser
 
+      - name: Clean build
+        run: |
+          cd documentation
+          make clean
+
       - name: Build Sphinx Docs
         run: |
           cd documentation
@@ -31,12 +36,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./documentation/_build/html
-
-      - name: Debugging
-        run: |
-            ls -R documentation
-            ls -R documentation/_build
-      - name: Clean build
-        run: |
-            cd documentation
-            make clean
