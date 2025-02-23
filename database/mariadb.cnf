@@ -1,0 +1,49 @@
+[server]
+# :Parameter bind-address:
+# :Beschreibung: IP-Adresse, an die MariaDB gebunden ist. ``0.0.0.0`` erlaubt Verbindungen von überall innerhalb des Docker-Netzwerks.
+# :Typ: IP-Adresse
+# :Standard: 127.0.0.1
+bind-address=0.0.0.0
+
+# :Parameter port:
+# :Beschreibung: Port, auf dem MariaDB lauscht.
+# :Typ: Integer
+# :Standard: 3306
+port=3306
+
+# :Parameter default_authentication_plugin:
+# :Beschreibung: Standard-Authentifizierungs-Plugin für neue Verbindungen. ``mysql_native_password`` ist oft notwendig für Kompatibilität mit älteren Clients.
+# :Typ: String
+# :Standard: mysql_native_password
+default_authentication_plugin=mysql_native_password
+
+# :Parameter character-set-server:
+# :Beschreibung: Standard-Zeichensatz des Servers. ``utf8mb4`` unterstützt Emojis und andere erweiterte Zeichen.
+# :Typ: String
+# :Standard: latin1
+character-set-server=utf8mb4
+
+# :Parameter collation-server:
+# :Beschreibung: Standard-Kollation des Servers. ``utf8mb4_unicode_ci`` sorgt für korrekte Sortierung von Unicode-Zeichen.
+# :Typ: String
+# :Standard: latin1_swedish_ci
+collation-server=utf8mb4_unicode_ci
+
+[mysqld]
+# :Parameter innodb_buffer_pool_size:
+# :Beschreibung: Größe des InnoDB-Pufferpools im Speicher. Anpassen nach verfügbaren Ressourcen und Datenbankgröße.
+# :Typ: Speichergröße (z.B. 128M, 1G)
+# :Standard: 128M
+innodb_buffer_pool_size=128M
+
+# :Parameter innodb_flush_log_at_trx_commit:
+# :Beschreibung: Bestimmt, wie oft InnoDB Transaktionsprotokolle auf die Festplatte schreibt. ``1`` sorgt für sofortige Schreibvorgänge (Datensicherheit), ``2`` für verzögertes Schreiben (Performance).
+# :Typ: Integer (0, 1, 2)
+# :Standard: 1
+innodb_flush_log_at_trx_commit=1
+
+# :Parameter innodb_file_per_table:
+# :Beschreibung: Speichert jede InnoDB-Tabelle in einer separaten ``.ibd``-Datei. Erleichtert das Aufräumen von Speicherplatz und die Wiederherstellung von Tabellen.
+# :Typ: Boolean (0 oder 1)
+# :Standard: 0
+innodb_file_per_table=1
