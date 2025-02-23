@@ -18,6 +18,9 @@ Dieses Dokument beschreibt die Architektur unseres Projekts, das einen Dienst be
 * **Versionskontrolle:** Git (mit GitHub)
 * **Dokumentation:** Markdown
 
+## Architekturdiagramm
+
+[Architekturdiagramm](architecture_diagram.md)
 ## Detailbeschreibung
 
 ### Backend-Server
