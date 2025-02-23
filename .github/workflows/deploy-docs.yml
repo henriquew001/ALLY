@@ -36,3 +36,7 @@ jobs:
         run: |
             ls -R documentation
             ls -R documentation/_build
+      - name: Clean build
+        run: |
+            cd documentation
+            make clean
