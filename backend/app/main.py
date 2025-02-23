@@ -1,7 +1,10 @@
+from fastapi import FastAPI, HTTPException
 import pymysql
 import os
 
-def main():
+app = FastAPI()
+
+def get_db_connection():
     try:
         connection = pymysql.connect(
             host=os.environ.get("DB_HOST"),
@@ -11,24 +14,32 @@ def main():
             charset='utf8mb4',
             cursorclass=pymysql.cursors.DictCursor
         )
+        return connection
+    except pymysql.MySQLError as e:
+        raise HTTPException(status_code=500, detail=f"Database connection error: {e}")
 
+@app.get("/")
+async def read_root():
+    return {"Hello": "World"}
+
+@app.get("/db_version")
+async def get_db_version():
+    connection = get_db_connection()
+    try:
         with connection.cursor() as cursor:
-            # Beispielabfrage
             cursor.execute("SELECT VERSION()")
             result = cursor.fetchone()
-            print("MariaDB Version:", result['VERSION()'])
-
-            # Weitere Abfragen hier möglich
-            cursor.execute("SELECT 1")
-            result = cursor.fetchone()
-            print("Verbindung erfolgreich: ", result)
-
-    except pymysql.MySQLError as e:
-        print(f"Fehler bei der Verbindung zur MariaDB: {e}")
-
+            return {"MariaDB Version": result['VERSION()']}
     finally:
-        if "connection" in locals() and connection.open:
-            connection.close()
+        connection.close()
 
-if __name__ == "__main__":
-    main()
+@app.get("/health")  # Add a healthcheck endpoint
+async def healthcheck():
+  try:
+      conn = get_db_connection()
+      with conn.cursor() as cursor:
+          cursor.execute("SELECT 1")
+      conn.close()
+      return {"status": "ok"}
+  except Exception:
+    return {"status": "error"}

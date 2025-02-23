@@ -1,11 +1,12 @@
-FROM python:3.13.2-slim-bookworm
+#FROM python:3.13.2-slim-bookworm
+FROM python:3.13.2-bookworm
 
 WORKDIR /app
 
 # Install build-essential (gcc and related tools) AND MariaDB client libraries
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends build-essential libmariadb3 libmariadb-dev-compat && \
-    rm -rf /var/lib/apt/lists/*
+# RUN apt-get update && \
+#    apt-get install -y --no-install-recommends build-essential libmariadb3 libmariadb-dev-compat && \
+#    rm -rf /var/lib/apt/lists/*
 
 # Copy requirements.txt first for caching
 COPY backend/requirements.txt ./
@@ -13,6 +14,10 @@ COPY backend/requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the application code
-COPY ./backend/app ./app/
-
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+COPY backend/app /app/
+COPY backend/app /app
+COPY ./backend/app /app/
+COPY ./backend/app /app
+COPY ../backend/app /app/
+COPY ../backend/app /app
+Run echo "Test"

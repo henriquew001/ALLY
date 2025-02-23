@@ -14,4 +14,4 @@ venv/
 
 # Spezifisch für Ihr Projekt (anpassen, falls nötig)
 tests/
-docs/
+#docs/
