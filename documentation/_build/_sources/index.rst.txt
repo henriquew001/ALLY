@@ -1,5 +1,41 @@
-MariaDB-Konfiguration
-======================
+Willkommen bei der Dokumentation von Dein Projektname!
+=====================================================
 
-.. literalinclude:: ../database/mariadb.cnf
+Diese Dokumentation beschreibt die Konfiguration und den Aufbau unseres Projekts.
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Inhalte:
+
+   mariadb_config
+
+Einführung
+----------
+
+Hier könntest du eine kurze Einführung in dein Projekt geben. Beschreibe, was dein Projekt macht und welche Ziele es verfolgt.
+
+Konfiguration
+-------------
+
+Die Konfiguration unseres Projekts erfolgt über verschiedene Dateien und Einstellungen. Hier werden die wichtigsten Konfigurationsdateien beschrieben.
+
+MariaDB Konfiguration
+---------------------
+
+Die MariaDB-Datenbank wird mit der folgenden Konfigurationsdatei konfiguriert:
+
+.. literalinclude:: ../../database/mariadb.cnf
    :language: ini
+
+Nützliche Links
+--------------
+
+* `Link zu deinem GitHub-Repository <https://github.com/deinusername/deinrepo>`_
+* `Link zur externen Dokumentation <https://example.com>`_
+
+Indices und Tabellen
+====================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`

@@ -24,13 +24,13 @@ MariaDB Konfiguration
 
 Die MariaDB-Datenbank wird mit der folgenden Konfigurationsdatei konfiguriert:
 
-.. literalinclude:: ../../database/mariadb.cnf
+.. literalinclude:: ../database/mariadb.cnf
    :language: ini
 
 Nützliche Links
 --------------
 
-* `Link zu deinem GitHub-Repository <https://github.com/deinusername/deinrepo>`_
+* `Link zu deinem GitHub-Repository https://github.com/henriquew001/ConsciousFit/`_
 * `Link zur externen Dokumentation <https://example.com>`_
 
 Indices und Tabellen
