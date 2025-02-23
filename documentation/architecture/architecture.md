@@ -20,7 +20,10 @@ Dieses Dokument beschreibt die Architektur unseres Projekts, das einen Dienst be
 
 ## Architekturdiagramm
 
+Hier finden Sie eine Übersicht über unsere Systemarchitektur.
+
 [Architekturdiagramm](architecture_diagram.md)
+
 ## Detailbeschreibung
 
 ### Backend-Server
