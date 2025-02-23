@@ -1,0 +1,25 @@
+version: "3.8"
+services:
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile_mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: jede2
+      MYSQL_DATABASE: conscious_fit
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile_python
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: mysql+pymysql://root:jede2@db/conscious_fit # Passwort in der Verbindungszeichenfolge angepasst
+volumes:
+  mariadb_data:
