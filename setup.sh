@@ -9,9 +9,11 @@ source scripts/create_gitignore.sh
 source scripts/create_readme.sh
 source scripts/create_github_actions_workflow.sh
 source scripts/commit_and_push.sh
+source scrpts/create_sql_init_files.sh
 
 #create_folders
 #create_gitignore
 #create_readme
 #create_github_actions_workflow
 #commit_and_push
+#create_sql_init_files

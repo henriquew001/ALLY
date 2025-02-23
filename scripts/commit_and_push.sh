@@ -2,6 +2,6 @@
 
 commit_and_push() {
   git add .
-  git commit -m "Initial commit: Project structure, .gitignore, README"
+  git commit -m "update setup.sh and architecture.md"
   git push origin main
 }

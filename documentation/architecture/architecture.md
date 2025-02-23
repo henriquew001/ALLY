@@ -60,6 +60,5 @@ Es wird darauf geachtet, dass alle verwendeten Komponenten LGPL oder kompatible 
 ## Nächste Schritte
 
 * Auswahl der spezifischen Frontend- und Mobile-Frameworks.
-* Detaillierte Planung der Datenbankstruktur.
 * Implementierung der RESTful API.
 * Einrichtung der Entwicklungsumgebung.
