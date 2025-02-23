@@ -31,3 +31,8 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./documentation/_build/html
+
+      - name: Debugging
+        run: |
+            ls -R documentation
+            ls -R documentation/_build
