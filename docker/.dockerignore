@@ -1,0 +1,17 @@
+# Allgemeine Dateien und Verzeichnisse, die ignoriert werden sollten
+.git
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+venv/
+.pytest_cache/
+.idea/
+*.swp
+*~
+\#*#
+
+# Spezifisch für Ihr Projekt (anpassen, falls nötig)
+tests/
+docs/

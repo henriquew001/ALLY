@@ -1,4 +1,5 @@
-FROM mariadb:latest # z.B. mariadb:10.6
+FROM mariadb:latest
+# z.B. mariadb:10.6
 
-COPY database/mariadb.cnf /etc/mysql/mariadb.conf.d/
-COPY database/init/ /docker-entrypoint-initdb.d/
+COPY ./mariadb.cnf /etc/mysql/mariadb.conf.d/
+COPY ./init/ /docker-entrypoint-initdb.d/
