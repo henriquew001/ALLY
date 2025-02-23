@@ -1,4 +1,4 @@
-Willkommen bei der Dokumentation von Dein Projektname!
+Willkommen bei der Dokumentation von CoFi!
 =====================================================
 
 Diese Dokumentation beschreibt die Konfiguration und den Aufbau unseres Projekts.
@@ -7,12 +7,15 @@ Diese Dokumentation beschreibt die Konfiguration und den Aufbau unseres Projekts
    :maxdepth: 2
    :caption: Inhalte:
 
+   ToDo
+   architecture/architecture
    mariadb_config
 
 Einführung
 ----------
 
 Hier könntest du eine kurze Einführung in dein Projekt geben. Beschreibe, was dein Projekt macht und welche Ziele es verfolgt.
+
 
 Konfiguration
 -------------
@@ -30,7 +33,7 @@ Die MariaDB-Datenbank wird mit der folgenden Konfigurationsdatei konfiguriert:
 Nützliche Links
 --------------
 
-* `Link zu deinem GitHub-Repository https://github.com/henriquew001/ConsciousFit/`_
+* https://github.com/henriquew001/ConsciousFit/
 * `Link zur externen Dokumentation <https://example.com>`_
 
 Indices und Tabellen

@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Willkommen bei der Dokumentation von Dein Projektname! &mdash; CoFi  Dokumentation</title>
+  <title>Willkommen bei der Dokumentation von CoFi! &mdash; Dein Projektname  Dokumentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=f5127f15" />
 
@@ -19,7 +19,8 @@
       <script src="_static/translations.js?v=9bf55d28"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Stichwortverzeichnis" href="genindex.html" />
-    <link rel="search" title="Suche" href="search.html" /> 
+    <link rel="search" title="Suche" href="search.html" />
+    <link rel="next" title="ToDo" href="ToDo.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -31,7 +32,7 @@
           
           
           <a href="#" class="icon icon-home">
-            CoFi
+            Dein Projektname
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -41,25 +42,19 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">Willkommen bei der Dokumentation von Dein Projektname!</a><ul>
-<li><a class="reference internal" href="#einfuhrung">Einführung</a></li>
-<li><a class="reference internal" href="#konfiguration">Konfiguration</a></li>
-<li><a class="reference internal" href="#mariadb-konfiguration">MariaDB Konfiguration</a></li>
-<li><a class="reference internal" href="#nutzliche-links">Nützliche Links</a></li>
+              <p class="caption" role="heading"><span class="caption-text">Inhalte:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ToDo.html">ToDo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture/architecture.html">Projektarchitektur</a></li>
 </ul>
-</li>
-<li><a class="reference internal" href="#indices-und-tabellen">Indices und Tabellen</a></li>
-</ul>
-</div>
+
         </div>
       </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">CoFi</a>
+          <a href="#">Dein Projektname</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -67,7 +62,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Willkommen bei der Dokumentation von Dein Projektname!</li>
+      <li class="breadcrumb-item active">Willkommen bei der Dokumentation von CoFi!</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/index.rst.txt" rel="nofollow"> Quelltext anzeigen</a>
       </li>
@@ -77,10 +72,26 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="willkommen-bei-der-dokumentation-von-dein-projektname">
-<h1>Willkommen bei der Dokumentation von Dein Projektname!<a class="headerlink" href="#willkommen-bei-der-dokumentation-von-dein-projektname" title="Link to this heading"></a></h1>
+  <section id="willkommen-bei-der-dokumentation-von-cofi">
+<h1>Willkommen bei der Dokumentation von CoFi!<a class="headerlink" href="#willkommen-bei-der-dokumentation-von-cofi" title="Link to this heading"></a></h1>
 <p>Diese Dokumentation beschreibt die Konfiguration und den Aufbau unseres Projekts.</p>
 <div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Inhalte:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="ToDo.html">ToDo</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="ToDo.html#docker-umgebung-verbesserungen">Docker Umgebung Verbesserungen</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture/architecture.html">Projektarchitektur</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture/architecture.html#ubersicht">Übersicht</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/architecture.html#komponenten">Komponenten</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/architecture.html#architekturdiagramm">Architekturdiagramm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/architecture.html#detailbeschreibung">Detailbeschreibung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/architecture.html#entscheidungen">Entscheidungen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/architecture.html#nachste-schritte">Nächste Schritte</a></li>
+</ul>
+</li>
+</ul>
 </div>
 <section id="einfuhrung">
 <h2>Einführung<a class="headerlink" href="#einfuhrung" title="Link to this heading"></a></h2>
@@ -93,11 +104,62 @@
 <section id="mariadb-konfiguration">
 <h2>MariaDB Konfiguration<a class="headerlink" href="#mariadb-konfiguration" title="Link to this heading"></a></h2>
 <p>Die MariaDB-Datenbank wird mit der folgenden Konfigurationsdatei konfiguriert:</p>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[server]</span>
+<span class="c1"># :Parameter bind-address:</span>
+<span class="c1"># :Beschreibung: IP-Adresse, an die MariaDB gebunden ist. ``0.0.0.0`` erlaubt Verbindungen von überall innerhalb des Docker-Netzwerks.</span>
+<span class="c1"># :Typ: IP-Adresse</span>
+<span class="c1"># :Standard: 127.0.0.1</span>
+<span class="na">bind-address</span><span class="o">=</span><span class="s">0.0.0.0</span>
+
+<span class="c1"># :Parameter port:</span>
+<span class="c1"># :Beschreibung: Port, auf dem MariaDB lauscht.</span>
+<span class="c1"># :Typ: Integer</span>
+<span class="c1"># :Standard: 3306</span>
+<span class="na">port</span><span class="o">=</span><span class="s">3306</span>
+
+<span class="c1"># :Parameter default_authentication_plugin:</span>
+<span class="c1"># :Beschreibung: Standard-Authentifizierungs-Plugin für neue Verbindungen. ``mysql_native_password`` ist oft notwendig für Kompatibilität mit älteren Clients.</span>
+<span class="c1"># :Typ: String</span>
+<span class="c1"># :Standard: mysql_native_password</span>
+<span class="na">default_authentication_plugin</span><span class="o">=</span><span class="s">mysql_native_password</span>
+
+<span class="c1"># :Parameter character-set-server:</span>
+<span class="c1"># :Beschreibung: Standard-Zeichensatz des Servers. ``utf8mb4`` unterstützt Emojis und andere erweiterte Zeichen.</span>
+<span class="c1"># :Typ: String</span>
+<span class="c1"># :Standard: latin1</span>
+<span class="na">character-set-server</span><span class="o">=</span><span class="s">utf8mb4</span>
+
+<span class="c1"># :Parameter collation-server:</span>
+<span class="c1"># :Beschreibung: Standard-Kollation des Servers. ``utf8mb4_unicode_ci`` sorgt für korrekte Sortierung von Unicode-Zeichen.</span>
+<span class="c1"># :Typ: String</span>
+<span class="c1"># :Standard: latin1_swedish_ci</span>
+<span class="na">collation-server</span><span class="o">=</span><span class="s">utf8mb4_unicode_ci</span>
+
+<span class="k">[mysqld]</span>
+<span class="c1"># :Parameter innodb_buffer_pool_size:</span>
+<span class="c1"># :Beschreibung: Größe des InnoDB-Pufferpools im Speicher. Anpassen nach verfügbaren Ressourcen und Datenbankgröße.</span>
+<span class="c1"># :Typ: Speichergröße (z.B. 128M, 1G)</span>
+<span class="c1"># :Standard: 128M</span>
+<span class="na">innodb_buffer_pool_size</span><span class="o">=</span><span class="s">128M</span>
+
+<span class="c1"># :Parameter innodb_flush_log_at_trx_commit:</span>
+<span class="c1"># :Beschreibung: Bestimmt, wie oft InnoDB Transaktionsprotokolle auf die Festplatte schreibt. ``1`` sorgt für sofortige Schreibvorgänge (Datensicherheit), ``2`` für verzögertes Schreiben (Performance).</span>
+<span class="c1"># :Typ: Integer (0, 1, 2)</span>
+<span class="c1"># :Standard: 1</span>
+<span class="na">innodb_flush_log_at_trx_commit</span><span class="o">=</span><span class="s">1</span>
+
+<span class="c1"># :Parameter innodb_file_per_table:</span>
+<span class="c1"># :Beschreibung: Speichert jede InnoDB-Tabelle in einer separaten ``.ibd``-Datei. Erleichtert das Aufräumen von Speicherplatz und die Wiederherstellung von Tabellen.</span>
+<span class="c1"># :Typ: Boolean (0 oder 1)</span>
+<span class="c1"># :Standard: 0</span>
+<span class="na">innodb_file_per_table</span><span class="o">=</span><span class="s">1</span>
+</pre></div>
+</div>
 </section>
 <section id="nutzliche-links">
 <h2>Nützliche Links<a class="headerlink" href="#nutzliche-links" title="Link to this heading"></a></h2>
 <ul class="simple">
-<li><p><a class="reference external" href="https://github.com/deinusername/deinrepo">Link zu deinem GitHub-Repository</a></p></li>
+<li><p><a class="reference external" href="https://github.com/henriquew001/ConsciousFit/">https://github.com/henriquew001/ConsciousFit/</a></p></li>
 <li><p><a class="reference external" href="https://example.com">Link zur externen Dokumentation</a></p></li>
 </ul>
 </section>
@@ -114,12 +176,14 @@
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="ToDo.html" class="btn btn-neutral float-right" title="ToDo" accesskey="n" rel="next">Weiter <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2025, Heinrich Weinz.</p>
+    <p>&#169; Copyright 2023, Dein Name.</p>
   </div>
 
   Erstellt mit <a href="https://www.sphinx-doc.org/">Sphinx</a> mit einem

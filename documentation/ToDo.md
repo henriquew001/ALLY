@@ -1,6 +1,8 @@
-# Docker Umgebung Verbesserungen
+# ToDo
 
-## Sicherheit
+## Docker Umgebung Verbesserungen
+
+### Sicherheit
 
 - [ ] Passwörter nicht direkt in `docker-compose.yml` speichern
     - [ ] Docker Secrets für sensible Daten verwenden
@@ -8,14 +10,14 @@
 - [ ] Zugriffsbeschränkungen für Docker-Images und Container überprüfen und anpassen
 - [ ] Regelmäßige Sicherheitsupdates für Docker-Engine und Container-Images durchführen
 
-## Healthcheck
+### Healthcheck
 
 - [ ] `/health`-Endpoint im Backend-Service implementieren
     - [ ] Korrekten Zustand der Anwendung im Endpoint widerspiegeln
 - [ ] Docker Compose Healthchecks konfigurieren, um Container-Zustände zu überwachen
 - [ ] Überwachungssystem einrichten, um Healthchecks zu protokollieren und zu alarmieren
 
-## Logging
+### Logging
 
 - [ ] Logging zum Backend-Service hinzufügen
     - [ ] Fehler protokollieren
@@ -24,7 +26,7 @@
 - [ ] Zentralisiertes Log-Management einrichten (z.B. mit ELK Stack, Loki oder Graylog)
 - [ ] Log-Rotation und -Archivierung konfigurieren, um Speicherplatz zu sparen
 
-## Dockerfile Optimierung
+### Dockerfile Optimierung
 
 - [ ] Dockerfiles überprüfen und optimieren
     - [ ] Multi-Stage Builds verwenden, um Image-Größe zu reduzieren
@@ -34,7 +36,7 @@
 - [ ] Image-Scans auf Sicherheitslücken durchführen (z.B. mit Trivy oder Snyk)
 - [ ] Das Port-Mapping 3306:3306 ist in Ordnung für lokale Entwicklung, sollte aber in Produktionsumgebungen vermieden werden.
 
-## Netzwerk
+### Netzwerk
 
 - [ ] Benutzerdefinierte Netzwerke in Docker verwenden
     - [ ] Netzwerktreiber auswählen (Bridge, Overlay, Macvlan)
