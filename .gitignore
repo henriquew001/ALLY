@@ -13,7 +13,7 @@ node_modules/
 *.log
 *.err
 
-# PostgreSQL (auskommentiert)
+# PostgreSQL
 # *.log
 # *.pid
 # *.conf.swp
@@ -31,3 +31,6 @@ node_modules/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# kate
+*.kate-swp
