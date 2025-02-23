@@ -3,7 +3,7 @@ version: "3.8"
 services:
   db:
     build:
-      context: .
+      context: ../database
       dockerfile: Dockerfile_mariadb
     environment:
       MYSQL_ROOT_PASSWORD: jede2
