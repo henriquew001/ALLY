@@ -1,4 +1,5 @@
-uvicorn
-python-multipart
-SQLAlchemy
-mysqlclient
+mariadb
+#uvicorn
+#python-multipart
+#SQLAlchemy
+#mysqlclient

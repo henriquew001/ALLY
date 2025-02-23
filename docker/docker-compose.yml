@@ -1,28 +1,54 @@
-version: "3.9" # Definiert die Version der Docker Compose-Datei.
+version: "3.8"
 
 services:
-  db: # Definiert den MariaDB-Datenbankdienst.
-    build: # Konfiguriert den Build des Datenbank-Images.
-      context: . # Setzt das Build-Kontext auf das aktuelle Verzeichnis.
-      dockerfile: Dockerfile_mariadb # Gibt das Dockerfile für den Datenbank-Build an.
-    environment: # Setzt Umgebungsvariablen für den Datenbankcontainer.
-      MYSQL_ROOT_PASSWORD: jede2 # Setzt das Root-Passwort für die MariaDB-Datenbank. (Sicherheitshinweis: Verwenden Sie stärkere Passwörter in Produktionsumgebungen.)
-      MYSQL_DATABASE: conscious_fit # Erstellt die Datenbank "conscious_fit" beim Start.
-    ports: # Ordnet Ports zwischen Host und Container zu.
-      - "3306:3306" # Macht den MariaDB-Port 3306 auf dem Host zugänglich.
-    volumes: # Bindet Volumes für persistente Datenspeicherung.
-      - mariadb_data:/var/lib/mysql # Speichert die Datenbankdaten im benannten Volume "mariadb_data".
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile_mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: jede2
+      MYSQL_DATABASE: conscious_fit
+      MYSQL_USER: app_user
+      MYSQL_PASSWORD: app_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "app_user", "-papp_password"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
-  backend: # Definiert den Python-Backenddienst.
-    build: # Konfiguriert den Build des Backend-Images.
-      context: . # Setzt das Build-Kontext auf das aktuelle Verzeichnis.
-      dockerfile: Dockerfile_python # Gibt das Dockerfile für den Backend-Build an.
-    ports: # Ordnet Ports zwischen Host und Container zu.
-      - "8000:8000" # Macht den Backend-Port 8000 auf dem Host zugänglich.
-    depends_on: # Definiert Abhängigkeiten zwischen Diensten.
-      - db # Stellt sicher, dass der "db"-Dienst vor dem "backend"-Dienst gestartet wird.
-    environment: # Setzt Umgebungsvariablen für den Backend-Container.
-      DATABASE_URL: mysql+pymysql://root:jede2@db/conscious_fit # Setzt die Datenbankverbindungs-URL.
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile_python
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: mysql+pymysql://app_user:app_password@db/conscious_fit # Direktes Passwort, oder Umgebungsvariable verwenden.
+      DB_NAME: conscious_fit
+      DB_PASSWORD: app_password
+      DB_HOST: db
+      DB_USER: app_user
+    volumes:
+      - ./backend:/app
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - app-network
 
-volumes: # Definiert benannte Volumes für persistente Datenspeicherung.
-  mariadb_data: # Definiert das Volume "mariadb_data".
+volumes:
+  mariadb_data:
+
+networks:
+  app-network:
+    driver: bridge
