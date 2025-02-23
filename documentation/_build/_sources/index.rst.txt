@@ -9,13 +9,13 @@ Diese Dokumentation beschreibt die Konfiguration und den Aufbau unseres Projekts
 
    ToDo
    architecture/architecture
+   database/database_schema
    mariadb_config
 
 Einführung
 ----------
 
 Hier könntest du eine kurze Einführung in dein Projekt geben. Beschreibe, was dein Projekt macht und welche Ziele es verfolgt.
-
 
 
 Konfiguration

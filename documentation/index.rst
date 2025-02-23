@@ -9,6 +9,7 @@ Diese Dokumentation beschreibt die Konfiguration und den Aufbau unseres Projekts
 
    ToDo
    architecture/architecture
+   database/database_schema
    mariadb_config
 
 Einführung

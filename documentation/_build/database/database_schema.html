@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>&lt;no title&gt; &mdash; Dein Projektname  Dokumentation</title>
+  <title>Database Schema for ConsciousFit &mdash; Dein Projektname  Dokumentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=f5127f15" />
 
@@ -19,7 +19,8 @@
       <script src="../_static/translations.js?v=9bf55d28"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Stichwortverzeichnis" href="../genindex.html" />
-    <link rel="search" title="Suche" href="../search.html" /> 
+    <link rel="search" title="Suche" href="../search.html" />
+    <link rel="prev" title="Projektarchitektur" href="../architecture/architecture.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -42,9 +43,25 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Inhalte:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../ToDo.html">ToDo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../architecture/architecture.html">Projektarchitektur</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Database Schema for ConsciousFit</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tables">Tables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#users"><code class="docutils literal notranslate"><span class="pre">users</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#meal-types"><code class="docutils literal notranslate"><span class="pre">meal_types</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#food-groups"><code class="docutils literal notranslate"><span class="pre">food_groups</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#food-items"><code class="docutils literal notranslate"><span class="pre">food_items</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#meals"><code class="docutils literal notranslate"><span class="pre">meals</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#meal-items"><code class="docutils literal notranslate"><span class="pre">meal_items</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#shopping-list"><code class="docutils literal notranslate"><span class="pre">shopping_list</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#food-diary"><code class="docutils literal notranslate"><span class="pre">food_diary</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#food-diary-entries"><code class="docutils literal notranslate"><span class="pre">food_diary_entries</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#habits"><code class="docutils literal notranslate"><span class="pre">habits</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -61,7 +78,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">&lt;no title&gt;</li>
+      <li class="breadcrumb-item active">Database Schema for ConsciousFit</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/database/database_schema.md.txt" rel="nofollow"> Quelltext anzeigen</a>
       </li>
@@ -71,11 +88,450 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
+  <section class="tex2jax_ignore mathjax_ignore" id="database-schema-for-consciousfit">
+<h1>Database Schema for ConsciousFit<a class="headerlink" href="#database-schema-for-consciousfit" title="Link to this heading"></a></h1>
+<p>This document outlines the database schema for the ConsciousFit application.</p>
+<section id="tables">
+<h2>Tables<a class="headerlink" href="#tables" title="Link to this heading"></a></h2>
+<section id="users">
+<h3><code class="docutils literal notranslate"><span class="pre">users</span></code><a class="headerlink" href="#users" title="Link to this heading"></a></h3>
+<p>Stores user account information.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Constraints</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">user_id</span></code></p></td>
+<td><p>INT</p></td>
+<td><p>AUTO_INCREMENT, PRIMARY KEY</p></td>
+<td><p>Unique identifier for the user.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">username</span></code></p></td>
+<td><p>VARCHAR(255)</p></td>
+<td><p>UNIQUE, NOT NULL</p></td>
+<td><p>User’s username.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">password</span></code></p></td>
+<td><p>VARCHAR(255)</p></td>
+<td><p>NOT NULL</p></td>
+<td><p>User’s hashed password.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">email</span></code></p></td>
+<td><p>VARCHAR(255)</p></td>
+<td><p>UNIQUE, NOT NULL</p></td>
+<td><p>User’s email address.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">role</span></code></p></td>
+<td><p>ENUM(‘basic’, ‘premium’, ‘professional’, ‘admin’)</p></td>
+<td><p>NOT NULL</p></td>
+<td><p>User’s role (basic, premium, professional, admin).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">first_name</span></code></p></td>
+<td><p>VARCHAR(255)</p></td>
+<td><p></p></td>
+<td><p>User’s first name.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">last_name</span></code></p></td>
+<td><p>VARCHAR(255)</p></td>
+<td><p></p></td>
+<td><p>User’s last name.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">date_of_birth</span></code></p></td>
+<td><p>DATE</p></td>
+<td><p></p></td>
+<td><p>User’s date of birth.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">height</span></code></p></td>
+<td><p>INT</p></td>
+<td><p></p></td>
+<td><p>User’s height (in cm or inches).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">weight</span></code></p></td>
+<td><p>INT</p></td>
+<td><p></p></td>
+<td><p>User’s weight (in kg or lbs).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">goals</span></code></p></td>
+<td><p>TEXT</p></td>
+<td><p></p></td>
+<td><p>User’s fitness goals.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">activation_code</span></code></p></td>
+<td><p>VARCHAR(255)</p></td>
+<td><p></p></td>
+<td><p>User’s account activation code.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">activated</span></code></p></td>
+<td><p>BOOLEAN</p></td>
+<td><p>DEFAULT FALSE</p></td>
+<td><p>Indicates if the user’s account is activated.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="meal-types">
+<h3><code class="docutils literal notranslate"><span class="pre">meal_types</span></code><a class="headerlink" href="#meal-types" title="Link to this heading"></a></h3>
+<p>Stores predefined meal types.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Constraints</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">meal_type_id</span></code></p></td>
+<td><p>INT</p></td>
+<td><p>AUTO_INCREMENT, PRIMARY KEY</p></td>
+<td><p>Unique identifier for the meal type.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">meal_type_name</span></code></p></td>
+<td><p>VARCHAR(255)</p></td>
+<td><p>UNIQUE, NOT NULL</p></td>
+<td><p>Name of the meal type (e.g., Breakfast).</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="food-groups">
+<h3><code class="docutils literal notranslate"><span class="pre">food_groups</span></code><a class="headerlink" href="#food-groups" title="Link to this heading"></a></h3>
+<p>Stores predefined food groups.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Constraints</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">food_group_id</span></code></p></td>
+<td><p>INT</p></td>
+<td><p>AUTO_INCREMENT, PRIMARY KEY</p></td>
+<td><p>Unique identifier for the food group.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">food_group_name</span></code></p></td>
+<td><p>VARCHAR(255)</p></td>
+<td><p>UNIQUE, NOT NULL</p></td>
+<td><p>Name of the food group (e.g., Vegetables).</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="food-items">
+<h3><code class="docutils literal notranslate"><span class="pre">food_items</span></code><a class="headerlink" href="#food-items" title="Link to this heading"></a></h3>
+<p>Stores individual food items.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Constraints</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">food_item_id</span></code></p></td>
+<td><p>INT</p></td>
+<td><p>AUTO_INCREMENT, PRIMARY KEY</p></td>
+<td><p>Unique identifier for the food item.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">food_group_id</span></code></p></td>
+<td><p>INT</p></td>
+<td><p>FOREIGN KEY referencing <code class="docutils literal notranslate"><span class="pre">food_groups(food_group_id)</span></code></p></td>
+<td><p>Identifier of the food group.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">food_item_name</span></code></p></td>
+<td><p>VARCHAR(255)</p></td>
+<td><p>NOT NULL</p></td>
+<td><p>Name of the food item (e.g., Apple).</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="meals">
+<h3><code class="docutils literal notranslate"><span class="pre">meals</span></code><a class="headerlink" href="#meals" title="Link to this heading"></a></h3>
+<p>Stores user meal records.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Constraints</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">meal_id</span></code></p></td>
+<td><p>INT</p></td>
+<td><p>AUTO_INCREMENT, PRIMARY KEY</p></td>
+<td><p>Unique identifier for the meal.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">user_id</span></code></p></td>
+<td><p>INT</p></td>
+<td><p>FOREIGN KEY referencing <code class="docutils literal notranslate"><span class="pre">users(user_id)</span></code></p></td>
+<td><p>Identifier of the user who recorded the meal.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">meal_type_id</span></code></p></td>
+<td><p>INT</p></td>
+<td><p>FOREIGN KEY referencing <code class="docutils literal notranslate"><span class="pre">meal_types(meal_type_id)</span></code></p></td>
+<td><p>Identifier of the meal type.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">meal_date</span></code></p></td>
+<td><p>DATE</p></td>
+<td><p></p></td>
+<td><p>Date of the meal.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">meal_time</span></code></p></td>
+<td><p>TIME</p></td>
+<td><p></p></td>
+<td><p>Time of the meal.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">description</span></code></p></td>
+<td><p>TEXT</p></td>
+<td><p></p></td>
+<td><p>Description of the meal.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">notes</span></code></p></td>
+<td><p>TEXT</p></td>
+<td><p></p></td>
+<td><p>Additional notes about the meal.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="meal-items">
+<h3><code class="docutils literal notranslate"><span class="pre">meal_items</span></code><a class="headerlink" href="#meal-items" title="Link to this heading"></a></h3>
+<p>Stores individual food items within a meal.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Constraints</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">meal_item_id</span></code></p></td>
+<td><p>INT</p></td>
+<td><p>AUTO_INCREMENT, PRIMARY KEY</p></td>
+<td><p>Unique identifier for the meal item.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">meal_id</span></code></p></td>
+<td><p>INT</p></td>
+<td><p>FOREIGN KEY referencing <code class="docutils literal notranslate"><span class="pre">meals(meal_id)</span></code></p></td>
+<td><p>Identifier of the meal.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">food_item_id</span></code></p></td>
+<td><p>INT</p></td>
+<td><p>FOREIGN KEY referencing <code class="docutils literal notranslate"><span class="pre">food_items(food_item_id)</span></code></p></td>
+<td><p>Identifier of the food item.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">quantity</span></code></p></td>
+<td><p>DECIMAL(10, 2)</p></td>
+<td><p></p></td>
+<td><p>Quantity of the food item consumed.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="shopping-list">
+<h3><code class="docutils literal notranslate"><span class="pre">shopping_list</span></code><a class="headerlink" href="#shopping-list" title="Link to this heading"></a></h3>
+<p>Stores shopping list items.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Constraints</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">shopping_list_id</span></code></p></td>
+<td><p>INT</p></td>
+<td><p>AUTO_INCREMENT, PRIMARY KEY</p></td>
+<td><p>Unique identifier for the shopping list item.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">user_id</span></code></p></td>
+<td><p>INT</p></td>
+<td><p>FOREIGN KEY referencing <code class="docutils literal notranslate"><span class="pre">users(user_id)</span></code></p></td>
+<td><p>Identifier of the user.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">meal_id</span></code></p></td>
+<td><p>INT</p></td>
+<td><p>FOREIGN KEY referencing <code class="docutils literal notranslate"><span class="pre">meals(meal_id)</span></code></p></td>
+<td><p>Identifier of the related meal (optional).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">item_date</span></code></p></td>
+<td><p>DATE</p></td>
+<td><p></p></td>
+<td><p>Date the item was added to the list.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">quantity</span></code></p></td>
+<td><p>DECIMAL(10, 2)</p></td>
+<td><p></p></td>
+<td><p>Quantity of the item.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">notes</span></code></p></td>
+<td><p>TEXT</p></td>
+<td><p></p></td>
+<td><p>Additional notes about the item.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="food-diary">
+<h3><code class="docutils literal notranslate"><span class="pre">food_diary</span></code><a class="headerlink" href="#food-diary" title="Link to this heading"></a></h3>
+<p>Stores general food diary entries.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Constraints</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">diary_id</span></code></p></td>
+<td><p>INT</p></td>
+<td><p>AUTO_INCREMENT, PRIMARY KEY</p></td>
+<td><p>Unique identifier for the diary entry.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">user_id</span></code></p></td>
+<td><p>INT</p></td>
+<td><p>FOREIGN KEY referencing <code class="docutils literal notranslate"><span class="pre">users(user_id)</span></code></p></td>
+<td><p>Identifier of the user.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">meal_type_id</span></code></p></td>
+<td><p>INT</p></td>
+<td><p>FOREIGN KEY referencing <code class="docutils literal notranslate"><span class="pre">meal_types(meal_type_id)</span></code></p></td>
+<td><p>Identifier of the meal type.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">diary_date</span></code></p></td>
+<td><p>DATE</p></td>
+<td><p></p></td>
+<td><p>Date of the diary entry.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">diary_time</span></code></p></td>
+<td><p>TIME</p></td>
+<td><p></p></td>
+<td><p>Time of the diary entry.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">notes</span></code></p></td>
+<td><p>TEXT</p></td>
+<td><p></p></td>
+<td><p>General notes about the day.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">feeling</span></code></p></td>
+<td><p>ENUM(‘Excellent’, ‘Good’, ‘Neutral’, ‘Poor’, ‘Very Poor’)</p></td>
+<td><p></p></td>
+<td><p>User’s general feeling.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">feeling_details</span></code></p></td>
+<td><p>TEXT</p></td>
+<td><p></p></td>
+<td><p>Detailed description of the user’s feeling.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="food-diary-entries">
+<h3><code class="docutils literal notranslate"><span class="pre">food_diary_entries</span></code><a class="headerlink" href="#food-diary-entries" title="Link to this heading"></a></h3>
+<p>Stores detailed food diary entries.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Constraints</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">entry_id</span></code></p></td>
+<td><p>INT</p></td>
+<td><p>AUTO_INCREMENT, PRIMARY KEY</p></td>
+<td><p>Unique identifier for the diary entry.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">user_id</span></code></p></td>
+<td><p>INT</p></td>
+<td><p>FOREIGN KEY referencing <code class="docutils literal notranslate"><span class="pre">users(user_id)</span></code></p></td>
+<td><p>Identifier of the user.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">diary_date</span></code></p></td>
+<td><p>DATE</p></td>
+<td><p></p></td>
+<td><p>Date of the diary entry.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">entry_time</span></code></p></td>
+<td><p>TIME</p></td>
+<td><p></p></td>
+<td><p>Time of the diary entry.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">meal_type_id</span></code></p></td>
+<td><p>INT</p></td>
+<td><p>FOREIGN KEY referencing <code class="docutils literal notranslate"><span class="pre">meal_types(meal_type_id)</span></code></p></td>
+<td><p>Identifier of the meal type.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">hunger_level</span></code></p></td>
+<td><p>ENUM(‘Not at all’, ‘Slightly’, ‘Moderately’, ‘Very’, ‘Extremely’)</p></td>
+<td><p></p></td>
+<td><p>User’s hunger level.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">food_consumed</span></code></p></td>
+<td><p>TEXT</p></td>
+<td><p></p></td>
+<td><p>Description of the food consumed.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">quantity</span></code></p></td>
+<td><p>VARCHAR(255)</p></td>
+<td><p></p></td>
+<td><p>Quantity of the food consumed.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">feeling</span></code></p></td>
+<td><p>ENUM(‘Excellent’, ‘Good’, ‘Neutral’, ‘Poor’, ‘Very Poor’)</p></td>
+<td><p></p></td>
+<td><p>User’s feeling after eating.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">feeling_details</span></code></p></td>
+<td><p>TEXT</p></td>
+<td><p></p></td>
+<td><p>Detailed description of the user’s feeling.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="habits">
+<h3><code class="docutils literal notranslate"><span class="pre">habits</span></code><a class="headerlink" href="#habits" title="Link to this heading"></a></h3>
+<p>Stores user habit tracking.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Column</p></th>
+<th class="head"><p>Type</p></th>
+<th class="head"><p>Constraints</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">habit_id</span></code></p></td>
+<td><p>INT</p></td>
+<td><p>AUTO_INCREMENT, PRIMARY KEY</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+
 
            </div>
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../architecture/architecture.html" class="btn btn-neutral float-left" title="Projektarchitektur" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Zurück</a>
+    </div>
 
   <hr/>
 
