@@ -1,0 +1,156 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="de" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MariaDB-Konfiguration &mdash; CoFi  Dokumentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=f5127f15" />
+
+  
+      <script src="_static/jquery.js?v=8dae8fb0"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=245627df"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=9bf55d28"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Stichwortverzeichnis" href="genindex.html" />
+    <link rel="search" title="Suche" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            CoFi
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Dokumentation durchsuchen" aria-label="Dokumentation durchsuchen" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">MariaDB-Konfiguration</a></li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">CoFi</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">MariaDB-Konfiguration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> Quelltext anzeigen</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="mariadb-konfiguration">
+<h1>MariaDB-Konfiguration<a class="headerlink" href="#mariadb-konfiguration" title="Link to this heading"></a></h1>
+<div class="highlight-ini notranslate"><div class="highlight"><pre><span></span><span class="k">[server]</span>
+<span class="c1"># :Parameter bind-address:</span>
+<span class="c1"># :Beschreibung: IP-Adresse, an die MariaDB gebunden ist. ``0.0.0.0`` erlaubt Verbindungen von überall innerhalb des Docker-Netzwerks.</span>
+<span class="c1"># :Typ: IP-Adresse</span>
+<span class="c1"># :Standard: 127.0.0.1</span>
+<span class="na">bind-address</span><span class="o">=</span><span class="s">0.0.0.0</span>
+
+<span class="c1"># :Parameter port:</span>
+<span class="c1"># :Beschreibung: Port, auf dem MariaDB lauscht.</span>
+<span class="c1"># :Typ: Integer</span>
+<span class="c1"># :Standard: 3306</span>
+<span class="na">port</span><span class="o">=</span><span class="s">3306</span>
+
+<span class="c1"># :Parameter default_authentication_plugin:</span>
+<span class="c1"># :Beschreibung: Standard-Authentifizierungs-Plugin für neue Verbindungen. ``mysql_native_password`` ist oft notwendig für Kompatibilität mit älteren Clients.</span>
+<span class="c1"># :Typ: String</span>
+<span class="c1"># :Standard: mysql_native_password</span>
+<span class="na">default_authentication_plugin</span><span class="o">=</span><span class="s">mysql_native_password</span>
+
+<span class="c1"># :Parameter character-set-server:</span>
+<span class="c1"># :Beschreibung: Standard-Zeichensatz des Servers. ``utf8mb4`` unterstützt Emojis und andere erweiterte Zeichen.</span>
+<span class="c1"># :Typ: String</span>
+<span class="c1"># :Standard: latin1</span>
+<span class="na">character-set-server</span><span class="o">=</span><span class="s">utf8mb4</span>
+
+<span class="c1"># :Parameter collation-server:</span>
+<span class="c1"># :Beschreibung: Standard-Kollation des Servers. ``utf8mb4_unicode_ci`` sorgt für korrekte Sortierung von Unicode-Zeichen.</span>
+<span class="c1"># :Typ: String</span>
+<span class="c1"># :Standard: latin1_swedish_ci</span>
+<span class="na">collation-server</span><span class="o">=</span><span class="s">utf8mb4_unicode_ci</span>
+
+<span class="k">[mysqld]</span>
+<span class="c1"># :Parameter innodb_buffer_pool_size:</span>
+<span class="c1"># :Beschreibung: Größe des InnoDB-Pufferpools im Speicher. Anpassen nach verfügbaren Ressourcen und Datenbankgröße.</span>
+<span class="c1"># :Typ: Speichergröße (z.B. 128M, 1G)</span>
+<span class="c1"># :Standard: 128M</span>
+<span class="na">innodb_buffer_pool_size</span><span class="o">=</span><span class="s">128M</span>
+
+<span class="c1"># :Parameter innodb_flush_log_at_trx_commit:</span>
+<span class="c1"># :Beschreibung: Bestimmt, wie oft InnoDB Transaktionsprotokolle auf die Festplatte schreibt. ``1`` sorgt für sofortige Schreibvorgänge (Datensicherheit), ``2`` für verzögertes Schreiben (Performance).</span>
+<span class="c1"># :Typ: Integer (0, 1, 2)</span>
+<span class="c1"># :Standard: 1</span>
+<span class="na">innodb_flush_log_at_trx_commit</span><span class="o">=</span><span class="s">1</span>
+
+<span class="c1"># :Parameter innodb_file_per_table:</span>
+<span class="c1"># :Beschreibung: Speichert jede InnoDB-Tabelle in einer separaten ``.ibd``-Datei. Erleichtert das Aufräumen von Speicherplatz und die Wiederherstellung von Tabellen.</span>
+<span class="c1"># :Typ: Boolean (0 oder 1)</span>
+<span class="c1"># :Standard: 0</span>
+<span class="na">innodb_file_per_table</span><span class="o">=</span><span class="s">1</span>
+</pre></div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Heinrich Weinz.</p>
+  </div>
+
+  Erstellt mit <a href="https://www.sphinx-doc.org/">Sphinx</a> mit einem
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    bereitgestellt von <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
