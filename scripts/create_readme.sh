@@ -1,3 +1,7 @@
+#!/bin/bash
+
+create_readme() {
+  cat <<EOF > README.md
 # ConsciousFit (CoFi)
 
 ConsciousFit (CoFi) is a platform designed to empower users with the knowledge and tools to achieve their fitness goals through informed nutritional choices.
@@ -13,7 +17,7 @@ ConsciousFit (CoFi) is a platform designed to empower users with the knowledge a
 
 ## Project Structure
 
-```
+\`\`\`
 
 ConsciousFit/
 ├── backend/        \# Python API code
@@ -26,48 +30,48 @@ ConsciousFit/
 ├── LICENSE         \# MIT License
 └── README.md       \# Project description and instructions
 
-```
+\`\`\`
 
 ## Getting Started
 
 1. **Clone the repository:**
 
-   ```bash
+   \`\`\`bash
    git clone git@github.com:henriquew001/ConsciousFit.git
-   ```
+   \`\`\`
 
 2.  **Navigate to the project directory:**
 
-    ```bash
+    \`\`\`bash
     cd ConsciousFit
-    ```
+    \`\`\`
 
 4.  **Create and activate a virtual environment:**
 
-    ```bash
+    \`\`\`bash
     python3 -m venv venv
     source venv/bin/activate
-    ```
+    \`\`\`
 
 ## Running with Docker Compose
 
 To run the application using Docker Compose:
 
-1.  **Navigate to the `docker/` directory:**
+1.  **Navigate to the \`docker/\` directory:**
 
-    ```bash
+    \`\`\`bash
     cd docker
-    ```
+    \`\`\`
 
 2.  **Run Docker Compose:**
 
-    ```bash
+    \`\`\`bash
     docker-compose up --build
-    ```
+    \`\`\`
 
 ## Documentation
 
-The project documentation is available in the `documentation/` directory. It includes:
+The project documentation is available in the \`documentation/\` directory. It includes:
 
   * Architecture diagrams and explanations.
   * API documentation.
@@ -91,3 +95,7 @@ This project is licensed under the [MIT License](LICENSE).
 ## Contact
 
 For any questions or inquiries, please contact [your contact information here].
+EOF
+}
+
+create_readme
