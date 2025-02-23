@@ -1,6 +1,10 @@
+# Architekturdiagramm
+
+Dieses Diagramm veranschaulicht die Architektur unseres Projekts.
+
 ```plantuml
 @startuml
-!define AzurePuml https://raw.githubusercontent.com/plantuml-stdlib/Azure-PlantUML/master/dist
+!define AzurePuml [https://raw.githubusercontent.com/plantuml-stdlib/Azure-PlantUML/master/dist](https://raw.githubusercontent.com/plantuml-stdlib/Azure-PlantUML/master/dist)
 !include AzurePuml/AzureCommon.puml
 !include AzurePuml/Databases/AzureDatabaseForMariaDb.puml
 !include AzurePuml/Compute/AzureAppService.puml
@@ -44,4 +48,3 @@ node "Lizenzen" {
 
 api --> python
 @enduml
-```
