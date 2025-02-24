@@ -1,5 +1,7 @@
-mariadb
+#mariadb
 uvicorn
 python-multipart
 SQLAlchemy
+fastapi
+pymysql
 #mysqlclient

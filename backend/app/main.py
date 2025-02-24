@@ -20,7 +20,7 @@ def get_db_connection():
 
 @app.get("/")
 async def read_root():
-    return {"Hello": "World"}
+    return {"Hello": "ANNY "}
 
 @app.get("/db_version")
 async def get_db_version():

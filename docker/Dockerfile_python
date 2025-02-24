@@ -14,10 +14,5 @@ COPY backend/requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the application code
-COPY backend/app /app/
-COPY backend/app /app
-COPY ./backend/app /app/
-COPY ./backend/app /app
-COPY ../backend/app /app/
 COPY ../backend/app /app
-Run echo "Test"
+#Run echo "Test"
