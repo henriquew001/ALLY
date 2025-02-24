@@ -1,7 +1,8 @@
-#mariadb
 uvicorn
 python-multipart
 SQLAlchemy
 fastapi
-pymysql
+django
 #mysqlclient
+pymysql
+#mariadb
