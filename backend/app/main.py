@@ -8,4 +8,4 @@ app.include_router(db_info.router)  # Füge den DB-Info-Router hinzu
 
 @app.get("/")
 async def read_root():
-    return {"Hello": "ANNY & Heinrich"}
+    return {"Hello": "ANNY & Heinrich 2"}

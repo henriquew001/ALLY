@@ -1,17 +1,25 @@
 #FROM python:3.13.2-slim-bookworm
-FROM python:3.13.2-bookworm
+FROM python:3.13.2-alpine AS base
 
 WORKDIR /app
+
+# Install necessary system packages
+RUN apk add --no-cache mariadb-connector-c-dev gcc musl-dev
 
 # Install build-essential (gcc and related tools) AND MariaDB client libraries
 # RUN apt-get update && \
 #    apt-get install -y --no-install-recommends build-essential libmariadb3 libmariadb-dev-compat && \
 #    rm -rf /var/lib/apt/lists/*
 
-# Copy requirements.txt first for caching
-COPY backend/requirements.txt ./
-
+# Install Python dependencies
+COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the application code
 COPY ../backend/app /app
+
+# Expose the application port
+ EXPOSE 8000
+
+# Set the command to run your application
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

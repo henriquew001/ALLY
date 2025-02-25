@@ -4,5 +4,6 @@ SQLAlchemy
 fastapi
 django
 pymysql
+python-dotenv
 #mysqlclient
 #mariadb

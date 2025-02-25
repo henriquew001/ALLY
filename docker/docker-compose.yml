@@ -2,41 +2,36 @@ version: "3.8"
 
 services:
   db:
-    image: mariadb:10.11  # Use the official MariaDB image
+    image: mariadb:10.11.6  # Use the official MariaDB image
     environment:
-      MYSQL_ROOT_PASSWORD: jede2  # Change this in production!
-      MYSQL_DATABASE: conscious_fit
-      MYSQL_USER: app_user
-      MYSQL_PASSWORD: app_password
-    ports:
-      - "3306:3306"  # Expose only if needed for external access
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
       - consciousfit_data:/var/lib/mysql
-    restart: always
+    restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      test: ["CMD", "mysql", "-u", "${DB_USER}", "-p${DB_PASSWORD}", "-e", "SELECT 1;"] # Datenbank Healthcheck
       interval: 30s
       timeout: 10s
       retries: 3
+    networks:
+      - app-network
 
   backend:
     build:
-      context: ..
-      dockerfile: docker/Dockerfile_python
+      context: .
+      dockerfile: Dockerfile_python
     ports:
       - "8000:8000"
     depends_on:
       - db
     environment:
       - PYTHONPATH=/app
-      - DATABASE_URL=mysql+pymysql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}
-      - DB_NAME=conscious_fit
-      - DB_PASSWORD=app_password
-      - DB_HOST=db
-      - DB_USER=app_user
     volumes:
-      - ../backend/app:/app  # Use relative path for consistency
-    restart: always
+      - ../backend/app:/app  # Für Entwicklung
+    restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"] # Assumes /health endpoint
       interval: 30s
@@ -44,8 +39,6 @@ services:
       retries: 3
     networks:
       - app-network
-    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload # <-- Use Uvicorn
-# ... (rest of your docker-compose.yml)
 
 volumes:
   consciousfit_data:

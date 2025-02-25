@@ -8,6 +8,7 @@ node_modules/
 
 # Docker
 .dockerenv
+.env
 
 # MariaDB
 *.log
