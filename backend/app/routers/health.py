@@ -1,17 +1,14 @@
-from fastapi import APIRouter
-from database.db import get_db_connection  # Importiere deine Datenbankfunktion
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+from database.db import get_db  # Korrekter Import
 
 router = APIRouter()
 
 @router.get("/health")
-async def healthcheck():
+async def health_check(db: Session = Depends(get_db)):
     try:
-        conn = get_db_connection()
-        if conn is None:
-            return {"status": "error", "details": "Database connection error"}
-        with conn.cursor() as cursor:
-            cursor.execute("SELECT 1")
-        conn.close()
+        # Überprüfen der Datenbankverbindung
+        db.execute("SELECT 1")
         return {"status": "ok"}
     except Exception as e:
-        return {"status": "error", "details": str(e)}
+        return {"status": "error", "message": str(e)}

@@ -3,6 +3,6 @@ python-multipart
 SQLAlchemy
 fastapi
 django
-#mysqlclient
 pymysql
+#mysqlclient
 #mariadb

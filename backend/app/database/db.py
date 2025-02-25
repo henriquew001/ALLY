@@ -1,23 +1,38 @@
-import pymysql
-import os
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.exc import OperationalError, ProgrammingError
 from fastapi import HTTPException
+import os
 import logging
 
-# Logger initialisieren
 logger = logging.getLogger(__name__)
 
-def get_db_connection():
+# Datenbankverbindungsinformationen aus Umgebungsvariablen lesen
+DB_HOST = os.environ.get("DB_HOST")
+DB_USER = os.environ.get("DB_USER")
+DB_PASSWORD = os.environ.get("DB_PASSWORD")
+DB_NAME = os.environ.get("DB_NAME")
+
+# Datenbank-URL erstellen
+SQLALCHEMY_DATABASE_URL = f"mysql+pymysql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}/{DB_NAME}"
+
+# Engine erstellen
+try:
+    engine = create_engine(SQLALCHEMY_DATABASE_URL)
+    logger.info("Database engine created")
+except OperationalError as e:
+    logger.error(f"Database connection error: {e}")
+    raise HTTPException(status_code=500, detail=f"Database connection error: {e}")
+
+# Session erstellen
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+# Dependency Injection für FastAPI
+def get_db():
+    db = SessionLocal()
     try:
-        connection = pymysql.connect(
-            host=os.environ.get("DB_HOST"),
-            user=os.environ.get("DB_USER"),
-            password=os.environ.get("DB_PASSWORD"),
-            database=os.environ.get("DB_NAME"),
-            charset='utf8mb4',
-            cursorclass=pymysql.cursors.DictCursor
-        )
-        logger.info("Database connection established")  # Log-Nachricht hinzufügen
-        return connection
-    except pymysql.MySQLError as e:
-        logger.error(f"Database connection error: {e}") # Log-Nachricht mit Fehler
-        raise HTTPException(status_code=500, detail=f"Database connection error: {e}")
+        yield db
+        logger.info("Database session retrieved")
+    finally:
+        db.close()
+        logger.info("Database session closed")

@@ -1,17 +1,16 @@
-from fastapi import APIRouter, HTTPException
-from database.db import get_db_connection  # Importiere deine Datenbankfunktion
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+from sqlalchemy import text  # Für rohe SQL-Abfragen
+from database.db import get_db
 
 router = APIRouter()
 
 @router.get("/db_version")
-async def get_db_version():
-    connection = get_db_connection()
-    if connection is None:
-        raise HTTPException(status_code=500, detail="Database connection error")
+async def get_db_version(db: Session = Depends(get_db)):
     try:
-        with connection.cursor(dictionary=True) as cursor:
-            cursor.execute("SELECT VERSION()")
-            result = cursor.fetchone()
-            return {"MariaDB Version": result['VERSION()']}
-    finally:
-        connection.close()
+        result = db.execute(text("SELECT VERSION()"))
+        version = result.fetchone()[0]  # Das Ergebnis ist ein Tupel
+        return {"MariaDB Version": version}
+    except ProgrammingError as e:  # Spezifischer für SQL-Fehler
+        logger.error(f"SQL error: {e}")
+        raise HTTPException(status_code=500, detail=f"SQL error: {e}")
