@@ -2,8 +2,12 @@ uvicorn
 python-multipart
 SQLAlchemy
 fastapi
+python-jose
 django
 pymysql
 python-dotenv
+passlib
+python-jose[cryptography] # Hinzugefügt
+
 #mysqlclient
 #mariadb

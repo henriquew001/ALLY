@@ -23,12 +23,19 @@ services:
     build:
       context: .
       dockerfile: Dockerfile_python
+    env_file:
+      - ./.env # Hinzugefügte Zeile
     ports:
       - "8000:8000"
     depends_on:
       - db
     environment:
       - PYTHONPATH=/app
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - SECRET_KEY=${SECRET_KEY}
     volumes:
       - ../backend/app:/app  # Für Entwicklung
     restart: unless-stopped

@@ -2,7 +2,9 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from sqlalchemy import text  # Für rohe SQL-Abfragen
 from database.db import get_db
+import logging
 
+logger = logging.getLogger(__name__)
 router = APIRouter()
 
 @router.get("/db_version")
