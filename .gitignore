@@ -9,10 +9,10 @@ node_modules/
 # Docker
 .dockerenv
 .env
-.env.development
+.env.dev
 .env.testing
 .env.preprod
-.env.production
+.env.prod
 
 # MariaDB
 *.log
