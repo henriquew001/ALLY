@@ -11,7 +11,7 @@ router = APIRouter()
 @router.get("/db_version")
 async def get_db_version(db: Session = Depends(get_db)):
     try:
-        result = db.execute(text("SELECT VERSION()"))
+        result = db.execute(text("SELECT VERSION()")) # use text()
         version = result.fetchone()[0]  # Das Ergebnis ist ein Tupel
         return {"MariaDB Version": version}
     except ProgrammingError as e:  # Spezifischer für SQL-Fehler
