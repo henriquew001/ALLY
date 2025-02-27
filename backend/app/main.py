@@ -2,10 +2,12 @@ from fastapi import FastAPI
 from routers import health, db_info, users, auth
 from database.db import Base, engine
 import logging
+from config import config
 import os
 
 # Create tables if they do not exist
-Base.metadata.create_all(bind=engine)
+if config.ENV == "dev": # only create the tables in the dev env.
+    Base.metadata.create_all(bind=engine)
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

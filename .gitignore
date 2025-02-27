@@ -9,6 +9,10 @@ node_modules/
 # Docker
 .dockerenv
 .env
+.env.development
+.env.testing
+.env.preprod
+.env.production
 
 # MariaDB
 *.log
@@ -32,8 +36,6 @@ node_modules/
 .Trashes
 ehthumbs.db
 Thumbs.db
-
-.env
 
 # kate
 *.kate-swp
