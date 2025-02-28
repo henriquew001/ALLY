@@ -35,6 +35,7 @@
     - [ ] Unnötige Dateien und Abhängigkeiten entfernen
 - [ ] Image-Scans auf Sicherheitslücken durchführen (z.B. mit Trivy oder Snyk)
 - [ ] Das Port-Mapping 3306:3306 ist in Ordnung für lokale Entwicklung, sollte aber in Produktionsumgebungen vermieden werden.
+- [ ] in Dockerfile_pyhton auf slim wechseln für prod: FROM python:3.13.2-slim-bookworm
 
 ### Netzwerk
 

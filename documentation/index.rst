@@ -4,13 +4,14 @@ Willkommen bei der Dokumentation von CoFi!
 Diese Dokumentation beschreibt die Konfiguration und den Aufbau unseres Projekts.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 5
    :caption: Inhalte:
 
    ToDo
    architecture/architecture
-   database/database_schema
-   mariadb_config
+   database/database_schema   
+   api/api_documentation
+   backend/app/main
 
 Einführung
 ----------
@@ -32,7 +33,7 @@ Die MariaDB-Datenbank wird mit der folgenden Konfigurationsdatei konfiguriert:
    :language: ini
 
 Nützliche Links
---------------
+---------------
 
 * https://github.com/henriquew001/ConsciousFit/
 * `Link zur externen Dokumentation <https://example.com>`_

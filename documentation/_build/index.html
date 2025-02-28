@@ -47,6 +47,7 @@
 <li class="toctree-l1"><a class="reference internal" href="ToDo.html">ToDo</a></li>
 <li class="toctree-l1"><a class="reference internal" href="architecture/architecture.html">Projektarchitektur</a></li>
 <li class="toctree-l1"><a class="reference internal" href="database/database_schema.html">Database Schema for ConsciousFit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="backend/app/main.html">Main</a></li>
 </ul>
 
         </div>
@@ -80,22 +81,50 @@
 <p class="caption" role="heading"><span class="caption-text">Inhalte:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="ToDo.html">ToDo</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="ToDo.html#docker-umgebung-verbesserungen">Docker Umgebung Verbesserungen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ToDo.html#docker-umgebung-verbesserungen">Docker Umgebung Verbesserungen</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ToDo.html#sicherheit">Sicherheit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ToDo.html#healthcheck">Healthcheck</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ToDo.html#logging">Logging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ToDo.html#dockerfile-optimierung">Dockerfile Optimierung</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ToDo.html#netzwerk">Netzwerk</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="architecture/architecture.html">Projektarchitektur</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="architecture/architecture.html#ubersicht">Übersicht</a></li>
 <li class="toctree-l2"><a class="reference internal" href="architecture/architecture.html#komponenten">Komponenten</a></li>
 <li class="toctree-l2"><a class="reference internal" href="architecture/architecture.html#architekturdiagramm">Architekturdiagramm</a></li>
-<li class="toctree-l2"><a class="reference internal" href="architecture/architecture.html#detailbeschreibung">Detailbeschreibung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture/architecture.html#detailbeschreibung">Detailbeschreibung</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="architecture/architecture.html#backend-server">Backend-Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/architecture.html#webanwendung">Webanwendung</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/architecture.html#mobile-apps">Mobile Apps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/architecture.html#versionskontrolle">Versionskontrolle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/architecture.html#dokumentation">Dokumentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture/architecture.html#lizenzierung">Lizenzierung</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="architecture/architecture.html#entscheidungen">Entscheidungen</a></li>
 <li class="toctree-l2"><a class="reference internal" href="architecture/architecture.html#nachste-schritte">Nächste Schritte</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="database/database_schema.html">Database Schema for ConsciousFit</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="database/database_schema.html#tables">Tables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="database/database_schema.html#tables">Tables</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="database/database_schema.html#users"><code class="docutils literal notranslate"><span class="pre">users</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="database/database_schema.html#meal-types"><code class="docutils literal notranslate"><span class="pre">meal_types</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="database/database_schema.html#food-groups"><code class="docutils literal notranslate"><span class="pre">food_groups</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="database/database_schema.html#food-items"><code class="docutils literal notranslate"><span class="pre">food_items</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="database/database_schema.html#meals"><code class="docutils literal notranslate"><span class="pre">meals</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="database/database_schema.html#meal-items"><code class="docutils literal notranslate"><span class="pre">meal_items</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="database/database_schema.html#shopping-list"><code class="docutils literal notranslate"><span class="pre">shopping_list</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="database/database_schema.html#food-diary"><code class="docutils literal notranslate"><span class="pre">food_diary</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="database/database_schema.html#food-diary-entries"><code class="docutils literal notranslate"><span class="pre">food_diary_entries</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="database/database_schema.html#habits"><code class="docutils literal notranslate"><span class="pre">habits</span></code></a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="backend/app/main.html">Main</a></li>
 </ul>
 </div>
 <section id="einfuhrung">
@@ -188,7 +217,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Dein Name.</p>
+    <p>&#169; Copyright 2025, Dein Name.</p>
   </div>
 
   Erstellt mit <a href="https://www.sphinx-doc.org/">Sphinx</a> mit einem

@@ -3,9 +3,10 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="de" data-content_root="./">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stichwortverzeichnis &mdash; Dein Projektname  Dokumentation</title>
+  <title>&lt;no title&gt; &mdash; Dein Projektname  Dokumentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=f5127f15" />
 
@@ -16,16 +17,8 @@
       <script src="_static/doctools.js?v=9bcbadda"></script>
       <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
       <script src="_static/translations.js?v=9bf55d28"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
-      <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
-      <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
-      <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
-      <script type="module">
-import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
-window.addEventListener("load", () => mermaid.run());
-</script>
     <script src="_static/js/theme.js"></script>
-    <link rel="index" title="Stichwortverzeichnis" href="#" />
+    <link rel="index" title="Stichwortverzeichnis" href="genindex.html" />
     <link rel="search" title="Suche" href="search.html" /> 
 </head>
 
@@ -70,8 +63,9 @@ window.addEventListener("load", () => mermaid.run());
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Stichwortverzeichnis</li>
+      <li class="breadcrumb-item active">&lt;no title&gt;</li>
       <li class="wy-breadcrumbs-aside">
+            <a href="_sources/structure.md.txt" rel="nofollow"> Quelltext anzeigen</a>
       </li>
   </ul>
   <hr/>
@@ -79,11 +73,44 @@ window.addEventListener("load", () => mermaid.run());
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
+  <p>graph TD
+A[ConsciousFit/] –&gt; B(backend/);
+A –&gt; C(database/);
+A –&gt; D(frontend/);
+A –&gt; E(documentation/);
+A –&gt; F(docker/);
+A –&gt; G(.gitignore);
+A –&gt; H(README.md);</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>B --&gt; B1(app/);
+B --&gt; B2(tests/);
+B --&gt; B3(requirements.txt);
+B --&gt; B4(Dockerfile);
 
-<h1 id="index">Stichwortverzeichnis</h1>
+C --&gt; C1(init/);
+C --&gt; C2(migrations/);
+C --&gt; C3(Dockerfile);
+C --&gt; C4(mariadb.cnf);
 
-<div class="genindex-jumpbox">
- 
+D --&gt; D1(web/);
+D --&gt; D2(mobile/);
+
+E --&gt; E1(architecture/);
+E --&gt; E2(api/);
+E --&gt; E3(database/);
+
+F --&gt; F1(docker-compose.yml);
+
+B1 --&gt; B11(__init__.py);
+B1 --&gt; B12(main.py);
+B1 --&gt; B13(models.py);
+B1 --&gt; B14(routes.py);
+
+C1 --&gt; C11(init.sql);
+
+D1 --&gt; D11(public/);
+D1 --&gt; D12(src/);
+D1 --&gt; D13(package.json);
+</pre></div>
 </div>
 
 

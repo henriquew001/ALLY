@@ -1,16 +1,14 @@
-# Configuration file for the Sphinx documentation builder.
-
 import os
 import sys
-#import lexers
-
-#def setup(app):
-#    app.add_lexer('mermaid', MermaidLexer())
+sys.path.insert(0, os.path.abspath('../../backend'))
+sys.path.insert(0, os.path.abspath('../backend/app'))
+sys.path.insert(0, os.path.abspath('../../backend/routers'))
+sys.path.insert(0, os.path.abspath('./_ext'))
 
 sys.path.insert(0, os.path.abspath('.'))
 
 project = 'Dein Projektname'
-copyright = '2023, Dein Name'
+copyright = '2025, Dein Name'
 author = 'Dein Name'
 
 extensions = [
