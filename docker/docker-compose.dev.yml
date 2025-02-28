@@ -24,7 +24,7 @@ services:
       context: .
       dockerfile: Dockerfile_python
     env_file:
-      - ./.env.dev # Hinzugefügte Zeile
+      - ./.env.dev
     ports:
       - "8000:8000"
     depends_on:

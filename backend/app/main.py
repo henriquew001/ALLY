@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from contextlib import asynccontextmanager
 from routers import health, db_info, users, auth
 from database.db import Base, engine
 import logging
@@ -13,6 +14,11 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 logger.info("Starting FastAPI application")
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    create_database()
+    yield
+    
 app = FastAPI()
 
 # Include routers
@@ -21,13 +27,12 @@ app.include_router(db_info.router)
 app.include_router(users.router)
 app.include_router(auth.router)
 
-@app.on_event("startup")
-async def on_startup():
+def create_database():
     """
-    Creates the database tables if they do not exist.
-    Retries multiple times with a delay if the connection fails.
-    """
-    if config.ENV == "dev":
+        Creates the database tables if they do not exist.
+        Retries multiple times with a delay if the connection fails.
+        """
+    if config.ENV == "dev" or config.ENV == "test":
         MAX_RETRIES = 10
         RETRY_DELAY = 3
         retries = 0

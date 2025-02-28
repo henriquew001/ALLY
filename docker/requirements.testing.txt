@@ -9,5 +9,8 @@ python-dotenv
 passlib
 python-jose[cryptography] # Hinzugefügt
 bcrypt
+pytest
+httpx
+
 #mysqlclient
 #mariadb
