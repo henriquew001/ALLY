@@ -17,7 +17,7 @@ services:
       timeout: 10s
       retries: 3
     networks:
-      - app-network
+      - app-network_dev
 
   backend:
     build:
@@ -44,11 +44,11 @@ services:
       timeout: 10s
       retries: 3
     networks:
-      - app-network
+      - app-network_dev
 
 volumes:
   consciousfit_data_dev:
 
 networks:
-  app-network:
+  app-network_dev:
     driver: bridge
