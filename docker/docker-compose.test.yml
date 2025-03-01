@@ -19,7 +19,7 @@ services:
     networks:
       - app-network_test
 
-  backend:
+  backend_test:
     build:
       context: ../
       dockerfile: docker/Dockerfile_python.test

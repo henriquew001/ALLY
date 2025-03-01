@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  db_dev: # Umbenannt in db_dev
+  db_dev: 
     image: mariadb:10.11.6  # Use the official MariaDB image
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
@@ -19,7 +19,7 @@ services:
     networks:
       - app-network_dev
 
-  backend:
+  backend_dev:
     build:
       context: ../
       dockerfile: docker/Dockerfile_python
