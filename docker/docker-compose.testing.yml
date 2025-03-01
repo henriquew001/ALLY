@@ -9,7 +9,7 @@ services:
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - consciousfit_data_testing:/var/lib/mysql
+      - consciousfit_data_test:/var/lib/mysql
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "mysql", "-u", "${DB_USER}", "-p${DB_PASSWORD}", "-e", "SELECT 1;"] # Datenbank Healthcheck
