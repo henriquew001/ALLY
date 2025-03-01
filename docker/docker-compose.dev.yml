@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  db:
+  db_dev: # Umbenannt in db_dev
     image: mariadb:10.11.6  # Use the official MariaDB image
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
@@ -12,7 +12,7 @@ services:
       - consciousfit_data_dev:/var/lib/mysql
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "mysql", "-u", "${DB_USER}", "-p${DB_PASSWORD}", "-e", "SELECT 1;"] # Datenbank Healthcheck
+      test: ["CMD", "mysql", "-u", "${DB_USER}", "-p${DB_PASSWORD}", "-e", "SELECT 1;"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -23,23 +23,27 @@ services:
     build:
       context: .
       dockerfile: Dockerfile_python
-    env_file:
-      - ./.env.dev
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      db_dev: # Geändert zu db_dev
+        condition: service_healthy
+
+    env_file:
+      - ./.env
     environment:
       - PYTHONPATH=/app
-      - DATABASE_URL=mysql+pymysql://${DB_USER}:${DB_PASSWORD}@db:3306/${DB_DATABASE} # Construct database URL
+      - DATABASE_URL=mysql+pymysql://${DB_USER}:${DB_PASSWORD}@db_dev:3306/${DB_DATABASE} # Geändert zu db_dev
       - SECRET_KEY=${SECRET_KEY}
-      - ENV=${ENV}
-      - DEBUG=${DEBUG}
+      - ENV=dev
+      - DEBUG=True
     volumes:
-      - ../backend/app:/app  # Für Entwicklung
+      - ./backend/app:/app  # Für Entwicklung
+      - ./.cache:/root/.cache
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"] # Assumes /health endpoint
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 30s
       timeout: 10s
       retries: 3

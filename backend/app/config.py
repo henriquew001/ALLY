@@ -2,8 +2,6 @@
 import os
 from dotenv import load_dotenv
 
-load_dotenv()  # Load .env variables if present
-
 class Config:
     ENV = os.environ.get("ENV", "dev")  # Default to 'dev' if not set
     DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
@@ -24,4 +22,7 @@ class Config:
         """
         return self.DATABASE_URL
 
+# Lade die .env Datei nur, falls die Applikation nicht im test Modus ist.
+if os.environ.get("ENV", "dev") != "test":
+    load_dotenv()
 config = Config()

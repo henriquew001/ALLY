@@ -1,7 +1,7 @@
 version: "3.8"
 
 services:
-  db:
+  db_test:
     image: mariadb:10.11.6  # Use the official MariaDB image
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
@@ -22,14 +22,14 @@ services:
   backend:
     build:
       context: ../
-      dockerfile: docker/Dockerfile_python.testing
+      dockerfile: docker/Dockerfile_python.test
     ports:
       - "8001:8000"
     depends_on:
-      - db
+      - db_test
     environment:
       - PYTHONPATH=/app
-      - DATABASE_URL=mysql+pymysql://${DB_USER}:${DB_PASSWORD}@db:3306/${DB_DATABASE} # Construct database URL
+      - DATABASE_URL=mysql+pymysql://${DB_USER}:${DB_PASSWORD}@db_test:3306/${DB_DATABASE} # Construct database URL
       - SECRET_KEY=${SECRET_KEY}
       - ENV=test
       - DEBUG=${DEBUG}
