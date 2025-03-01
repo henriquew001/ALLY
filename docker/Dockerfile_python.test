@@ -7,8 +7,8 @@ WORKDIR /app
 RUN apk add --no-cache mariadb-connector-c-dev gcc musl-dev
 
 # Install Python dependencies
-COPY docker/requirements.testing.txt ./
-RUN pip install --no-cache-dir -r requirements.testing.txt
+COPY docker/requirements.test.txt ./
+RUN pip install --no-cache-dir -r requirements.test.txt
 
 # Copy the application code
 COPY backend/app /app
