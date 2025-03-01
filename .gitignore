@@ -39,3 +39,7 @@ Thumbs.db
 
 # kate
 *.kate-swp
+
+# Test results
+report.html
+

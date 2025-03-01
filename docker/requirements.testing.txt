@@ -10,6 +10,7 @@ passlib
 python-jose[cryptography] # Hinzugefügt
 bcrypt
 pytest
+pytest-html
 httpx
 
 #mysqlclient
