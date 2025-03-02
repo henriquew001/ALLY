@@ -10,6 +10,8 @@ passlib
 python-jose[cryptography] # Hinzugefügt
 bcrypt
 pytest
+pytest-cov
+pytest-asyncio
 pytest-html
 httpx
 
