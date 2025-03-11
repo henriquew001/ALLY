@@ -13,6 +13,20 @@ router = APIRouter(prefix="/users", tags=["Users"])
 
 @router.post("/", response_model=UserScheme, status_code=status.HTTP_201_CREATED)
 async def create_user(user: UserCreate, db: Session = Depends(get_db)):
+    """
+    Creates a new user in the database.
+
+    Args:
+        user: The user data for creation.
+        db: The database session.
+
+    Returns:
+        The created user.
+
+    Raises:
+        HTTPException: If the user data is invalid or if the username already exists.
+    """
+
     db_user = UserModel(username=user.username)
     db_user.set_password(user.password)
     try:

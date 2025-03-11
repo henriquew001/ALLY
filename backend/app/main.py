@@ -1,59 +1,26 @@
+# /app/main.py
 from fastapi import FastAPI
-from contextlib import asynccontextmanager
-from routers import health, db_info, users, auth
-from database.db import Base, engine
+from routers import users, auth, health, db_info
 import logging
-from config import app_config
-import time
-from sqlalchemy.exc import OperationalError
+from database.db import engine, Base
+
+# Create the tables
+Base.metadata.create_all(bind=engine)
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-logger.info("Starting FastAPI application")
 
+app = FastAPI()
 
-def create_database():  # <- remove async
-    """
-    Creates the database tables if they do not exist.
-    Retries multiple times with a delay if the connection fails.
-    """
-    MAX_RETRIES = 10
-    RETRY_DELAY = 3
-    retries = 0
-    while retries < MAX_RETRIES:
-        try:
-            with engine.connect() as connection:
-                Base.metadata.create_all(bind=engine)
-                logger.info("Database tables created or already exist.")
-                break
-        except OperationalError as e:
-            logger.error(
-                f"Database connection failed, retrying in {RETRY_DELAY} seconds, attempt {retries + 1}: {e}"
-            )
-            retries += 1
-            time.sleep(RETRY_DELAY)
-        except Exception as e:
-            logger.error(f"Unexpected error connecting to the database: {e}")
-            break  # Stop retrying on unexpected errors
-
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    """create db if it is neccessary"""
-    if app_config.ENV == "dev" or app_config.ENV == "test":
-        try:
-            create_database()
-            pass
-        except Exception as e:
-            logger.error(f"Failed to setup Database: {e}")
-    yield  # Yield after attempting to create the database
-
-
-app = FastAPI(lifespan=lifespan)
-
-# Include routers
-app.include_router(health.router)
-app.include_router(db_info.router)
 app.include_router(users.router)
 app.include_router(auth.router)
+app.include_router(health.router)
+app.include_router(db_info.router)
+
+
+@app.get("/")
+async def root():
+    """
+    Root endpoint, returns the welcome message.
+    """
+    return {"message": "ConsciousFit"}

@@ -39,15 +39,17 @@ def db():
         session.close()
 
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="function", autouse=True)
 def reset_db(db):
     """
     Resets the database by removing all data.
     """
-    try:
-        yield
-    finally:
-        # clear all data
-        for table in reversed(Base.metadata.sorted_tables):
-            db.execute(table.delete())
-        db.commit()
+    # clear all data
+    for table in reversed(Base.metadata.sorted_tables):
+      db.execute(table.delete())
+    db.commit()
+    yield
+    # clear all data
+    for table in reversed(Base.metadata.sorted_tables):
+        db.execute(table.delete())
+    db.commit()
