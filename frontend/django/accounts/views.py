@@ -32,7 +32,7 @@ def user_registration(request):
             login(request, user)
             messages.success(request, f"Account created for {user.username}! You are now logged in.")
             print("Template Name:", 'accounts/register.html')
-            return redirect("home") # Hier zu deiner Hauptseite weiterleiten
+            return redirect("home:home") # Hier zu deiner Hauptseite weiterleiten
         else:
              for error in list(form.errors.values()):
                  messages.error(request, error)
@@ -47,6 +47,6 @@ def user_logout(request):
      messages.info(request, "You have successfully logged out.")
      return redirect("home") # Hier zu deiner Hauptseite weiterleiten
 
-# Example for a home route
-def home(request):
-     return render(request, "home.html")
+# # Example for a home route
+# def home(request):
+#      return render(request, "home:home.html")
