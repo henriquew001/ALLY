@@ -44,6 +44,7 @@ async def lifespan(app: FastAPI):
     if app_config.ENV == "dev" or app_config.ENV == "test":
         try:
             create_database()
+            pass
         except Exception as e:
             logger.error(f"Failed to setup Database: {e}")
     yield  # Yield after attempting to create the database

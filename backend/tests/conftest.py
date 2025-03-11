@@ -6,6 +6,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine  # Import create_engine
 import os
 from config import app_config
+from sqlalchemy.exc import OperationalError
 
 # Create a test database (in-memory SQLite for testing)
 if app_config.ENV == "test":
@@ -13,11 +14,25 @@ if app_config.ENV == "test":
     if os.path.exists(TEST_DATABASE_URL.replace("sqlite:///", "")):
         os.remove(TEST_DATABASE_URL.replace("sqlite:///", ""))
     engine = create_engine(TEST_DATABASE_URL, connect_args={"check_same_thread": False})
-    Base.metadata.create_all(bind=engine)
+    # Base.metadata.create_all(bind=engine)
+    MAX_RETRIES = 10
+    RETRY_DELAY = 3
+    retries = 0
+    while retries < MAX_RETRIES:
+        try:
+            with engine.connect() as connection:
+                Base.metadata.create_all(bind=engine)
+                break
+        except OperationalError as e:
+            retries += 1
+            time.sleep(RETRY_DELAY)
+        except Exception as e:
+            break  # Stop retrying on unexpected errors
 
 else:
     TEST_DATABASE_URL = "sqlite:///:memory:"
     engine = create_engine(TEST_DATABASE_URL, connect_args={"check_same_thread": False})
+    Base.metadata.create_all(bind=engine)
     
 
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
