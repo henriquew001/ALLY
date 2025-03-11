@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from routers import health, db_info, users, auth
 from database.db import Base, engine
 import logging
-from config import config
+from app.config import app_config
 import os
 import time
 from sqlalchemy.exc import OperationalError
@@ -32,7 +32,7 @@ def create_database():
         Creates the database tables if they do not exist.
         Retries multiple times with a delay if the connection fails.
         """
-    if config.ENV == "dev" or config.ENV == "test":
+    if app_config.ENV == "dev" or app_config.ENV == "test":
         MAX_RETRIES = 10
         RETRY_DELAY = 3
         retries = 0

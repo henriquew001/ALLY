@@ -1,23 +1,6 @@
 version: "3.8"
 
 services:
-  db_test:
-    image: mariadb:10.11.6  # Use the official MariaDB image
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-    volumes:
-      - consciousfit_data_test:/var/lib/mysql
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "mysql", "-u", "${DB_USER}", "-p${DB_PASSWORD}", "-e", "SELECT 1;"] # Datenbank Healthcheck
-      interval: 30s
-      timeout: 10s
-      retries: 3
-    networks:
-      - app-network_test
 
   backend_test:
     build:
@@ -25,8 +8,6 @@ services:
       dockerfile: docker/Dockerfile_python.test
     ports:
       - "8001:8000"
-    depends_on:
-      - db_test
     environment:
       - PYTHONPATH=/app
       - DATABASE_URL=mysql+pymysql://${DB_USER}:${DB_PASSWORD}@db_test:3306/${DB_DATABASE} # Construct database URL
@@ -45,11 +26,11 @@ services:
       timeout: 10s
       retries: 3
     networks:
-      - app-network_test
+      - app-network_unittest
 
 volumes:
   consciousfit_data_test:
 
 networks:
-  app-network_test:
+  app-network_unittest:
     driver: bridge

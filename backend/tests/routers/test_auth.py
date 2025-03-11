@@ -24,11 +24,11 @@ if not os.environ.get("ENV"):
 
 from main import app  # Now import directly
 from database.db import Base, get_db
-from config import config
+from app.config import app_config
 
 
 # Use an in-memory SQLite database for testing
-SQLALCHEMY_DATABASE_URL = config.get_database_url()
+SQLALCHEMY_DATABASE_URL = app_config.get_database_url()
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL

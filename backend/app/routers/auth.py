@@ -2,7 +2,7 @@
 from datetime import datetime, timedelta, UTC
 from typing import Annotated
 import os
-from config import config
+from app.config import app_config
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
@@ -16,10 +16,10 @@ from schemes.user import Token, TokenData
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
 # Environment variables
-SECRET_KEY = config.SECRET_KEY
-ALGORITHM = config.ALGORITHM
-ACCESS_TOKEN_EXPIRE_MINUTES = config.ACCESS_TOKEN_EXPIRE_MINUTES
-REFRESH_TOKEN_EXPIRE_DAYS = config.REFRESH_TOKEN_EXPIRE_DAYS
+SECRET_KEY = app_config.SECRET_KEY
+ALGORITHM = app_config.ALGORITHM
+ACCESS_TOKEN_EXPIRE_MINUTES = app_config.ACCESS_TOKEN_EXPIRE_MINUTES
+REFRESH_TOKEN_EXPIRE_DAYS = app_config.REFRESH_TOKEN_EXPIRE_DAYS
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/token")
 

@@ -3,7 +3,7 @@ import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database.db import Base
-from config import config
+from app.config import app_config
 from fastapi.testclient import TestClient
 from main import app
 
@@ -12,7 +12,7 @@ def db_engine():
     """
     Returns a SQLAlchemy engine for the test database.
     """
-    engine = create_engine(config.get_database_url())
+    engine = create_engine(app_config.get_database_url())
     Base.metadata.create_all(bind=engine)
     yield engine
     Base.metadata.drop_all(bind=engine)
