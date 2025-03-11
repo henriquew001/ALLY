@@ -2,7 +2,7 @@
 from datetime import datetime, timedelta, UTC
 from typing import Annotated
 import os
-from app.config import app_config
+from config import app_config
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm

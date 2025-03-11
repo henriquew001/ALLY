@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from routers import health, db_info, users, auth
 from database.db import Base, engine
 import logging
-from app.config import app_config
+from config import app_config
 import os
 import time
 from sqlalchemy.exc import OperationalError
