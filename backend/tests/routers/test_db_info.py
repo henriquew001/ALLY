@@ -1,26 +1,44 @@
-from sqlalchemy.orm import Session
-from fastapi.testclient import TestClient
-from sqlalchemy.exc import ProgrammingError
-from unittest.mock import patch, MagicMock
-from fastapi import status
-from database.db import get_db  # Import get_db
-from app.main import app  # Import the FastAPI app
-
-def test_get_db_version_ok(client: TestClient):
-    response = client.get("/db_version")
-    assert response.status_code == status.HTTP_200_OK
-    assert "db_version" in response.json()
-
-from unittest.mock import patch
+# /tests/routers/test_db_info.py
 import logging
+from unittest.mock import MagicMock
 
-def test_get_db_version_fail(client: TestClient, caplog):
+import pytest
+from fastapi import FastAPI
+from sqlalchemy.exc import ProgrammingError
+from sqlalchemy.orm import Session
+from starlette.testclient import TestClient
+
+from database.db import get_db
+from main import app as main_app  # Import the app instance from main.py
+
+
+@pytest.fixture(scope="module")
+def app():
+    """Fixture that creates and yields the app instance"""
+    return main_app
+
+
+@pytest.fixture(scope="module")
+def client(app: FastAPI):
+    """Fixture that yields a test client for the app."""
+    with TestClient(app) as c:
+        yield c
+
+
+def test_get_db_version_success(client: TestClient, caplog):
+    caplog.set_level(logging.INFO)
+    response = client.get("/db_version")
+    assert response.status_code == 200
+    assert response.json() == {"db_version": "10.11.6-MariaDB-1:10.11.6+maria~ubu2204"}
+
+
+def test_get_db_version_fail(client: TestClient, caplog, app: FastAPI):  # add app here
     caplog.set_level(logging.ERROR)
 
     mock_session = MagicMock(spec=Session)
-    mock_session.execute.side_effect = ProgrammingError("Fake SQL Error", {}, None)
+    mock_session.execute.return_value.scalar.side_effect = ProgrammingError("Fake SQL Error", {}, None)
 
-    app.dependency_overrides[get_db] = lambda: mock_session  # Direktes Setzen!
+    app.dependency_overrides[get_db] = lambda: mock_session  # Set it on the app instance from the fixture!
 
     # 🔍 Debugging: Prüfen, ob die Dependency-Override greift
     print("Dependency Overrides:", app.dependency_overrides)  # Sollte get_db enthalten
@@ -32,7 +50,8 @@ def test_get_db_version_fail(client: TestClient, caplog):
     print("Mock execute called:", mock_session.execute.called)
 
     assert mock_session.execute.called, "Mock wurde nicht aufgerufen!"  # Debugging
-    assert response.status_code == status.HTTP_500_INTERNAL_SERVER_ERROR
-    assert "SQL error:" in response.json().get("detail")
+    assert response.status_code == 500
+    assert "Database error" in response.text
 
-    del app.dependency_overrides[get_db]  # Cleanup nach Test
+    app.dependency_overrides.clear()  # clear overrides after the test
+
