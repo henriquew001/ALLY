@@ -1,7 +1,7 @@
 # /app/routers/db_info.py
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from database.db import get_db, engine
+from database.db import get_db
 import logging
 from sqlalchemy import text, inspect
 
