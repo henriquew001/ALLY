@@ -24,9 +24,9 @@ services:
       context: ../
       dockerfile: docker/Dockerfile_python
     ports:
-      - "8000:8000"
+      - "8001:8000"
     depends_on:
-      db_dev: # Geändert zu db_dev
+      db_dev:
         condition: service_healthy
     environment:
       - PYTHONPATH=/app
@@ -38,9 +38,9 @@ services:
       - ../backend/app:/app  # Für Entwicklung
       - ../.cache:/root/.cache
     command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
-    restart: unless-stopped
+    # restart: unless-stopped
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:8001/health"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -52,8 +52,9 @@ services:
       context: ../
       dockerfile: docker/Dockerfile_django.dev
     ports:
-      - "8080:8000"
+      - "8000:8000"
     depends_on:
+      # backend_dev:
       db_dev:
         condition: service_healthy
     environment:
@@ -62,7 +63,7 @@ services:
       - DEBUG=True
       - ENV=dev
     volumes:
-      - ../frontend/cofo_django:/app # For development
+      - ../frontend/django:/app # For development
       - ../.cache_django:/root/.cache
     command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
     restart: unless-stopped
