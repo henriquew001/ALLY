@@ -1,0 +1,18 @@
+<!-- /home/heinrich/projects/ConsciousFit/frontend/django/templates/home.html -->
+
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <h1>Welcome to ConsciousFit!</h1>
+    {% include "messages.html" %}
+
+    {% if user.is_authenticated %}
+        <p>You are logged in as {{ user.username }}.</p>
+        <a href="{% url 'accounts:logout' %}">Logout</a>
+    {% else %}
+        <p>You are not logged in.</p>
+        <a href="{% url 'accounts:login' %}">Login</a> or <a href="{% url 'accounts:register' %}">Register</a>
+    {% endif %}
+{% endblock %}

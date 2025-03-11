@@ -1,0 +1,14 @@
+<!-- frontend/django/accounts/templates/accounts/register.html -->
+
+{% extends "base.html" %}
+{% block title %}Register{% endblock %}
+{% block content %}
+<h2>Register</h2>
+{% include "messages.html" %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Register</button>
+</form>
+<p>Already have an account? <a href="{% url 'accounts:login' %}">Login here</a>.</p>
+{% endblock %}
