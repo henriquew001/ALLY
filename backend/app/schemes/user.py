@@ -1,17 +1,15 @@
-# app/schemas/user.py
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 class UserCreate(BaseModel):
     username: str
     password: str
 
 class User(BaseModel):
-    id: int
+    id: int | None = None
     username: str
-    is_active: bool
+    is_active: bool = True
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class Token(BaseModel):
     access_token: str

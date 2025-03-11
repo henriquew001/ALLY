@@ -19,7 +19,7 @@ async def lifespan(app: FastAPI):
     create_database()
     yield
     
-app = FastAPI()
+app = FastAPI(lifespan=lifespan)
 
 # Include routers
 app.include_router(health.router)
@@ -48,4 +48,3 @@ def create_database():
             except Exception as e:
                 logger.error(f"Unexpected error connecting to the database: {e}")
                 break  # Stop retrying on unexpected errors
-
