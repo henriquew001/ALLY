@@ -47,6 +47,33 @@ services:
     networks:
       - app-network_dev
 
+  frontend_dev:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile_django.dev
+    ports:
+      - "8080:8000"
+    depends_on:
+      db_dev:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=mysql+pymysql://${DB_USER}:${DB_PASSWORD}@db_dev:3306/${DB_DATABASE}
+      - SECRET_KEY=${SECRET_KEY}
+      - DEBUG=True
+      - ENV=dev
+    volumes:
+      - ../frontend/cofo_django:/app # For development
+      - ../.cache_django:/root/.cache
+    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+    restart: unless-stopped
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+        interval: 30s
+        timeout: 10s
+        retries: 3
+    networks:
+        - app-network_dev
+
 volumes:
   consciousfit_data_dev:
 
