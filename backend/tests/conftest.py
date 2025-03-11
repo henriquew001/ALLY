@@ -1,38 +1,53 @@
-# /home/heinrich/projects/ConsciousFit/backend/tests/conftest.py
-import pytest
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from database.db import Base
-from config import app_config
 from fastapi.testclient import TestClient
+import pytest
+from database.db import get_db, Base, engine
 from main import app
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine  # Import create_engine
+import os
+from config import app_config
 
-@pytest.fixture(scope="session")
-def db_engine():
-    """
-    Returns a SQLAlchemy engine for the test database.
-    """
-    engine = create_engine(app_config.get_database_url())
+# Create a test database (in-memory SQLite for testing)
+if app_config.ENV == "test":
+    TEST_DATABASE_URL = "sqlite:///./test.db"
+    if os.path.exists(TEST_DATABASE_URL.replace("sqlite:///", "")):
+        os.remove(TEST_DATABASE_URL.replace("sqlite:///", ""))
+    engine = create_engine(TEST_DATABASE_URL, connect_args={"check_same_thread": False})
     Base.metadata.create_all(bind=engine)
-    yield engine
-    Base.metadata.drop_all(bind=engine)
 
-@pytest.fixture(scope="function")
-def db(db_engine):
-    """
-    Returns a SQLAlchemy session for the test database.
-    """
-    SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=db_engine)
-    db = SessionLocal()
+else:
+    TEST_DATABASE_URL = "sqlite:///:memory:"
+    engine = create_engine(TEST_DATABASE_URL, connect_args={"check_same_thread": False})
+    
+
+TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+
+def override_get_db():
+    """Override the dependency to use the test database."""
+    db = TestingSessionLocal()
     try:
         yield db
     finally:
         db.close()
-        
-@pytest.fixture(scope="module")
-def client():
-    """
-    Return a TestClient for testing the app
-    """
-    with TestClient(app) as client:
-        yield client
+
+
+# Override the get_db dependency in your main app
+app.dependency_overrides[get_db] = override_get_db
+
+client = TestClient(app)
+
+
+@pytest.fixture(scope="function", autouse=True)
+def reset_db():
+    """Reset the database state after each test."""
+    session = TestingSessionLocal()
+    yield
+    # Delete all data after each test.
+    for table in reversed(Base.metadata.sorted_tables):
+        try:
+            session.execute(table.delete())
+        except Exception as e:
+            pass
+    session.commit()
+    session.close()

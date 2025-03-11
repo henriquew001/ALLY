@@ -2,8 +2,8 @@
 import os
 from dotenv import load_dotenv
 
-class AppConfig:  # Renamed to AppConfig
-    ENV = os.environ.get("ENV", "dev")  # Default to 'dev' if not set
+class AppConfig:
+    ENV = os.environ.get("ENV", "dev")
     DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
     DATABASE_URL = os.environ.get("DATABASE_URL")
     SECRET_KEY = os.environ.get("SECRET_KEY")
@@ -22,8 +22,8 @@ class AppConfig:  # Renamed to AppConfig
         """
         return self.DATABASE_URL
 
-# Lade die .env Datei nur, falls die Applikation nicht im test Modus ist.
+# Load the .env file only if the application is not in test mode.
 if os.environ.get("ENV", "dev") != "test":
     load_dotenv()
 
-app_config = AppConfig() # the name of the instanced object has to be changed too!
+app_config = AppConfig()
