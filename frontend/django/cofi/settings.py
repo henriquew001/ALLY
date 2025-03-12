@@ -15,7 +15,8 @@ import os
 import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+# BASE_DIR = Path(__file__).resolve().parent.parent # Remove this
+BASE_DIR = Path(__file__).resolve().parent.parent # Add this
 
 
 # Quick-start development settings - unsuitable for production
@@ -41,6 +42,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites', # needed for allauth
+    'allauth', # Add these for allauth
+    'allauth.account', # Add these for allauth
+    'allauth.socialaccount', # Add these for social login
+    'allauth.socialaccount.providers.google', # For Google login
 ]
 
 MIDDLEWARE = [
@@ -51,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware', # Add this for allauth
 ]
 
 ROOT_URLCONF = 'cofi.urls'
@@ -58,7 +65,7 @@ ROOT_URLCONF = 'cofi.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, "templates")], # where to search for templates
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -72,7 +79,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'cofi.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -90,7 +96,6 @@ DATABASE_URL = f"{DB_ENGINE}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_N
 DATABASES = {
     "default": dj_database_url.parse(DATABASE_URL)
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -127,8 +132,44 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "home/static"),
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Authentication
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+# Site ID for allauth
+SITE_ID = 1
+
+# allauth configuration
+ACCOUNT_EMAIL_REQUIRED = True  # Makes email addresses required
+ACCOUNT_USERNAME_REQUIRED = True  # requires a username
+ACCOUNT_LOGIN_METHODS = ['username','email']  # Login with username or email
+ACCOUNT_SESSION_REMEMBER = True  # Remember the user session
+LOGIN_REDIRECT_URL = '/'  # url to redirect to after login
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'  # url to redirect to after logout
+
+# Google login scope
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}

@@ -4,6 +4,7 @@
 :root {
     --CFFarbe1: #a83f2a;
     --CFFarbe2: #231304;
+    --header-height: 61px; /* Define header height as a variable */
 }
 
 /* Basic Reset (Optional but Recommended) */
@@ -22,9 +23,11 @@ body {
     min-height: 100vh; /* Ensure the body takes up at least the full viewport height */
     display: flex;
     flex-direction: column;
+    /*padding-top: 61px; Remove this*/
 }
 main {
     flex: 1; /* Let the content grow and occupy available space */
+    padding-top: var(--header-height);
 }
 
 /* Header Styles */
@@ -38,6 +41,7 @@ header {
     width: 100%;
     z-index: 100; /* Ensure header stays on top of other content */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    height: var(--header-height);
 }
 
 .header-content {
@@ -55,13 +59,12 @@ header {
     align-items: center;
     flex: 1; /* Added flex-grow */
 }
-.logo-link {
+.logo-link{
     display:flex; /*Make this a flex container */
     align-items: center;
     text-decoration:none;
     color: black;
 }
-
 .logo {
     height: 40px; /* Adjust as needed */
     margin-right: 10px;
