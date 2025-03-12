@@ -1,13 +1,49 @@
+<!-- frontend/django/templates/base.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
-    {% load static %}  <!-- Load the static tag -->
+    {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    {% block content %}
-    {% endblock %}
+    <header>
+        <div class="header-content">
+            <div class="logo-section">
+                <a href="{% url 'home:home' %}"> <img src="{% static 'images/cofi_logo.png' %}" alt="Consciencia Fitness Logo" class="logo"></a>
+                <span class="brand-text">
+                  <span class="consciencia">Consciencia</span>
+                  <span class="fitness">Fitness</span>
+                </span>
+            </div>
+            <div class="login-button-section">
+                {% if user.is_authenticated %}
+                <div class="dropdown">
+                  <button class="dropbtn">
+                     <span class="user-initial">
+                        {% if user.first_name %}
+                            {{ user.first_name|slice:":1"|upper }}
+                        {% else %}
+                            {{ user.username|slice:":1"|upper }}
+                        {% endif %}
+                     </span>
+                  </button>
+                  <div class="dropdown-content">
+                    <a href="#">Einstellungen</a>
+                    <a href="{% url 'accounts:logout' %}">Logout</a>
+                  </div>
+                </div>
+                {% else %}
+                  <a href="{% url 'accounts:login' %}" class="login-button">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
 </body>
 </html>

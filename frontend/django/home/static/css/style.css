@@ -1,5 +1,167 @@
 /* frontend/django/home/static/css/style.css */
 
+/* Define custom properties (CSS variables) */
+:root {
+    --CFFarbe1: #a83f2a;
+    --CFFarbe2: #231304;
+}
+
+/* Basic Reset (Optional but Recommended) */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh; /* Ensure the body takes up at least the full viewport height */
+    display: flex;
+    flex-direction: column;
+}
+main {
+    flex: 1; /* Let the content grow and occupy available space */
+}
+
+/* Header Styles */
+header {
+    background-color: #fff;
+    color: #333;
+    padding: 0.5rem 0;
+    position: fixed; /* Make the header fixed */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100; /* Ensure header stays on top of other content */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto; /* Center the header content */
+    padding: 0 20px;
+    width: 100%; /* Make it full width */
+    max-width: 100%; /*Make it full width*/
+}
+
+.logo-section {
+    display: flex; /* Make this a flex container */
+    align-items: center;
+    flex: 1; /* Added flex-grow */
+}
+.logo-link {
+    display:flex; /*Make this a flex container */
+    align-items: center;
+    text-decoration:none;
+    color: black;
+}
+
+.logo {
+    height: 40px; /* Adjust as needed */
+    margin-right: 10px;
+}
+
+.brand-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.consciencia {
+    color: var(--CFFarbe1); /* Use the custom property here */
+}
+
+.fitness {
+    color: var(--CFFarbe2); /* Use the custom property here */
+}
+
+.login-button-section {
+    display: flex;
+    align-items: center;
+}
+
+/* Dropdown Styles */
+.dropbtn {
+    background-color: #eee; /* Fallback Color */
+    background-image: linear-gradient(to right, var(--CFFarbe1) 50%, var(--CFFarbe2) 50%); /* Split Background */
+    color: #fff; /* Change text color to white */
+    padding: 0;
+    border-radius: 50%; /* Make it round */
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    width: 45px;
+    height: 45px;
+    display: flex; /* Use flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+    line-height: 1; /* Add line-height for perfect centering */
+}
+
+.dropbtn:hover {
+    background-color: #913625; /* Darker version of CFFarbe1 on hover */
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+    right: 0; /* Align to the right */
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.login-button {
+    background-color: #007bff; /* Blue, adjust as needed */
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap; /* Prevent text from wrapping */
+
+}
+
+.login-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Rest of your CSS (from previous responses) */
+/* Styling for the login page */
+/* ...rest of the CSS...*/
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
@@ -56,19 +218,21 @@ button[type="submit"]:hover {
     color: red;
     margin-bottom: 10px;
 }
+
 .messages {
     margin-bottom: 10px;
 }
+
 .messages li {
     list-style: none;
     color: green;
 }
 
 a {
-  color: #007bff;
-  text-decoration: none;
-}
-a:hover{
-  text-decoration: underline;
+    color: #007bff;
+    text-decoration: none;
 }
 
+a:hover {
+    text-decoration: underline;
+}
