@@ -12,11 +12,11 @@ def user_login(request):
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            user = authenticate(username=username, password=password)
+            user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
                 messages.info(request, f"You are now logged in as {username}.")
-                return redirect("home") # Hier zu deiner Hauptseite weiterleiten
+                return redirect("home:home") # Hier zu deiner Hauptseite weiterleiten
             else:
                 messages.error(request, "Invalid username or password.")
         else:
@@ -45,7 +45,7 @@ def user_registration(request):
 def user_logout(request):
      logout(request)
      messages.info(request, "You have successfully logged out.")
-     return redirect("home") # Hier zu deiner Hauptseite weiterleiten
+     return redirect("home:home") # Hier zu deiner Hauptseite weiterleiten
 
 # # Example for a home route
 # def home(request):
