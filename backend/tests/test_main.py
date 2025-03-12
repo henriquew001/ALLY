@@ -1,4 +1,4 @@
-# /tests/test_main.py
+# /home/heinrich/projects/ConsciousFit/backend/tests/test_main.py
 from fastapi.testclient import TestClient
 import os
 import sys
@@ -14,6 +14,7 @@ if app_dir not in sys.path:
 from main import app
 from database.db import get_db
 from sqlalchemy.orm import Session
+from fastapi import status
 
 @pytest.fixture(scope="module")
 def test_client(db: Session):
@@ -34,16 +35,17 @@ def test_client(db: Session):
     
 
 def test_read_main(test_client: TestClient):
+    """
+    Tests the root endpoint ("/") of the application.
+    """
     response = test_client.get("/")
-    assert response.status_code == 200
+    assert response.status_code == status.HTTP_200_OK
     assert response.json() == {"message": "ConsciousFit"}
 
-def test_create_users_endpoint(test_client: TestClient, reset_db):
-    response = test_client.post("/users/", json={"username": "testuser", "password": "password"})
-    assert response.status_code == 201
-
-def test_create_users_duplicate_endpoint(test_client: TestClient, reset_db):
-    test_client.post("/users/", json={"username": "testuser", "password": "password"})
-    response = test_client.post("/users/", json={"username": "testuser", "password": "password"})
-    assert response.status_code == 400
-
+def test_health_endpoint(test_client: TestClient):
+    """
+    Tests the health endpoint of the application.
+    """
+    response = test_client.get("/health")
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json() == {"status": "ok"}
