@@ -74,8 +74,8 @@ services:
     volumes:
       - ../frontend/django:/app # For development
       - ../.cache_django:/root/.cache
-    # entrypoint: ["/app/entrypoint.sh"] # zum Aufbau der Datenbank
-    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+    entrypoint: ["/app/entrypoint.sh"] # zum Aufbau der Datenbank
+    # command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
     restart: unless-stopped
     healthcheck:
         test: ["CMD", "curl", "-f", "http://localhost:8000/"]
