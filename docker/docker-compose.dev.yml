@@ -71,6 +71,9 @@ services:
       - SECRET_KEY=${SECRET_KEY}
       - DEBUG=True
       - ENV=dev
+      - DJANGO_SUPERUSER_USERNAME=admin
+      - DJANGO_SUPERUSER_EMAIL=admin@example.com
+      - DJANGO_SUPERUSER_PASSWORD=admin
     volumes:
       - ../frontend/django:/app # For development
       - ../.cache_django:/root/.cache
