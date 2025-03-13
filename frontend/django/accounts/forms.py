@@ -3,6 +3,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordChangeForm
 from django.utils.translation import gettext_lazy as _
+from django.core.exceptions import ValidationError
 
 class UserRegisterForm(forms.ModelForm):
     password = forms.CharField(
@@ -34,9 +35,14 @@ class UserRegisterForm(forms.ModelForm):
         cleaned_data = super().clean()
         password = cleaned_data.get("password")
         password_confirm = cleaned_data.get("password_confirm")
+        email = cleaned_data.get("email")
 
         if password and password_confirm and password != password_confirm:
-            raise forms.ValidationError(_("Passwords do not match."))
+            self.add_error("password", forms.ValidationError(_("Passwords do not match.")))
+        if email:
+            if User.objects.filter(email=email).exists():
+                self.add_error("email", forms.ValidationError(_("This email address is already in use."))) # changed this
+
         return cleaned_data
 
     def save(self, commit=True):
