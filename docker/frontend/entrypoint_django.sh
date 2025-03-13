@@ -5,18 +5,18 @@ check_db_connection() {
   python -c "
 import django
 import os
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cofi.settings')  # Replace 'cofi.settings' with your project's settings
-django.setup()
 from django.db import connection
 from django.db.utils import OperationalError
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cofi.settings')  # Replace 'cofi.settings' with your project's settings
+django.setup()
 
 try:
     connection.ensure_connection()
     print('Database connection successful')
-    exit(0)  # Connection successful
 except OperationalError as e:
     print(f'Database connection failed: {e}')
-    exit(1)  # Connection failed
+    exit(1)
 except Exception as e:
     print(f'An unexpected error occurred: {e}')
     exit(1)
@@ -37,22 +37,35 @@ if [ $retry_count -ge $max_retries ]; then
   exit 1
 fi
 
-# Check if migrations have been run (by looking for a specific table).
-# Customize this table if necessary.
-if ! python manage.py showmigrations | grep -q "[X]"; then
-    echo "Migrations have not been run. Running them now..."
-    python manage.py migrate
+# Check if migrations have been run
+if ! python manage.py migrate --plan | grep -q "^[ ]+applying"; then
+    echo "Migrations have already been applied."
 else
-    echo "Migrations have already been run."
+    echo "Applying migrations..."
+    python manage.py migrate
 fi
 
-# Create superuser if it doesn't exist (using environment variables)
-if ! python manage.py changepassword admin &>/dev/null; then
+# Check if superuser exists before creating one
+SUPERUSER_EXISTS=$(python -c "
+import django
+import os
+from django.contrib.auth import get_user_model
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cofi.settings')
+django.setup()
+
+User = get_user_model()
+if User.objects.filter(username='admin').exists():
+    print('EXISTS')
+")
+
+if [ "$SUPERUSER_EXISTS" != "EXISTS" ]; then
     echo "Superuser 'admin' does not exist. Creating it..."
-    python manage.py createsuperuser --noinput
+    python manage.py createsuperuser --noinput || echo "Failed to create superuser."
 else
     echo "Superuser 'admin' already exists."
 fi
 
 # Start the Django server.
-python manage.py runserver 0.0.0.0:8000
+echo "Starting Django server..."
+exec python manage.py runserver 0.0.0.0:8000
