@@ -1,0 +1,72 @@
+#: accounts/templates/accounts/login.html:4
+#: accounts/templates/accounts/login.html:8
+#: accounts/templates/accounts/login.html:15 templates/base.html:37
+#: templates/home.html:17
+msgid "Login"
+msgstr ""
+
+#: accounts/templates/accounts/login.html:17
+msgid "Don't have an account?"
+msgstr ""
+
+#: accounts/templates/accounts/login.html:17
+msgid "Register here"
+msgstr ""
+
+#: accounts/templates/accounts/register.html:4
+#: accounts/templates/accounts/register.html:8
+#: accounts/templates/accounts/register.html:15 templates/home.html:17
+msgid "Register"
+msgstr ""
+
+#: accounts/templates/accounts/register.html:17
+msgid "Already have an account?"
+msgstr ""
+
+#: accounts/templates/accounts/register.html:17
+msgid "Login here"
+msgstr ""
+
+#: accounts/views.py:23 accounts/views.py:25
+msgid "Invalid username or password."
+msgstr ""
+
+#: accounts/views.py:48
+msgid "You have successfully logged out."
+msgstr ""
+
+#: templates/base.html:17
+msgid "Consciencia"
+msgstr ""
+
+#: templates/base.html:18
+msgid "Fitness"
+msgstr ""
+
+#: templates/base.html:32
+msgid "Settings"
+msgstr ""
+
+#: templates/base.html:33 templates/home.html:14
+msgid "Logout"
+msgstr ""
+
+#: templates/home.html:5
+msgid "Home"
+msgstr ""
+
+#: templates/home.html:9
+msgid "Welcome to Consciencia Fitness!"
+msgstr ""
+
+#: templates/home.html:13
+msgid "You are logged in as"
+msgstr "Sie sind angemeldet."
+
+#: templates/home.html:16
+msgid "You are not logged in."
+msgstr "Sie sind nicht angemeldet."
+
+#: templates/home.html:17
+msgid "or"
+msgstr ""
