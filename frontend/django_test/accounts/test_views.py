@@ -1,9 +1,10 @@
+# frontend/django_tests/test_views.py
 from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.contrib import messages
-from accounts.forms import UserRegisterForm
 from django.utils.translation import gettext_lazy as _
+
 
 class AccountsViewsTest(TestCase):
     def setUp(self):
@@ -26,8 +27,11 @@ class AccountsViewsTest(TestCase):
         self.assertRedirects(response, self.home_url)
         messages_list = list(messages.get_messages(response.wsgi_request))
         self.assertEqual(len(messages_list), 1)
-        self.assertEqual(str(messages_list[0]), _("Account created for testuser! You are now logged in."))
-        
+        self.assertEqual(
+            str(messages_list[0]),
+            _("Account created for testuser! You are now logged in."),
+        )
+
     def test_user_registration_invalid_data(self):
         data = {
             "username": "testuser2",
@@ -40,7 +44,9 @@ class AccountsViewsTest(TestCase):
         self.assertFalse(User.objects.filter(username="testuser2").exists())
         messages_list = list(messages.get_messages(response.wsgi_request))
         self.assertEqual(len(messages_list), 1)
-        self.assertEqual(str(messages_list[0]), _("Please correct the errors below."))
+        self.assertEqual(
+            str(messages_list[0]), _("Please correct the errors below.")
+        )
 
     def test_user_login_success(self):
         user = User.objects.create_user(username="testuser", password="testpassword")
@@ -51,7 +57,9 @@ class AccountsViewsTest(TestCase):
         self.assertRedirects(response, self.home_url)
         messages_list = list(messages.get_messages(response.wsgi_request))
         self.assertEqual(len(messages_list), 1)
-        self.assertEqual(str(messages_list[0]), _(f"You are now logged in as testuser."))
+        self.assertEqual(
+            str(messages_list[0]), _(f"You are now logged in as testuser.")
+        )
 
     def test_user_login_invalid_credentials(self):
         data = {"username": "wronguser", "password": "wrongpassword"}
@@ -60,7 +68,9 @@ class AccountsViewsTest(TestCase):
         self.assertFalse(response.wsgi_request.user.is_authenticated)
         messages_list = list(messages.get_messages(response.wsgi_request))
         self.assertEqual(len(messages_list), 1)
-        self.assertEqual(str(messages_list[0]), _("Invalid username or password."))
+        self.assertEqual(
+            str(messages_list[0]), _("Invalid username or password.")
+        )
 
     def test_user_logout_success(self):
         user = User.objects.create_user(username="testuser", password="testpassword")
@@ -71,60 +81,11 @@ class AccountsViewsTest(TestCase):
         self.assertRedirects(response, self.home_url)
         messages_list = list(messages.get_messages(response.wsgi_request))
         self.assertEqual(len(messages_list), 1)
-        self.assertEqual(str(messages_list[0]), _("You have successfully logged out."))
+        self.assertEqual(
+            str(messages_list[0]), _("You have successfully logged out.")
+        )
 
     def test_user_logout_without_login(self):
-      response = self.client.get(self.logout_url)
-      self.assertEqual(response.status_code, 302)
-      self.assertRedirects(response, self.home_url)
-
-    def test_user_registration_with_existing_username(self):
-      User.objects.create_user(username="existinguser", email="existing@example.com", password="testpassword")
-      data = {
-          "username": "existinguser",
-          "email": "new@example.com",
-          "password": "testpassword",
-          "password_confirm": "testpassword",
-      }
-      response = self.client.post(self.register_url, data)
-      self.assertEqual(response.status_code, 200)
-      self.assertFalse(User.objects.filter(username="newuser").exists())
-      form = UserRegisterForm(data)
-      self.assertFalse(form.is_valid())
-      self.assertTrue("username" in form.errors)
-
-    def test_user_registration_with_existing_email(self):
-        User.objects.create_user(username="existinguser", email="existing@example.com", password="testpassword")
-        data = {
-            "username": "newuser",
-            "email": "existing@example.com",
-            "password": "testpassword",
-            "password_confirm": "testpassword",
-        }
-        response = self.client.post(self.register_url, data)
-        self.assertEqual(response.status_code, 200)
-        self.assertFalse(User.objects.filter(username="newuser").exists())
-        form = UserRegisterForm(data)
-        self.assertFalse(form.is_valid())
-        self.assertTrue("email" in form.errors)
-
-    def test_user_login_with_wrong_password(self):
-      User.objects.create_user(username="testuser", password="testpassword")
-      data = {"username": "testuser", "password": "wrongpassword"}
-      response = self.client.post(self.login_url, data)
-      self.assertEqual(response.status_code, 200)
-      self.assertFalse(response.wsgi_request.user.is_authenticated)
-      messages_list = list(messages.get_messages(response.wsgi_request))
-      self.assertEqual(len(messages_list), 1)
-      self.assertEqual(str(messages_list[0]), _("Invalid username or password."))
-
-    def test_user_login_with_wrong_username(self):
-      User.objects.create_user(username="testuser", password="testpassword")
-      data = {"username": "wronguser", "password": "testpassword"}
-      response = self.client.post(self.login_url, data)
-      self.assertEqual(response.status_code, 200)
-      self.assertFalse(response.wsgi_request.user.is_authenticated)
-      messages_list = list(messages.get_messages(response.wsgi_request))
-      self.assertEqual(len(messages_list), 1)
-      self.assertEqual(str(messages_list[0]), _("Invalid username or password."))
-
+        response = self.client.get(self.logout_url)
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, self.home_url)

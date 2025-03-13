@@ -1,0 +1,100 @@
+# version: "3.8"
+
+services:
+  db_djangotest:
+    image: mariadb:10.11.6  # Use the official MariaDB image
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - consciousfit_data_djangotest:/var/lib/mysql
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf # Zum Testen, in Prod entfernen oder auf bestimmte Netzwerke beschränken, damit man direkt auf die Datenbnak zugreifen kann
+    restart: unless-stopped
+    # ports:
+    #   - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysql", "-u", "${DB_USER}", "-p${DB_PASSWORD}", "-e", "SELECT 1;"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - app-network_djangotest
+
+  # backend_djangotest:
+  #   build:
+  #     context: ../
+  #     dockerfile: docker/Dockerfile_python
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - "8001:8000"
+  #   depends_on:
+  #     db_dev:
+  #       condition: service_healthy
+  #   environment:
+  #     - PYTHONPATH=/app
+  #     - DATABASE_URL=mysql+pymysql://${DB_USER}:${DB_PASSWORD}@db_dev:3306/${DB_DATABASE} # Geändert zu db_dev
+  #     - SECRET_KEY=${SECRET_KEY}
+  #     - ENV=dev
+  #     - DEBUG=True
+  #   volumes:
+  #     - ../backend/app:/app  # Für Entwicklung
+  #     - ../.cache:/root/.cache
+  #   command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+  #   # restart: unless-stopped
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 3
+  #   networks:
+  #     - app-network_djangotest
+
+  frontend_djangotest:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile_django.dev
+    env_file:
+      - .env
+    ports:
+      - "8003:8000"
+    depends_on:
+      # backend_dev:
+      #   condition: service_healthy
+      db_djangotest:
+        condition: service_healthy
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+      - DEBUG=True
+      - ENV=test
+      - DJANGO_SUPERUSER_USERNAME=admin
+      - DJANGO_SUPERUSER_EMAIL=admin@example.com
+      - DJANGO_SUPERUSER_PASSWORD=admin
+      - DB_HOST=db_djangotest
+    volumes:
+      - ../frontend/django:/app # For development
+      - ../frontend/django_test:/app/test # For development
+      - ../.cache_django:/root/.cache
+    # entrypoint: ["/app/entrypoint.sh"] # zum Aufbau der Datenbank
+    command: ["python", "manage.py", "test"]
+    # command: ["ls"]
+    # command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+    restart: unless-stopped
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+        interval: 30s
+        timeout: 10s
+        retries: 3
+    networks:
+        - app-network_djangotest
+
+volumes:
+  consciousfit_data_djangotest:
+
+networks:
+  app-network_djangotest:
+    driver: bridge

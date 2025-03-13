@@ -92,11 +92,19 @@ DB_HOST = os.environ.get("DB_HOST", "db_dev")  # Default to "db_dev"
 DB_PORT = os.environ.get("DB_PORT", "3306")  # Default to "3306"
 DB_NAME = os.environ.get("DB_DATABASE", "conscious_fit_dev")  # Default to "cofi"
 
+DB_TEST_NAME = os.environ.get("DB_TEST_DATABASE", "conscious_fit_dev")
+
 DATABASE_URL = f"{DB_ENGINE}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
 DATABASES = {
     "default": dj_database_url.parse(DATABASE_URL)
 }
+if "DB_ENGINE" in os.environ:
+    if os.environ["DB_ENGINE"] == "mysql":
+        DATABASES["default"]["TEST"] = {
+            "NAME": DB_TEST_NAME
+        }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

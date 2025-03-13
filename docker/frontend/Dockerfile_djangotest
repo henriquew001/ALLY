@@ -1,0 +1,31 @@
+# docker/frontend/Dockerfile
+# Verwenden eines Python-Images als Basis
+FROM python:3.13.2-alpine AS base
+
+# Arbeitsverzeichnis im Container setzen
+WORKDIR /app
+
+# Install necessary system packages
+RUN apk add --no-cache mariadb-connector-c-dev gcc musl-dev
+
+# Abhängigkeiten kopieren und installieren
+COPY requirements_django.txt .
+RUN pip install --no-cache-dir -r requirements_django.txt
+
+
+# Abhängigkeiten kopieren und installieren
+# COPY requirements_djangotest.txt .
+# RUN pip install --no-cache-dir -r requirements_djangotest.txt
+
+
+# restlichen Code kopieren
+# COPY ../fronted/django /app
+COPY . .
+
+# Umgebungsvariablen für Django einrichten
+ENV DJANGO_SETTINGS_MODULE=cofi.settings
+
+# Befehl zum Ausführen der Tests
+CMD ["python", "django/manage.py", "test", "django_tests"]
+# CMD ["ls"]
+ 

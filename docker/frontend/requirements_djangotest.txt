@@ -1,0 +1,10 @@
+django
+mysqlclient
+requests
+python-dotenv
+dj-database-url
+django-allauth
+pyjwt
+cryptography
+pytest
+pytest-html
