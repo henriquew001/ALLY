@@ -1,19 +1,20 @@
 <!-- frontend/django/accounts/templates/accounts/login.html -->
 {% extends "base.html" %}
-{% block title %}Login{% endblock %}
+{% load i18n %}
+{% block title %}{% trans "Login" %}{% endblock %}
 {% block content %}
 <main>
     <div class="login-container">
-        <h2>Login</h2>
+        <h2>{% trans "Login" %}</h2>
         {% include "messages.html" %}
         <form method="post">
             {% csrf_token %}
             <div class="form-fields">
                 {{ form.as_p }}
             </div>
-            <button type="submit">Login</button>
+            <button type="submit">{% trans "Login" %}</button>
         </form>
-        <p>Don't have an account? <a href="{% url 'accounts:register' %}">Register here</a>.</p>
+        <p>{% trans "Don't have an account?" %} <a href="{% url 'accounts:register' %}">{% trans "Register here" %}</a>.</p>
     </div>
 </main>
 {% endblock %}

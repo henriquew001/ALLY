@@ -58,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware', # Add this for allauth
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'cofi.urls'
@@ -119,7 +120,14 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'pt-br'
+USE_I18N = True
+LANGUAGE_CODE = 'en'
+LANGUAGES = [
+    ('en', 'English'),
+    ('pt-br', 'Português'),
+    ('de', 'Deutsch'),
+    # ... weitere Sprachen
+]
 
 TIME_ZONE = 'UTC'
 
@@ -127,6 +135,9 @@ USE_I18N = True
 
 USE_TZ = True
 
+LOCALE_PATHS = [
+   os.path.join(BASE_DIR, 'locale'),
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/

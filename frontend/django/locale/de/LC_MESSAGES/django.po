@@ -1,72 +1,86 @@
-#: accounts/templates/accounts/login.html:4
-#: accounts/templates/accounts/login.html:8
-#: accounts/templates/accounts/login.html:15 templates/base.html:37
-#: templates/home.html:17
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-03-13 10:11+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: frontend/django/accounts/templates/accounts/login.html:4
+#: frontend/django/accounts/templates/accounts/login.html:8
+#: frontend/django/accounts/templates/accounts/login.html:15
+#: frontend/django/templates/base.html:40
+#: frontend/django/templates/home.html:17
 msgid "Login"
-msgstr ""
+msgstr "Anmelden"
 
-#: accounts/templates/accounts/login.html:17
+#: frontend/django/accounts/templates/accounts/login.html:17
 msgid "Don't have an account?"
-msgstr ""
+msgstr "Kein Konto?"
 
-#: accounts/templates/accounts/login.html:17
+#: frontend/django/accounts/templates/accounts/login.html:17
 msgid "Register here"
-msgstr ""
+msgstr "Hier registrieren"
 
-#: accounts/templates/accounts/register.html:4
-#: accounts/templates/accounts/register.html:8
-#: accounts/templates/accounts/register.html:15 templates/home.html:17
+#: frontend/django/accounts/templates/accounts/register.html:4
+#: frontend/django/accounts/templates/accounts/register.html:7
+#: frontend/django/accounts/templates/accounts/register.html:14
+#: frontend/django/templates/home.html:17
 msgid "Register"
-msgstr ""
+msgstr "Registrieren"
 
-#: accounts/templates/accounts/register.html:17
+#: frontend/django/accounts/templates/accounts/register.html:16
 msgid "Already have an account?"
-msgstr ""
+msgstr "Bereits ein Konto?"
 
-#: accounts/templates/accounts/register.html:17
+#: frontend/django/accounts/templates/accounts/register.html:16
 msgid "Login here"
-msgstr ""
+msgstr "Hier anmelden"
 
-#: accounts/views.py:23 accounts/views.py:25
-msgid "Invalid username or password."
-msgstr ""
+#: frontend/django/templates/base.html:16
+msgid "Consciencia Fitness Logo"
+msgstr "Consciencia Fitness Logo"
 
-#: accounts/views.py:48
-msgid "You have successfully logged out."
-msgstr ""
-
-#: templates/base.html:17
+#: frontend/django/templates/base.html:18
 msgid "Consciencia"
-msgstr ""
+msgstr "Consciencia"
 
-#: templates/base.html:18
+#: frontend/django/templates/base.html:19
 msgid "Fitness"
-msgstr ""
+msgstr "Fitness"
 
-#: templates/base.html:32
+#: frontend/django/templates/base.html:35
 msgid "Settings"
-msgstr ""
+msgstr "Einstellungen"
 
-#: templates/base.html:33 templates/home.html:14
+#: frontend/django/templates/base.html:36
+#: frontend/django/templates/home.html:14
 msgid "Logout"
-msgstr ""
+msgstr "Abmelden"
 
-#: templates/home.html:5
+#: frontend/django/templates/home.html:6
 msgid "Home"
-msgstr ""
+msgstr "Startseite"
 
-#: templates/home.html:9
+#: frontend/django/templates/home.html:9
 msgid "Welcome to Consciencia Fitness!"
-msgstr ""
+msgstr "Willkommen bei Consciencia Fitness!"
 
-#: templates/home.html:13
+#: frontend/django/templates/home.html:13
 msgid "You are logged in as"
-msgstr "Sie sind angemeldet."
+msgstr "Sie sind angemeldet als"
 
-#: templates/home.html:16
+#: frontend/django/templates/home.html:16
 msgid "You are not logged in."
 msgstr "Sie sind nicht angemeldet."
-
-#: templates/home.html:17
-msgid "or"
-msgstr ""

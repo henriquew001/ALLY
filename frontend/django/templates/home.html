@@ -1,18 +1,19 @@
 <!-- /home/heinrich/projects/ConsciousFit/frontend/django/templates/home.html -->
 
 {% extends "base.html" %}
+{% load i18n %}
 
-{% block title %}Home{% endblock %}
+{% block title %}{% trans "Home" %}{% endblock %}
 
 {% block content %}
-    <h1>Bem vindo á Consciencia Fitness!</h1>
+    <h1>{% trans "Welcome to Consciencia Fitness!" %}</h1>
     {% include "messages.html" %}
 
     {% if user.is_authenticated %}
-        <p>You are logged in as {{ user.username }}.</p>
-        <a href="{% url 'accounts:logout' %}">Logout</a>
+        <p>{% trans "You are logged in as" %} {{ user.username }}.</p>
+        <a href="{% url 'accounts:logout' %}">{% trans "Logout" %}</a>
     {% else %}
-        <p>You are not logged in.</p>
-        <a href="{% url 'accounts:login' %}">Login</a> or <a href="{% url 'accounts:register' %}">Register</a>
+        <p>{% trans "You are not logged in." %}</p>
+        <a href="{% url 'accounts:login' %}">{% trans "Login" %}</a> or <a href="{% url 'accounts:register' %}">{% trans "Register" %}</a>
     {% endif %}
 {% endblock %}

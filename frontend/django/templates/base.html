@@ -6,16 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
     {% load static %}
+    {% load i18n %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <header>
         <div class="header-content">
             <div class="logo-section">
-                <a href="{% url 'home:home' %}"> <img src="{% static 'images/cofi_logo_44x55.png' %}" alt="Consciencia Fitness Logo" class="logo"></a>
+                <a href="{% url 'home:home' %}"> <img src="{% static 'images/cofi_logo_44x55.png' %}" alt="{% translate 'Consciencia Fitness Logo' %}" class="logo"></a>
                 <span class="brand-text">
-                  <span class="consciencia">Consciencia</span>
-                  <span class="fitness">Fitness</span>
+                  <span class="consciencia">{% trans "Consciencia" %}</span>
+                  <span class="fitness">{% trans "Fitness" %}</span>
                 </span>
             </div>
             <div class="login-button-section">
@@ -31,12 +32,12 @@
                      </span>
                   </button>
                   <div class="dropdown-content">
-                    <a href="#">Einstellungen</a>
-                    <a href="{% url 'accounts:logout' %}">Logout</a>
+                    <a href="#">{% trans "Settings" %}</a>
+                    <a href="{% url 'accounts:logout' %}">{% trans "Logout" %}</a>
                   </div>
                 </div>
                 {% else %}
-                  <a href="{% url 'accounts:login' %}" class="login-button">Login</a>
+                  <a href="{% url 'accounts:login' %}" class="login-button">{% trans "Login" %}</a>
                 {% endif %}
             </div>
         </div>
@@ -45,5 +46,6 @@
     <main>
         {% block content %}{% endblock %}
     </main>
+    {% include "language_select.html" %}
 </body>
 </html>
