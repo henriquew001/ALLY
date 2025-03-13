@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordChangeForm
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
+from django.conf import settings # import settings
 
 class UserRegisterForm(forms.ModelForm):
     password = forms.CharField(
@@ -41,7 +42,23 @@ class UserRegisterForm(forms.ModelForm):
             self.add_error("password", forms.ValidationError(_("Passwords do not match.")))
         if email:
             if User.objects.filter(email=email).exists():
-                self.add_error("email", forms.ValidationError(_("This email address is already in use."))) # changed this
+                self.add_error("email", forms.ValidationError(_("This email address is already in use.")))
+
+        # Enforce the password validators
+        errors = list()
+        for validator in settings.AUTH_PASSWORD_VALIDATORS: #iterate through the validators in settings
+            # import the validator-class
+            validator_class = getattr(
+                __import__(".".join(validator['NAME'].split(".")[:-1]), fromlist=['']),
+                validator['NAME'].split(".")[-1]
+                )
+            validator_instance = validator_class() #create an instance
+            try:
+                validator_instance.validate(password, User) # check if the password is valid
+            except ValidationError as e:
+                errors.extend(list(e.messages)) #if there are errors, add them to the list
+        if errors:
+            self.add_error("password", ValidationError(errors)) # add the errors to the password field
 
         return cleaned_data
 
