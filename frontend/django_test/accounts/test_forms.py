@@ -9,25 +9,25 @@ class UserRegisterFormTest(TestCase):
         data = {
             'username': 'testuser',
             'email': 'test@example.com',
-            'password': 'password123',
-            'password_confirm': 'password123',
+            'password': 'ValidPassword123!', # changed this
+            'password_confirm': 'ValidPassword123!', # changed this
         }
         form = UserRegisterForm(data)
         self.assertTrue(form.is_valid())
         user = form.save()
         self.assertEqual(user.username, 'testuser')
         self.assertEqual(user.email, 'test@example.com')
-        self.assertNotEqual(user.password, 'password123')
+        self.assertNotEqual(user.password, 'ValidPassword123!')
 
     def test_user_registration_with_existing_email(self):
         # Create a user with an email, so that the email exists.
-        user = User.objects.create_user(username='existinguser', password='password123', email='existing@example.com')
+        user = User.objects.create_user(username='existinguser', password='ValidPassword123!', email='existing@example.com')
         
         data = {
             'username': 'newuser',
             'email': 'existing@example.com',
-            'password': 'password123',
-            'password_confirm': 'password123',
+            'password': 'ValidPassword123!',
+            'password_confirm': 'ValidPassword123!',
         }
         form = UserRegisterForm(data)
         self.assertFalse(form.is_valid())
@@ -37,7 +37,7 @@ class UserRegisterFormTest(TestCase):
         data = {
             'username': 'testuser',
             'email': 'test@example.com',
-            'password': 'password123',
+            'password': 'ValidPassword123!',
             'password_confirm': 'differentpassword',
         }
         form = UserRegisterForm(data)
@@ -48,8 +48,8 @@ class UserRegisterFormTest(TestCase):
         data = {
             'username': 'testuser',
             'email': 'invalid-email',
-            'password': 'password123',
-            'password_confirm': 'password123',
+            'password': 'ValidPassword123!',
+            'password_confirm': 'ValidPassword123!',
         }
         form = UserRegisterForm(data)
         self.assertFalse(form.is_valid())
@@ -59,8 +59,8 @@ class UserRegisterFormTest(TestCase):
         data = {
             'username': '',
             'email': 'test@example.com',
-            'password': 'password123',
-            'password_confirm': 'password123',
+            'password': 'ValidPassword123!',
+            'password_confirm': 'ValidPassword123!',
         }
         form = UserRegisterForm(data)
         self.assertFalse(form.is_valid())
@@ -70,8 +70,8 @@ class UserRegisterFormTest(TestCase):
         data = {
             'username': 'testuser',
             'email': '',
-            'password': 'password123',
-            'password_confirm': 'password123',
+            'password': 'ValidPassword123!',
+            'password_confirm': 'ValidPassword123!',
         }
         form = UserRegisterForm(data)
         self.assertFalse(form.is_valid())
@@ -90,13 +90,13 @@ class UserRegisterFormTest(TestCase):
 
     def test_user_registration_with_duplicate_username(self):
         # Create a user with a username so that the username exists.
-        user = User.objects.create_user(username='existinguser', password='password123', email='existing123@example.com')
+        user = User.objects.create_user(username='existinguser', password='ValidPassword123!', email='existing123@example.com')
 
         data = {
             'username': 'existinguser',
             'email': 'test@example.com',
-            'password': 'password123',
-            'password_confirm': 'password123',
+            'password': 'ValidPassword123!',
+            'password_confirm': 'ValidPassword123!',
         }
         form = UserRegisterForm(data)
         self.assertFalse(form.is_valid())
@@ -106,8 +106,8 @@ class UserRegisterFormTest(TestCase):
         data = {
             'username': 'testuser',
             'email': '',
-            'password': 'password123',
-            'password_confirm': 'password123',
+            'password': 'ValidPassword123!',
+            'password_confirm': 'ValidPassword123!',
         }
         form = UserRegisterForm(data)
         self.assertFalse(form.is_valid())
@@ -117,8 +117,8 @@ class UserRegisterFormTest(TestCase):
         data = {
             'username': '',
             'email': 'test@example.com',
-            'password': 'password123',
-            'password_confirm': 'password123',
+            'password': 'ValidPassword123!',
+            'password_confirm': 'ValidPassword123!',
         }
         form = UserRegisterForm(data)
         self.assertFalse(form.is_valid())
