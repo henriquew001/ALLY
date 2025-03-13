@@ -20,6 +20,15 @@
                 </span>
             </div>
             <div class="login-button-section">
+                {% get_current_language as LANGUAGE_CODE %}
+                {% if LANGUAGE_CODE == 'en' %}
+                    <img src="{% static 'images/flaggen/en.svg' %}" alt="English" class="language-flag">
+                {% elif LANGUAGE_CODE == 'pt-br' %}
+                    <img src="{% static 'images/flaggen/br.svg' %}" alt="Português (Brasil)" class="language-flag">
+                {% elif LANGUAGE_CODE == 'de' %}
+                    <img src="{% static 'images/flaggen/de.svg' %}" alt="Deutsch" class="language-flag">
+                {% endif %}
+
                 {% if user.is_authenticated %}
                 <div class="dropdown">
                   <button class="dropbtn">
@@ -46,6 +55,5 @@
     <main>
         {% block content %}{% endblock %}
     </main>
-    {% include "language_select.html" %}
 </body>
 </html>

@@ -239,3 +239,11 @@ a {
 a:hover {
     text-decoration: underline;
 }
+
+
+.language-flag {
+    width: 24px; /* Adjust size as needed */
+    height: auto;
+    margin-right: 10px; /* Space between flag and login button */
+    vertical-align: middle;
+  }
