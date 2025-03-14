@@ -8,3 +8,6 @@ pyjwt
 cryptography
 pytest
 pytest-html
+tblib
+pytest
+pytest-django

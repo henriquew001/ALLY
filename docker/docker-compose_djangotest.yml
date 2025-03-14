@@ -57,7 +57,7 @@ services:
   frontend_djangotest:
     build:
       context: ../
-      dockerfile: docker/Dockerfile_django.dev
+      dockerfile: docker/frontend/Dockerfile_djangotest
     env_file:
       - .env
     ports:
@@ -77,10 +77,11 @@ services:
       - DB_HOST=db_djangotest
     volumes:
       - ../frontend/cofi:/app # For development
-      # - ../frontend/django_test:/app/test # For development
+      # - ../frontend/cofi_test:/app/test # For development
       - ../.cache_cofi:/root/.cache
     # entrypoint: ["/app/entrypoint.sh"] # zum Aufbau der Datenbank
-    command: ["python", "manage.py", "test", "--noinput"]
+    # command: ["python", "manage.py", "test", "--parallel", "--noinput"]
+    command: ["sh", "-c", "sleep 5 && while true; do pytest /app/tests --html=/app/tests/report.html --self-contained-html; sleep 9; done"]
     # command: ["ls"]
     # command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
     restart: on-failure

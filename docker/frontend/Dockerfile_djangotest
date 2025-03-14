@@ -9,13 +9,13 @@ WORKDIR /app
 RUN apk add --no-cache mariadb-connector-c-dev gcc musl-dev
 
 # Abhängigkeiten kopieren und installieren
-COPY requirements_django.txt .
+COPY docker/frontend/requirements_django.txt .
 RUN pip install --no-cache-dir -r requirements_django.txt
 
 
 # Abhängigkeiten kopieren und installieren
-# COPY requirements_djangotest.txt .
-# RUN pip install --no-cache-dir -r requirements_djangotest.txt
+COPY docker/frontend/requirements_djangotest.txt .
+RUN pip install --no-cache-dir -r requirements_djangotest.txt
 
 
 # restlichen Code kopieren
