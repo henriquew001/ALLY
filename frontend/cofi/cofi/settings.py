@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -73,12 +75,26 @@ WSGI_APPLICATION = 'cofi.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# Construct the database URL dynamically
+DB_ENGINE = os.environ.get("DB_ENGINE", "mysql")  # You can change this if you use a different database
+DB_USER = os.environ.get("DB_USER", "root")  # Default to "root" if not set
+DB_PASSWORD = os.environ.get("DB_PASSWORD", "testpw")  # Default to "example"
+DB_HOST = os.environ.get("DB_HOST", "db_dev")  # Default to "db_dev"
+DB_PORT = os.environ.get("DB_PORT", "3306")  # Default to "3306"
+DB_NAME = os.environ.get("DB_DATABASE", "conscious_fit_dev")  # Default to "cofi"
+
+DB_TEST_NAME = os.environ.get("DB_TEST_DATABASE", "conscious_fit_dev")
+
+DATABASE_URL = f"{DB_ENGINE}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    "default": dj_database_url.parse(DATABASE_URL)
 }
+if "DB_ENGINE" in os.environ:
+    if os.environ["DB_ENGINE"] == "mysql":
+        DATABASES["default"]["TEST"] = {
+            "NAME": DB_TEST_NAME
+        }
 
 
 # Password validation
