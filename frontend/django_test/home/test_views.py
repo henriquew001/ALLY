@@ -1,7 +1,7 @@
-# home/test_views.py
+# frontend/django_test/home/test_views.py
 from django.test import TestCase, Client
 from django.urls import reverse
-from django.utils.translation import override, activate, get_language
+from django.utils.translation import override, activate
 from django.contrib.auth.models import User
 from django.conf import settings
 
@@ -96,25 +96,25 @@ class HomeViewTest(TestCase):
         # Test with German browser preference
         response = self.client.get(self.home_url, HTTP_ACCEPT_LANGUAGE='de')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(get_language(), 'de')  # Check that German is activated
+        self.assertContains(response, '<html lang="de">')
         self.assertContains(response, "<title>Startseite</title>")
 
         # Test with Portuguese (Brazil) browser preference
         response = self.client.get(self.home_url, HTTP_ACCEPT_LANGUAGE='pt-br')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(get_language(), 'pt-br')  # Check that Portuguese is activated
+        self.assertContains(response, '<html lang="pt-br">')
         self.assertContains(response, "<title>Início</title>")
 
         # Test with English browser preference
         response = self.client.get(self.home_url, HTTP_ACCEPT_LANGUAGE='en-US,en;q=0.9')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(get_language(), 'en')  # Check that English is activated
+        self.assertContains(response, '<html lang="en">')
         self.assertContains(response, "<title>Home</title>")
 
         # Test with a language not supported, should fallback to default
         response = self.client.get(self.home_url, HTTP_ACCEPT_LANGUAGE='es')
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(get_language(), 'en')  # Should fallback to default
+        self.assertContains(response, '<html lang="en">')
         self.assertContains(response, "<title>Home</title>")
 
     def create_and_login_user(self):
