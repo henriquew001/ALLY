@@ -52,13 +52,13 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware', # Wichtig: Hier position sollte weit oben sein.
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware', # Add this for allauth
-    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'cofi.urls'
@@ -130,12 +130,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 USE_I18N = True
-LANGUAGE_CODE = 'en'
+LANGUAGE_CODE = 'pt-br' # Oder 'de' oder 'es' etc.
 LANGUAGES = [
-    ('en', 'English'),
-    ('pt-br', 'Português'),
+    ('en', 'English'), 
+    ('pt-br', 'Português (Brasil)'),
     ('de', 'Deutsch'),
-    # ... weitere Sprachen
 ]
 
 TIME_ZONE = 'UTC'

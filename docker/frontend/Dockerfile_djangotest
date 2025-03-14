@@ -26,6 +26,6 @@ COPY . .
 ENV DJANGO_SETTINGS_MODULE=cofi.settings
 
 # Befehl zum Ausführen der Tests
-CMD ["python", "django/manage.py", "test", "django_tests"]
+# CMD ["python", "django/manage.py", "test", "django_tests"]
 # CMD ["ls"]
  

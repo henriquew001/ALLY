@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-14 12:07+0100\n"
+"POT-Creation-Date: 2025-03-14 12:46+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -52,7 +52,7 @@ msgstr "Diese E-Mail-Adresse wird bereits verwendet."
 
 #: accounts/templates/accounts/login.html:4
 #: accounts/templates/accounts/login.html:8
-#: accounts/templates/accounts/login.html:15 templates/base.html:75
+#: accounts/templates/accounts/login.html:15 templates/base.html:74
 #: templates/home.html:17
 msgid "Login"
 msgstr "Anmelden"
@@ -103,11 +103,11 @@ msgstr "Consciencia"
 msgid "Fitness"
 msgstr "Fitness"
 
-#: templates/base.html:70
+#: templates/base.html:69
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: templates/base.html:71 templates/home.html:14
+#: templates/base.html:70 templates/home.html:14
 msgid "Logout"
 msgstr "Abmelden"
 
@@ -126,3 +126,11 @@ msgstr "Sie sind angemeldet als"
 #: templates/home.html:16
 msgid "You are not logged in."
 msgstr "Sie sind nicht angemeldet."
+
+#: templates/messages.html:11
+#, python-format
+msgid ""
+"\n"
+"            %(message)s\n"
+"        "
+msgstr ""

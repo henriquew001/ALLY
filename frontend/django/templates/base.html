@@ -1,12 +1,12 @@
 <!-- frontend/django/templates/base.html -->
 <!DOCTYPE html>
-<html lang="en">
+{% load static %}
+{% load i18n %}
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
-    {% load static %}
-    {% load i18n %}
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 </head>
 <body>
@@ -21,9 +21,10 @@
             </div>
             <div class="login-button-section">
                 <div class="language-dropdown">
-                  {% get_current_language as current_language %}
-                  {% get_language_info for current_language as language_info %}
-                  <button class="language-button">
+                  <button class="language-button" id="language-button">
+                      {% get_current_language as LANGUAGE_CODE %}
+                      {% get_available_languages as LANGUAGES %}
+                      {% get_language_info for LANGUAGE_CODE as language_info %}
                       {% if language_info.code == 'en' %}
                       <img src="{% static 'images/flaggen/us.svg' %}" alt="English" class="language-flag">
                       {% elif language_info.code == 'de' %}
@@ -33,24 +34,22 @@
                       {% else %}
                       {{ language_info.name_local }}
                       {% endif %}
+                      <svg style="display:inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>
                   </button>
-                    <ul class="language-list">
-                        {% get_available_languages as languages %}
-                        {% for language in languages %}
-                            {% language language.0 %}
-                            <li>
-                                <a href="{% url 'i18n:set_language' %}?next={{ request.path|urlencode }}&language={{ language.0 }}">
-                                    {% if language.0 == 'en' %}
-                                    <img src="{% static 'images/flaggen/us.svg' %}" alt="English" class="language-flag">
-                                    {% elif language.0 == 'de' %}
-                                    <img src="{% static 'images/flaggen/de.svg' %}" alt="Deutsch" class="language-flag">
-                                    {% elif language.0 == 'pt-br' %}
-                                    <img src="{% static 'images/flaggen/br.svg' %}" alt="Portugues" class="language-flag">
-                                    {% endif %}
-                                    {{ language.1 }}
-                                </a>
-                            </li>
-                            {% endlanguage %}
+                    <ul class="language-list" id="language-list">
+                        {% for lang_code, lang_name in LANGUAGES %}
+                        <li>
+                            <a href="/{{ lang_code }}/{{ request.path|slice:'4:' }}">
+                                {% if lang_code == 'en' %}
+                                <img src="{% static 'images/flaggen/us.svg' %}" alt="English" class="language-flag">
+                                {% elif lang_code == 'de' %}
+                                <img src="{% static 'images/flaggen/de.svg' %}" alt="Deutsch" class="language-flag">
+                                {% elif lang_code == 'pt-br' %}
+                                <img src="{% static 'images/flaggen/br.svg' %}" alt="Portugues" class="language-flag">
+                                {% endif %}
+                                {{ lang_name }}
+                            </a>
+                        </li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -81,5 +80,12 @@
     <main>
         {% block content %}{% endblock %}
     </main>
+    <script>
+      const languageButton = document.getElementById('language-button');
+      const languageList = document.getElementById('language-list');
+      languageButton.addEventListener('click', function() {
+          languageList.classList.toggle('show');
+      });
+    </script>
 </body>
 </html>
