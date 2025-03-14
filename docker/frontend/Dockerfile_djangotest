@@ -19,13 +19,13 @@ RUN pip install --no-cache-dir -r requirements_django.txt
 
 
 # restlichen Code kopieren
-# COPY ../fronted/django /app
+# COPY ../fronted/cofi /app
 COPY . .
 
 # Umgebungsvariablen für Django einrichten
 ENV DJANGO_SETTINGS_MODULE=cofi.settings
 
 # Befehl zum Ausführen der Tests
-# CMD ["python", "django/manage.py", "test", "django_tests"]
+# CMD ["python", "cofi/manage.py", "test", "django_tests"]
 # CMD ["ls"]
  

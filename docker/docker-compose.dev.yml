@@ -75,8 +75,8 @@ services:
       - DJANGO_SUPERUSER_EMAIL=admin@example.com
       - DJANGO_SUPERUSER_PASSWORD=admin
     volumes:
-      - ../frontend/django:/app # For development
-      - ../.cache_django:/root/.cache
+      - ../frontend/cofi:/app # For development
+      - ../.cache_cofi:/root/.cache
     entrypoint: ["/app/entrypoint.sh"] # zum Aufbau der Datenbank
     # command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
     restart: unless-stopped

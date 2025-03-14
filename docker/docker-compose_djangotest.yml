@@ -76,9 +76,9 @@ services:
       - DJANGO_SUPERUSER_PASSWORD=admin
       - DB_HOST=db_djangotest
     volumes:
-      - ../frontend/django:/app # For development
-      - ../frontend/django_test:/app/test # For development
-      - ../.cache_django:/root/.cache
+      - ../frontend/cofi:/app # For development
+      # - ../frontend/django_test:/app/test # For development
+      - ../.cache_cofi:/root/.cache
     # entrypoint: ["/app/entrypoint.sh"] # zum Aufbau der Datenbank
     command: ["python", "manage.py", "test", "--noinput"]
     # command: ["ls"]
