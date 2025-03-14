@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-14 12:09+0100\n"
+"POT-Creation-Date: 2025-03-14 15:51+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Heinrich Weinz <weinzh@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -52,8 +52,8 @@ msgstr "Este endereço de email já está em uso."
 
 #: accounts/templates/accounts/login.html:4
 #: accounts/templates/accounts/login.html:8
-#: accounts/templates/accounts/login.html:15 templates/base.html:75
-#: templates/home.html:17
+#: accounts/templates/accounts/login.html:15 templates/base.html:89
+#: templates/home.html:15
 msgid "Login"
 msgstr "Entrar"
 
@@ -67,7 +67,7 @@ msgstr "Registre-se aqui"
 
 #: accounts/templates/accounts/register.html:4
 #: accounts/templates/accounts/register.html:7
-#: accounts/templates/accounts/register.html:14 templates/home.html:17
+#: accounts/templates/accounts/register.html:14 templates/home.html:15
 msgid "Register"
 msgstr "Registrar"
 
@@ -103,26 +103,41 @@ msgstr "Consciencia"
 msgid "Fitness"
 msgstr "Fitness"
 
-#: templates/base.html:70
+#: templates/base.html:84
 msgid "Settings"
 msgstr "Configurações"
 
-#: templates/base.html:71 templates/home.html:14
+#: templates/base.html:85 templates/home.html:12
 msgid "Logout"
 msgstr "Sair"
 
-#: templates/home.html:6
+#: templates/home.html:4
 msgid "Home"
 msgstr "Início"
 
-#: templates/home.html:9
+#: templates/home.html:7
 msgid "Welcome to Consciencia Fitness!"
 msgstr "Bem-vindo ao Consciencia Fitness!"
 
-#: templates/home.html:13
-msgid "You are logged in as"
-msgstr "Você está logado como"
+#: templates/home.html:11
+msgid "Hello"
+msgstr "Olá"
 
-#: templates/home.html:16
+#: templates/home.html:14
 msgid "You are not logged in."
 msgstr "Você não está logado."
+
+#: templates/home.html:15
+msgid "or"
+msgstr "ou"
+
+#: templates/messages.html:11
+#, python-format
+msgid ""
+"\n"
+"            %(message)s\n"
+"        "
+msgstr ""
+
+#~ msgid "You are logged in as"
+#~ msgstr "Você está logado como"

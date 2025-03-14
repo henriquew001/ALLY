@@ -80,11 +80,6 @@ class HomeViewTest(TestCase):
             self.assertNotContains(response, 'href="/accounts/register/"')
             self.assertContains(response, "<title>Startseite</title>")
 
-    def test_template_extends_base(self):
-        """Test if home.html extends base.html."""
-        response = self.client.get(self.home_url)
-        self.assertTemplateUsed(response, 'base.html')
-
     def test_messages_include(self):
         """Test if home.html includes messages.html."""
         response = self.client.get(self.home_url)

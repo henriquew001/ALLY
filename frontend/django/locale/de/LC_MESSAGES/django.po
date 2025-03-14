@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-14 12:46+0100\n"
+"POT-Creation-Date: 2025-03-14 15:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -52,8 +52,8 @@ msgstr "Diese E-Mail-Adresse wird bereits verwendet."
 
 #: accounts/templates/accounts/login.html:4
 #: accounts/templates/accounts/login.html:8
-#: accounts/templates/accounts/login.html:15 templates/base.html:74
-#: templates/home.html:17
+#: accounts/templates/accounts/login.html:15 templates/base.html:89
+#: templates/home.html:15
 msgid "Login"
 msgstr "Anmelden"
 
@@ -67,7 +67,7 @@ msgstr "Hier registrieren"
 
 #: accounts/templates/accounts/register.html:4
 #: accounts/templates/accounts/register.html:7
-#: accounts/templates/accounts/register.html:14 templates/home.html:17
+#: accounts/templates/accounts/register.html:14 templates/home.html:15
 msgid "Register"
 msgstr "Registrieren"
 
@@ -103,29 +103,33 @@ msgstr "Consciencia"
 msgid "Fitness"
 msgstr "Fitness"
 
-#: templates/base.html:69
+#: templates/base.html:84
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: templates/base.html:70 templates/home.html:14
+#: templates/base.html:85 templates/home.html:12
 msgid "Logout"
 msgstr "Abmelden"
 
-#: templates/home.html:6
+#: templates/home.html:4
 msgid "Home"
 msgstr "Startseite"
 
-#: templates/home.html:9
+#: templates/home.html:7
 msgid "Welcome to Consciencia Fitness!"
 msgstr "Willkommen bei Consciencia Fitness!"
 
-#: templates/home.html:13
-msgid "You are logged in as"
-msgstr "Sie sind angemeldet als"
+#: templates/home.html:11
+msgid "Hello"
+msgstr "Hallo"
 
-#: templates/home.html:16
+#: templates/home.html:14
 msgid "You are not logged in."
 msgstr "Sie sind nicht angemeldet."
+
+#: templates/home.html:15
+msgid "or"
+msgstr "oder"
 
 #: templates/messages.html:11
 #, python-format
@@ -134,3 +138,6 @@ msgid ""
 "            %(message)s\n"
 "        "
 msgstr ""
+
+#~ msgid "You are logged in as"
+#~ msgstr "Sie sind angemeldet als"
