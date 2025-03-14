@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-13 10:11+0100\n"
+"POT-Creation-Date: 2025-03-14 12:07+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,70 +17,112 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-#: frontend/django/accounts/templates/accounts/login.html:4
-#: frontend/django/accounts/templates/accounts/login.html:8
-#: frontend/django/accounts/templates/accounts/login.html:15
-#: frontend/django/templates/base.html:40
-#: frontend/django/templates/home.html:17
+
+#: accounts/forms.py:12
+msgid "Password"
+msgstr "Passwort"
+
+#: accounts/forms.py:13
+msgid "Enter a strong password."
+msgstr "Geben Sie ein sicheres Passwort ein."
+
+#: accounts/forms.py:17
+msgid "Confirm Password"
+msgstr "Passwort bestätigen"
+
+#: accounts/forms.py:18
+msgid "Confirm the password."
+msgstr "Bestätigen Sie das Passwort."
+
+#: accounts/forms.py:20
+msgid "Email"
+msgstr "E-Mail"
+
+#: accounts/forms.py:27
+msgid "Required"
+msgstr "Erforderlich"
+
+#: accounts/forms.py:42
+msgid "Passwords do not match."
+msgstr "Passwörter stimmen nicht überein."
+
+#: accounts/forms.py:45
+msgid "This email address is already in use."
+msgstr "Diese E-Mail-Adresse wird bereits verwendet."
+
+#: accounts/templates/accounts/login.html:4
+#: accounts/templates/accounts/login.html:8
+#: accounts/templates/accounts/login.html:15 templates/base.html:75
+#: templates/home.html:17
 msgid "Login"
 msgstr "Anmelden"
 
-#: frontend/django/accounts/templates/accounts/login.html:17
+#: accounts/templates/accounts/login.html:17
 msgid "Don't have an account?"
-msgstr "Kein Konto?"
+msgstr "Sie haben kein Konto?"
 
-#: frontend/django/accounts/templates/accounts/login.html:17
+#: accounts/templates/accounts/login.html:17
 msgid "Register here"
 msgstr "Hier registrieren"
 
-#: frontend/django/accounts/templates/accounts/register.html:4
-#: frontend/django/accounts/templates/accounts/register.html:7
-#: frontend/django/accounts/templates/accounts/register.html:14
-#: frontend/django/templates/home.html:17
+#: accounts/templates/accounts/register.html:4
+#: accounts/templates/accounts/register.html:7
+#: accounts/templates/accounts/register.html:14 templates/home.html:17
 msgid "Register"
 msgstr "Registrieren"
 
-#: frontend/django/accounts/templates/accounts/register.html:16
+#: accounts/templates/accounts/register.html:16
 msgid "Already have an account?"
-msgstr "Bereits ein Konto?"
+msgstr "Sie haben bereits ein Konto?"
 
-#: frontend/django/accounts/templates/accounts/register.html:16
+#: accounts/templates/accounts/register.html:16
 msgid "Login here"
 msgstr "Hier anmelden"
 
-#: frontend/django/templates/base.html:16
+#: accounts/views.py:23 accounts/views.py:43
+msgid "Please correct the errors below."
+msgstr "Bitte korrigieren Sie die untenstehenden Fehler."
+
+#: accounts/views.py:41
+msgid "Invalid username or password."
+msgstr "Ungültiger Benutzername oder Passwort."
+
+#: accounts/views.py:50
+msgid "You have successfully logged out."
+msgstr "Sie wurden erfolgreich abgemeldet."
+
+#: templates/base.html:16
 msgid "Consciencia Fitness Logo"
 msgstr "Consciencia Fitness Logo"
 
-#: frontend/django/templates/base.html:18
+#: templates/base.html:18
 msgid "Consciencia"
 msgstr "Consciencia"
 
-#: frontend/django/templates/base.html:19
+#: templates/base.html:19
 msgid "Fitness"
 msgstr "Fitness"
 
-#: frontend/django/templates/base.html:35
+#: templates/base.html:70
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: frontend/django/templates/base.html:36
-#: frontend/django/templates/home.html:14
+#: templates/base.html:71 templates/home.html:14
 msgid "Logout"
 msgstr "Abmelden"
 
-#: frontend/django/templates/home.html:6
+#: templates/home.html:6
 msgid "Home"
 msgstr "Startseite"
 
-#: frontend/django/templates/home.html:9
+#: templates/home.html:9
 msgid "Welcome to Consciencia Fitness!"
 msgstr "Willkommen bei Consciencia Fitness!"
 
-#: frontend/django/templates/home.html:13
+#: templates/home.html:13
 msgid "You are logged in as"
 msgstr "Sie sind angemeldet als"
 
-#: frontend/django/templates/home.html:16
+#: templates/home.html:16
 msgid "You are not logged in."
 msgstr "Sie sind nicht angemeldet."
