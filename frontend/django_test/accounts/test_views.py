@@ -12,7 +12,7 @@ class AccountsViewsTest(TestCase):
         self.register_url = reverse("accounts:register")
         self.login_url = reverse("accounts:login")
         self.logout_url = reverse("accounts:logout")
-        self.home_url = reverse("home:home")
+        self.home_url = reverse("home")
 
     def test_user_registration_success(self):
         data = {

@@ -19,8 +19,9 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-    path('i18n/', include( ('django.conf.urls.i18n', 'django.contrib.auth'), namespace='i18n')), # Corrected line
+    path('i18n/', include(('django.conf.urls.i18n', 'django.contrib.auth'), namespace='i18n')), # Corrected line
     path("home/", include("home.urls")),
+    path('', include('home.urls')),
     path('accounts/', include('accounts.urls')),
     path('admin/', admin.site.urls),
 ]

@@ -23,7 +23,11 @@ body {
     min-height: 100vh; /* Ensure the body takes up at least the full viewport height */
     display: flex;
     flex-direction: column;
-    /*padding-top: 61px; Remove this*/
+    padding-top: 0;
+    /*  Added this */
+    justify-content: center;
+    align-items: center;
+    margin: 0;
 }
 main {
     flex: 1; /* Let the content grow and occupy available space */
@@ -50,14 +54,14 @@ header {
     align-items: center;
     margin: 0 auto; /* Center the header content */
     padding: 0 20px;
+    max-width: 1200px; /* set the max width */
     width: 100%; /* Make it full width */
-    max-width: 100%; /*Make it full width*/
 }
 
 .logo-section {
     display: flex; /* Make this a flex container */
     align-items: center;
-    flex: 1; /* Added flex-grow */
+    max-width: 500px; /* added max width */
 }
 .logo-link{
     display:flex; /*Make this a flex container */
@@ -165,16 +169,17 @@ header {
 /* Rest of your CSS (from previous responses) */
 /* Styling for the login page */
 /* ...rest of the CSS...*/
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
+/* Styling for the login page */
+/*body {  # remove this */
+/*    font-family: Arial, sans-serif;*/
+/*    background-color: #f4f4f4;*/
+/*    margin: 0;*/
+/*    padding: 0;*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    min-height: 100vh;*/
+/*} # remove this */
 
 h2 {
     color: #333;
@@ -246,4 +251,4 @@ a:hover {
     height: auto;
     margin-right: 10px; /* Space between flag and login button */
     vertical-align: middle;
-  }
+}

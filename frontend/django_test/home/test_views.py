@@ -13,17 +13,17 @@ class HomeViewTest(TestCase):
 
     def test_home_view_status_code(self):
         # Check if the home view returns a 200 OK status code
-        response = self.client.get(reverse('home:home'))
+        response = self.client.get(reverse('home'))
         self.assertEqual(response.status_code, 200)
 
     def test_home_view_template_used(self):
         # Check if the correct template is used
-        response = self.client.get(reverse('home:home'))
+        response = self.client.get(reverse('home'))
         self.assertTemplateUsed(response, 'home.html')
 
     def test_home_view_content_unauthenticated(self):
         # Check content for unauthenticated users
-        response = self.client.get(reverse('home:home'))
+        response = self.client.get(reverse('home'))
         self.assertContains(response, _("Welcome to Consciencia Fitness!"))
         self.assertContains(response, _("You are not logged in."))
         self.assertContains(response, reverse("accounts:login"))
@@ -39,7 +39,7 @@ class HomeViewTest(TestCase):
         # Create and log in a user
         user = self.create_and_login_user()
         # Check content for authenticated users
-        response = self.client.get(reverse('home:home'))
+        response = self.client.get(reverse('home'))
         self.assertContains(response, _("Welcome to Consciencia Fitness!"))
         self.assertContains(response, _("You are logged in as"))
         self.assertContains(response, user.username)
@@ -58,13 +58,13 @@ class HomeViewTest(TestCase):
         return user
 
     def test_template_extends_base(self):
-        response = self.client.get(reverse('home:home'))
+        response = self.client.get(reverse('home'))
         self.assertTemplateUsed(response, 'base.html')
     
     def test_template_block_title(self):
-        response = self.client.get(reverse('home:home'))
+        response = self.client.get(reverse('home'))
         self.assertContains(response, "<title>Home</title>")
 
     def test_messages_include(self):
-        response = self.client.get(reverse('home:home'))
+        response = self.client.get(reverse('home'))
         self.assertTemplateUsed(response, "messages.html")

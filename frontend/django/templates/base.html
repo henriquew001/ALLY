@@ -13,40 +13,56 @@
     <header>
         <div class="header-content">
             <div class="logo-section">
-                <a href="{% url 'home:home' %}"> <img src="{% static 'images/cofi_logo_44x55.png' %}" alt="{% translate 'Consciencia Fitness Logo' %}" class="logo"></a>
+                <a href="{% url 'home' %}"> <img src="{% static 'images/cofi_logo_44x55.png' %}" alt="{% translate 'Consciencia Fitness Logo' %}" class="logo"></a>
                 <span class="brand-text">
-                  <span class="consciencia">{% trans "Consciencia" %}</span>
-                  <span class="fitness">{% trans "Fitness" %}</span>
+                <span class="consciencia">{% trans "Consciencia" %}</span>
+                <span class="fitness">{% trans "Fitness" %}</span>
                 </span>
             </div>
             <div class="login-button-section">
-                {% get_current_language as LANGUAGE_CODE %}
-                {% if LANGUAGE_CODE == 'en' %}
-                    <img src="{% static 'images/flaggen/en.svg' %}" alt="English" class="language-flag">
-                {% elif LANGUAGE_CODE == 'pt-br' %}
-                    <img src="{% static 'images/flaggen/br.svg' %}" alt="Português (Brasil)" class="language-flag">
-                {% elif LANGUAGE_CODE == 'de' %}
-                    <img src="{% static 'images/flaggen/de.svg' %}" alt="Deutsch" class="language-flag">
-                {% endif %}
+                <div class="language-dropdown">  {# Language Dropdown Container #}
+                    <button class="language-button"> {# language button #}
+                        {% get_current_language as LANGUAGE_CODE %}
+                        {% if LANGUAGE_CODE == 'en' %}
+                            <img src="{% static 'images/flaggen/en.svg' %}" alt="English" class="language-flag">
+                        {% elif LANGUAGE_CODE == 'pt-br' %}
+                            <img src="{% static 'images/flaggen/br.svg' %}" alt="Português (Brasil)" class="language-flag">
+                        {% elif LANGUAGE_CODE == 'de' %}
+                            <img src="{% static 'images/flaggen/de.svg' %}" alt="Deutsch" class="language-flag">
+                        {% endif %}
+                    </button>
+                    <ul class="language-list"> {# language list #}
+                        {% get_available_languages as languages %}
+                        {% for language in languages %}
+                            {% language language.0 %}
+                            <li>
+                                <a href="{% url 'i18n:set_language' %}?next={{ request.path|urlencode }}&language={{ language.0 }}">
+                                    {{ language.1 }}
+                                </a>
+                            </li>
+                            {% endlanguage %}
+                        {% endfor %}
+                    </ul> 
+                </div>
 
                 {% if user.is_authenticated %}
                 <div class="dropdown">
-                  <button class="dropbtn">
-                     <span class="user-initial">
+                <button class="dropbtn">
+                    <span class="user-initial">
                         {% if user.first_name %}
                             {{ user.first_name|slice:":1"|upper }}
                         {% else %}
                             {{ user.username|slice:":1"|upper }}
                         {% endif %}
-                     </span>
-                  </button>
-                  <div class="dropdown-content">
+                    </span>
+                </button>
+                <div class="dropdown-content">
                     <a href="#">{% trans "Settings" %}</a>
                     <a href="{% url 'accounts:logout' %}">{% trans "Logout" %}</a>
-                  </div>
+                </div>
                 </div>
                 {% else %}
-                  <a href="{% url 'accounts:login' %}" class="login-button">{% trans "Login" %}</a>
+                <a href="{% url 'accounts:login' %}" class="login-button">{% trans "Login" %}</a>
                 {% endif %}
             </div>
         </div>

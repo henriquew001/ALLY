@@ -18,7 +18,7 @@ def register(request):
                 request,
                 _(f"Account created for {user.username}! You are now logged in."),
             )
-            return redirect("home:home")
+            return redirect("home")
         else:
             messages.error(request, _("Please correct the errors below."))
     else:
@@ -36,7 +36,7 @@ def user_login(request):
             if user is not None:
                 login(request, user, backend='django.contrib.auth.backends.ModelBackend')
                 messages.success(request, _(f"You are now logged in as {user.username}."))
-                return redirect("home:home")
+                return redirect("home")
             else:
                 messages.error(request, _("Invalid username or password."))
         else:
@@ -49,4 +49,4 @@ def user_logout(request):
     if request.user.is_authenticated:
         messages.success(request, _("You have successfully logged out."))
     logout(request)
-    return redirect("home:home")
+    return redirect("home")
