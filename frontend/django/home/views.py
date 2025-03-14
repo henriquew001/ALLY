@@ -1,6 +1,7 @@
-# frontend/django/home/views.py
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.utils.translation import activate
 
-def home(request):
-    return render(request, "home.html")
+def home(request, lang=None):
+    if lang:
+        activate(lang)
+    return render(request, 'home.html')
