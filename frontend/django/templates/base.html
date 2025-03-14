@@ -20,29 +20,39 @@
                 </span>
             </div>
             <div class="login-button-section">
-                <div class="language-dropdown">  {# Language Dropdown Container #}
-                    <button class="language-button"> {# language button #}
-                        {% get_current_language as LANGUAGE_CODE %}
-                        {% if LANGUAGE_CODE == 'en' %}
-                            <img src="{% static 'images/flaggen/en.svg' %}" alt="English" class="language-flag">
-                        {% elif LANGUAGE_CODE == 'pt-br' %}
-                            <img src="{% static 'images/flaggen/br.svg' %}" alt="Português (Brasil)" class="language-flag">
-                        {% elif LANGUAGE_CODE == 'de' %}
-                            <img src="{% static 'images/flaggen/de.svg' %}" alt="Deutsch" class="language-flag">
-                        {% endif %}
-                    </button>
-                    <ul class="language-list"> {# language list #}
+                <div class="language-dropdown">
+                  {% get_current_language as current_language %}
+                  {% get_language_info for current_language as language_info %}
+                  <button class="language-button">
+                      {% if language_info.code == 'en' %}
+                      <img src="{% static 'images/flaggen/us.svg' %}" alt="English" class="language-flag">
+                      {% elif language_info.code == 'de' %}
+                      <img src="{% static 'images/flaggen/de.svg' %}" alt="Deutsch" class="language-flag">
+                      {% elif language_info.code == 'pt-br' %}
+                      <img src="{% static 'images/flaggen/br.svg' %}" alt="Portugues" class="language-flag">
+                      {% else %}
+                      {{ language_info.name_local }}
+                      {% endif %}
+                  </button>
+                    <ul class="language-list">
                         {% get_available_languages as languages %}
                         {% for language in languages %}
                             {% language language.0 %}
                             <li>
                                 <a href="{% url 'i18n:set_language' %}?next={{ request.path|urlencode }}&language={{ language.0 }}">
+                                    {% if language.0 == 'en' %}
+                                    <img src="{% static 'images/flaggen/us.svg' %}" alt="English" class="language-flag">
+                                    {% elif language.0 == 'de' %}
+                                    <img src="{% static 'images/flaggen/de.svg' %}" alt="Deutsch" class="language-flag">
+                                    {% elif language.0 == 'pt-br' %}
+                                    <img src="{% static 'images/flaggen/br.svg' %}" alt="Portugues" class="language-flag">
+                                    {% endif %}
                                     {{ language.1 }}
                                 </a>
                             </li>
                             {% endlanguage %}
                         {% endfor %}
-                    </ul> 
+                    </ul>
                 </div>
 
                 {% if user.is_authenticated %}
