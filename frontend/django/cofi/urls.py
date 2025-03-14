@@ -9,12 +9,12 @@ urlpatterns = [
     path('i18n/', include(('django.conf.urls.i18n', 'django.contrib.auth'), namespace='i18n')),
     path('accounts/', include('accounts.urls')),
     path('admin/', admin.site.urls),
+    path('', include('home.urls')),
 ]
 
 urlpatterns += i18n_patterns(
-    path('home/', include('home.urls')),
-    path('', include('home.urls')), # add this.
-    prefix_default_language=False
+    path('', include('home.urls')),
+    # prefix_default_language=False
 )
 
 if settings.DEBUG:
