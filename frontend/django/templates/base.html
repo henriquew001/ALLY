@@ -39,7 +39,22 @@
                     <ul class="language-list" id="language-list">
                         {% for lang_code, lang_name in LANGUAGES %}
                         <li>
-                            <a href="/{{ lang_code }}/{{ request.path|slice:'4:' }}">
+                            <a href="{% if lang_code == LANGUAGE_CODE %}{{ request.path }}{% else %}
+                                {% with path_prefix=request.path|slice:':4' %}
+                                    {% if path_prefix == '/en/' or path_prefix == '/de/' or path_prefix == '/pt-' %}
+                                        {% with remaining_path=request.path|slice:'4:' %}
+                                            {% if path_prefix == '/pt-' %}
+                                                {% with remaining_path=request.path|slice:'6:' %}
+                                                    {% url 'home' as home_url %}/{{lang_code}}{{ remaining_path }}
+                                                {% endwith %}
+                                            {% else %}
+                                                {% url 'home' as home_url %}/{{lang_code}}{{ remaining_path }}
+                                            {% endif %}
+                                        {% endwith %}
+                                    {% elif request.path == '/' %}/{{ lang_code }}/
+                                    {% else %}/{{ lang_code }}{{ request.path }}{% endif %}
+                                {% endwith %}
+                                {% endif %}">
                                 {% if lang_code == 'en' %}
                                 <img src="{% static 'images/flaggen/us.svg' %}" alt="English" class="language-flag">
                                 {% elif lang_code == 'de' %}

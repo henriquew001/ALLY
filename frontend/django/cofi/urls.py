@@ -16,6 +16,7 @@ urlpatterns += i18n_patterns(
     path('', include('home.urls')),
     # prefix_default_language=False
 )
+path("", include("home.urls")),  # the home view without prefix
 
 if settings.DEBUG:
     urlpatterns += [
