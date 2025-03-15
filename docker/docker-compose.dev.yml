@@ -37,7 +37,7 @@ services:
         condition: service_healthy
     environment:
       - PYTHONPATH=/app
-      - DATABASE_URL=mysql+pymysql://${DB_USER}:${DB_PASSWORD}@db_dev:3306/${DB_DATABASE} # Geändert zu db_dev
+      - DATABASE_URL=mysql+pymysql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:3306/${DB_DATABASE} # Geändert zu db_dev
       - SECRET_KEY=${SECRET_KEY}
       - ENV=dev
       - DEBUG=True
