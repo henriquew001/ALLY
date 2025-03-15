@@ -4,18 +4,19 @@
     --color-secondary: #231304; /* CFFarbe2 - Secondary color */
     --header-height: 61px;
     /* --font-main: Arial, sans-serif; */
-    /* --bg-body: #f4f4f4; */
+    --bg-body: #f4f4f4;
     --text-color-main: #333;
     --box-shadow-default: 0 2px 5px rgba(0, 0, 0, 0.1);
     /* --spacing-sm: 0.5rem;      /* 8px */
     /* --spacing-md: 1rem;        /* 16px */
-    /* --spacing-lg: 20px; */
+    --spacing-lg: 20px;
     /* --border-radius-sm: 3px; */
     /* --border-radius-md: 5px; */
     /* --transition-default: background-color 0.3s ease; */
 }
 body {
     font-family: Arial, sans-serif;
+    background-color: var(--bg-body);
     margin: 0;
     padding: 0;
     display: flex;
@@ -60,6 +61,7 @@ main {
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     flex: 1; /* Nimmt den verfügbaren Platz zwischen Header und Footer ein */
+    padding-top: var(--header-height);
 }
 
 footer {
