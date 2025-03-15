@@ -40,3 +40,13 @@ class HomeViewTest(TestCase):
         client = Client()
         response = client.get('/en/')
         self.assertContains(response, "Willkommen auf der Startseite!")
+    
+    def test_home_view_has_flags(self):
+        """
+        Test if language picker has flags
+        """
+        client = Client()
+        response = client.get('/en/')
+        self.assertContains(response, "<img src=\"/static/img/flags/en.svg\"")
+        self.assertContains(response, "<img src=\"/static/img/flags/de.svg\"")
+        self.assertContains(response, "<img src=\"/static/img/flags/pt-br.svg\"")

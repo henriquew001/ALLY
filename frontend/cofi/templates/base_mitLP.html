@@ -29,20 +29,15 @@
             </nav> 
             <div class="active-language-display">
                 <img src="{% static 'img/flags/' %}{{ LANGUAGE_CODE }}.svg" alt="{{ LANGUAGE_CODE }} Flag" class="flag-icon active-language-flag">
-                <div class="language-picker">
-                  <ul>
-                      {% for language in languages %}
-                      <li>
-                          <a href="/{{ language.code }}/" class="language-link {% if language.code == LANGUAGE_CODE %}active{% endif %}" hreflang="{{ language.code }}">
-                              <img src="{% static 'img/flags/' %}{{ language.code }}.svg" alt="{{ language.name_local }} Flag" class="flag-icon">
-                              <span class="language-name">{{ language.name_local }}</span>
-                          </a>
-                      </li>
-                      {% endfor %}
-                  </ul>
-              </div>
             </div>
-
+            <div class="language-picker">
+                {% for language in languages %}
+                <a href="/{{ language.code }}/" class="language-link {% if language.code == LANGUAGE_CODE %}active{% endif %}" hreflang="{{ language.code }}">
+                    <img src="{% static 'img/flags/' %}{{ language.code }}.svg" alt="{{ language.name_local }} Flag" class="flag-icon">
+                    <span class="language-name">{{ language.name_local }}</span>
+                </a>
+                {% endfor %}
+            </div>
         </div>
     </header>
     <main>

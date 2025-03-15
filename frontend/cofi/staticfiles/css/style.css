@@ -37,7 +37,7 @@ header {
     box-shadow: var(--box-shadow-default);
     height: auto; /* Header Höhe automatisch anpassen */
     display: flex; /* Flexbox für Logo und Navigation */
-    flex-direction: column; /* Elemente untereinander anordnen */
+    /*flex-direction: column; /* Elemente untereinander anordnen */
     align-items: center; /* Horizontale Zentrierung */
     justify-content: center; /* vertikale Zentrierung */
     padding: 10px 20px; /* Innenabstand */
@@ -46,19 +46,80 @@ header {
 .header-content {
     width: 100%;
     display: flex;
-    flex-direction: column; /* Elemente untereinander anordnen */
+    /*flex-direction: column; /* Elemente untereinander anordnen */
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+}
+
+.active-language-display {
+    display: flex;
+    align-items: center;
+    position: relative; /* Needed for absolute positioning of the picker */
+}
+.active-language-display:hover .language-picker {
+    display: block;
+}
+
+.active-language-flag {
+    width: 30px; /* Adjust size as needed */
+    height: auto; /* Adjust size as needed */
+    margin-right: 2rem;
+    vertical-align: middle;
+    border-radius: 2px;
+    cursor: pointer; /* Add a pointer cursor on hover */
+}
+
+.language-picker {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: var(--box-shadow-default);
+    z-index: 10; /* Ensure it's above other elements */
+    border-radius: 2px;
+}
+.language-picker ul{
+    list-style: none; /* Entfernt die Punkte vor den Links */
+    padding: 0; /*Entfernt die Innenabstände der Liste */
+    margin: 0;
+}
+
+.language-picker li {
+    padding: 0.5rem;
+    white-space: nowrap;
+}
+
+.language-picker a {
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Abstand zwischen Logo und Flagge */
+    padding: 5px;
+    width: 100%;
+}
+
+.flag-icon {
+    width: 20px;
+    height: auto;
+}
+.language-picker a:hover{
+    background-color: #f0f0f0;
+}
+.language-name{
+    color: black;
 }
 
 .logo-container {
     display: flex;
     align-items: center;
-    margin-bottom: 10px; /* Abstand zwischen Logo und Navigation */
+    gap: 10px; /* Abstand zwischen Logo und Flagge */
 }
 
 .logo {
-    height: 50px; /* Pass die Höhe nach Bedarf an */
+    height: 40px; /* Pass die Höhe nach Bedarf an */
     width: auto;
 }
 
@@ -75,25 +136,6 @@ header {
 
 .fitness {
     color: var(--color-secondary);
-}
-
-.language-picker {
-    display: flex;
-    gap: 10px;
-    margin-left: 20px;
-}
-
-.language-link {
-    color: var(--text-color-main);
-    text-decoration: none;
-    border: 1px solid var(--text-color-main);
-    padding: 5px;
-    border-radius: 5px;
-}
-
-.language-link.active {
-    background-color: #333;
-    color: white;
 }
 
 nav {
