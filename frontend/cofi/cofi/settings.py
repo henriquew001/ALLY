@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',  # Hinzugefügt: Spracherkennungs-Middleware
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -120,11 +121,18 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
 
+LANGUAGES = [
+    ('en', 'English'),
+    ('de', 'German'),  # Füge hier weitere Sprachen hinzu, die du unterstützen möchtest
+    ('pt-br', 'Spanish')
+]
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
+
+USE_L10N = True
 
 USE_TZ = True
 
@@ -138,7 +146,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # Ordner in dem alle statisc
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'), # Ordner in dem sich die statischen Dateien des Projekts befinden.
-    os.path.join(BASE_DIR, 'home', 'static'), # Ordner in dem sich die statischen Dateien des Projekts befinden.
+    # os.path.join(BASE_DIR, 'home', 'static'), # Ordner in dem sich die statischen Dateien des Projekts befinden.
 ]
 
 # Default primary key field type

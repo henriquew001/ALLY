@@ -16,8 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.conf.urls.i18n import i18n_patterns
+from django.utils.translation import gettext_lazy as _
+#... previous imports ...
 
-urlpatterns = [
+urlpatterns = i18n_patterns(
     path('admin/', admin.site.urls),
-    path('', include('home.urls', namespace='home')), # If you want the home view at the root
-]
+    path('', include('home.urls', namespace='home')),  # If you want the home view at the root
+)

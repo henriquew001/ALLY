@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load i18n %} <!-- i18n-Bibliothek laden -->
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -22,6 +23,13 @@
                 <a href="#">About</a>
                 <a href="#">Services</a>
                 <a href="#">Contact</a>
+                {% get_available_languages as LANGUAGES %}
+                {% get_language_info_list for LANGUAGES as languages %}
+                <div class="language-picker">
+                    {% for language in languages %}
+                    <a href="/{{ language.code }}/" class="language-link {% if language.code == LANGUAGE_CODE %}active{% endif %}" hreflang="{{ language.code }}">{{ language.name_local }}</a>
+                    {% endfor %}
+                </div>
             </nav>
         </div>
     </header>
