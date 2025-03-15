@@ -50,7 +50,11 @@ header {
     align-items: center;
     justify-content: space-between;
 }
-
+.header-actions{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
 .active-language-display {
     display: flex;
     align-items: center;
@@ -63,7 +67,7 @@ header {
 .active-language-flag {
     width: 30px; /* Adjust size as needed */
     height: auto; /* Adjust size as needed */
-    margin-right: 2rem;
+    /* margin-right: 2rem; */
     vertical-align: middle;
     border-radius: 2px;
     cursor: pointer; /* Add a pointer cursor on hover */
@@ -155,6 +159,11 @@ nav a:hover {
     text-decoration: underline;
 }
 
+.auth-nav {
+    display: flex;
+    /* margin-right: 20px;  Entfernt den Abstand da er nicht mehr benötigt wird */
+}
+
 main {
     width: 80%;
     margin: 5rem auto 2rem; /* Fügt Abstand hinzu, um den fixierten Header zu berücksichtigen */
@@ -171,3 +180,58 @@ footer {
     text-align: center;
     padding: 1rem 0;
 }
+
+/* User Avatar und Dropdown */
+.user-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.user-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-image: linear-gradient(to right, #a83f2a 50%, #231304 50%);
+    color: white;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.user-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 120px;
+    box-shadow: var(--box-shadow-default);
+    z-index: 1;
+    right: 0;
+    border-radius: 2px;
+}
+
+.user-dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.user-dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.user-dropdown:hover .user-dropdown-content {
+    display: block;
+}
+
+.auth-section{
+    display: flex;
+    align-items: center;
+    margin-right: 30px; 
+}
+

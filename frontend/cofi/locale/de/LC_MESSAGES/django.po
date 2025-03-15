@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-15 14:26+0100\n"
+"POT-Creation-Date: 2025-03-15 19:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Last-Translator: Heinrich Weinz <weinzh@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,20 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: home/templates/home/home.html:4 templates/base.html:25
+#: accounts/templates/accounts/login.html:5
+#: accounts/templates/accounts/login.html:9 templates/base.html:60
+msgid "Login"
+msgstr "Anmelden"
+
+#: accounts/templates/accounts/login.html:11
+msgid "You dont have an Account?"
+msgstr "Du hast noch kein Konto?"
+
+#: accounts/templates/accounts/login.html:11
+msgid "Register here"
+msgstr "Hier registrieren"
+
+#: home/templates/home/home.html:4 templates/base.html:26
 msgid "Home"
 msgstr "Startseite"
 
@@ -64,22 +77,28 @@ msgstr "Listenpunkt 3"
 msgid "ConsciousFit"
 msgstr "BewusstFit"
 
-#: templates/base.html:20
-msgid "Consciencia"
-msgstr "Bewusstsein"
-
-#: templates/base.html:21
-msgid "Fitness"
-msgstr "Fitness"
-
-#: templates/base.html:26
+#: templates/base.html:27
 msgid "About"
 msgstr "Über uns"
 
-#: templates/base.html:27
+#: templates/base.html:28
 msgid "Services"
 msgstr "Dienstleistungen"
 
-#: templates/base.html:28
+#: templates/base.html:29
 msgid "Contact"
 msgstr "Kontakt"
+
+#: templates/base.html:55
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: templates/base.html:56
+msgid "Logout"
+msgstr "Abmelden"
+
+#~ msgid "Consciencia"
+#~ msgstr "Bewusstsein"
+
+#~ msgid "Fitness"
+#~ msgstr "Fitness"

@@ -22,32 +22,47 @@
                 </span>
             </div>
             <nav>
-                <a href="{% url 'home:home' %}">{% translate "Home" %}</a>
-                <a href="#">{% translate "About" %}</a>
-                <a href="#">{% translate "Services" %}</a>
-                <a href="#">{% translate "Contact" %}</a>
-                {% if user.is_authenticated %}
-                    <a href="{% url 'accounts:logout' %}">{% translate "Logout" %}</a>
-                {% else %}
-                    <a href="{% url 'accounts:login' %}">{% translate "Login" %}</a>
-                    <a href="{% url 'accounts:register' %}">{% translate "Register" %}</a>
-                {% endif %}
-            </nav> 
-            <div class="active-language-display">
-                <img src="{% static 'img/flags/' %}{{ LANGUAGE_CODE }}.svg" alt="{{ LANGUAGE_CODE }} Flag" class="flag-icon active-language-flag">
-                <div class="language-picker">
-                  <ul>
-                      {% for language in languages %}
-                      <li>
-                          <a href="/{{ language.code }}/" class="language-link {% if language.code == LANGUAGE_CODE %}active{% endif %}" hreflang="{{ language.code }}">
-                              <img src="{% static 'img/flags/' %}{{ language.code }}.svg" alt="{{ language.name_local }} Flag" class="flag-icon">
-                              <span class="language-name">{{ language.name_local }}</span>
-                          </a>
-                      </li>
-                      {% endfor %}
-                  </ul>
-              </div>
+                <div class="main-nav">
+                    <a href="{% url 'home:home' %}">{% translate "Home" %}</a>
+                    <a href="#">{% translate "About" %}</a>
+                    <a href="#">{% translate "Services" %}</a>
+                    <a href="#">{% translate "Contact" %}</a>
+                </div>
+            </nav>
+            <div class="header-actions">
+                <div class="active-language-display">
+                    <img src="{% static 'img/flags/' %}{{ LANGUAGE_CODE }}.svg" alt="{{ LANGUAGE_CODE }} Flag" class="flag-icon active-language-flag">
+                    <div class="language-picker">
+                        <ul>
+                            {% for language in languages %}
+                            <li>
+                                <a href="/{{ language.code }}/" class="language-link {% if language.code == LANGUAGE_CODE %}active{% endif %}" hreflang="{{ language.code }}">
+                                    <img src="{% static 'img/flags/' %}{{ language.code }}.svg" alt="{{ language.name_local }} Flag" class="flag-icon">
+                                    <span class="language-name">{{ language.name_local }}</span>
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="auth-section">
+                    {% if user.is_authenticated %}
+                        <div class="user-dropdown">
+                            <div class="user-avatar">
+                                {{ user.username|first|upper }}
+                            </div>
+                            <div class="user-dropdown-content">
+                                <a href="#">{% translate "Settings" %}</a>
+                                <a href="{% url 'accounts:logout' %}">{% translate "Logout" %}</a>
+                            </div>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'accounts:login' %}">{% translate "Login" %}</a>
+                        {% comment %} <a href="{% url 'accounts:register' %}">{% translate "Register" %}</a> {% endcomment %}
+                    {% endif %}
+                </div>
             </div>
+
 
         </div>
     </header>
