@@ -34,7 +34,7 @@ class HeaderTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
         # Überprüft, ob die Text vorhanden ist
-        self.assertContains(response, '<span class="consciencia">Consciencia</span>')
+        self.assertContains(response, '<span class="consciencia">Consciência</span>')
         self.assertContains(response, '<span class="fitness">Fitness</span>')
 
     def test_header_layout(self):

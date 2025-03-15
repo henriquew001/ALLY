@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
-app_name = 'home'
-
 def home(request):
+    """
+    Renders the home page.
+    """
     return render(request, 'home/home.html')

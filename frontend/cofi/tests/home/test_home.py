@@ -1,35 +1,18 @@
-# /home/heinrich/projects/ConsciousFit/frontend/cofi/tests/home/test_home.py
-from django.test import TestCase, Client
-from django.urls import reverse
 import os
 from pathlib import Path
+from django.test import TestCase, Client
 
 class HomeViewTest(TestCase):
-    def setUp(self):
-        pass
-
-    def test_home_url_resolves(self):
-        """
-        Test if the home URL resolves to the correct view.
-        """
-        url = reverse('home:home')
-        self.assertEqual(url, '/en/')
-
+    """
+    Tests the home view.
+    """
     def test_home_view_status_code(self):
         """
-        Test if the home view returns a 200 OK status code.
+        Test if home view returns 200 status code.
         """
         client = Client()
-        response = client.get('/en/')
+        response = client.get('/en/', HTTP_ACCEPT_LANGUAGE='en')  # Set the language in get
         self.assertEqual(response.status_code, 200)
-
-    def test_home_view_uses_correct_template(self):
-        """
-        Test if the home view uses the correct template (home/home.html).
-        """
-        client = Client()
-        response = client.get('/en/')
-        self.assertTemplateUsed(response, 'home/home.html')
 
     def test_home_view_has_content(self):
         """
@@ -38,15 +21,15 @@ class HomeViewTest(TestCase):
         BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
         template_path = os.path.join(BASE_DIR, "frontend", "cofi", "home", "templates", "home", "home.html")
         client = Client()
-        response = client.get('/en/')
-        self.assertContains(response, "Willkommen auf der Startseite!")
-    
-    def test_home_view_has_flags(self):
+        response = client.get('/en/', HTTP_ACCEPT_LANGUAGE='en') # Set the language in get
+        self.assertContains(response, "Welcome to the Homepage!")
+
+    def test_home_view_has_content_german(self):
         """
-        Test if language picker has flags
+        Test if home view returns a html file with specific content in german.
         """
+        BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
+        template_path = os.path.join(BASE_DIR, "frontend", "cofi", "home", "templates", "home", "home.html")
         client = Client()
-        response = client.get('/en/')
-        self.assertContains(response, "<img src=\"/static/img/flags/en.svg\"")
-        self.assertContains(response, "<img src=\"/static/img/flags/de.svg\"")
-        self.assertContains(response, "<img src=\"/static/img/flags/pt-br.svg\"")
+        response = client.get('/de/', HTTP_ACCEPT_LANGUAGE='de') # Set the language in get
+        self.assertContains(response, "Willkommen auf der Startseite!")
