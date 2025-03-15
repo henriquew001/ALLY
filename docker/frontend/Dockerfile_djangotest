@@ -12,14 +12,12 @@ RUN apk add --no-cache mariadb-connector-c-dev gcc musl-dev
 COPY docker/frontend/requirements_django.txt .
 RUN pip install --no-cache-dir -r requirements_django.txt
 
-
 # Abhängigkeiten kopieren und installieren
 COPY docker/frontend/requirements_djangotest.txt .
 RUN pip install --no-cache-dir -r requirements_djangotest.txt
 
-
 # restlichen Code kopieren
-# COPY ../fronted/cofi /app
+COPY ../frontend/cofi /app
 COPY . .
 
 # Umgebungsvariablen für Django einrichten

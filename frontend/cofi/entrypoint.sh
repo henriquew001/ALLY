@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # Function to check database connection
 check_db_connection() {
   python -c "
@@ -8,7 +10,7 @@ import os
 from django.db import connection
 from django.db.utils import OperationalError
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cofi.settings')  # Replace 'cofi.settings' with your project's settings
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cofi.settings')
 django.setup()
 
 try:
@@ -29,7 +31,7 @@ retry_count=0
 until check_db_connection || [ $retry_count -ge $max_retries ]; do
   echo "Retrying database connection... ($((retry_count+1))/$max_retries)"
   retry_count=$((retry_count+1))
-  sleep 5  # Wait for 5 seconds before retrying
+  sleep 5
 done
 
 if [ $retry_count -ge $max_retries ]; then
@@ -37,16 +39,20 @@ if [ $retry_count -ge $max_retries ]; then
   exit 1
 fi
 
-# Check if migrations have been run
-if ! python manage.py migrate --plan | grep -q "^[ ]+applying"; then
-    echo "Migrations have already been applied."
-else
-    echo "Applying migrations..."
-    python manage.py migrate
-fi
+echo "Database connection successful"
+
+# Apply migrations
+echo "Applying migrations..."
+python manage.py makemigrations
+python manage.py migrate
+
+echo "Migrations applied successfully."
+
 # Collect static files
 echo "Collecting static files..."
 python manage.py collectstatic --noinput
+
+echo "Static files collected."
 
 # Check if superuser exists before creating one
 SUPERUSER_EXISTS=$(python -c "
@@ -64,12 +70,18 @@ if User.objects.filter(username='admin').exists():
 
 if [ "$SUPERUSER_EXISTS" != "EXISTS" ]; then
     echo "Superuser 'admin' does not exist. Creating it..."
-    python manage.py createsuperuser --noinput || echo "Failed to create superuser."
+    python manage.py createsuperuser --noinput
+    if [ $? -ne 0 ]; then
+        echo "Failed to create superuser."
+        exit 1
+    fi
 else
     echo "Superuser 'admin' already exists."
 fi
 
+echo "Superuser check completed."
 
-# Start the Django server.
+# Start Django server
 echo "Starting Django server..."
 exec python manage.py runserver 0.0.0.0:8000
+
