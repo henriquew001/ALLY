@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-    <title>ConsciousFit</title>
+    <title>{% translate "ConsciousFit" %}</title>
 </head>
 <body>
     <header>
@@ -17,15 +17,15 @@
             <div class="logo-container">
                 <a href="/"><img src="{% static 'img/cofi_logo_89x110.png' %}" alt="Cofi Logo" class="logo"></a>
                                 <span class="brand-text">
-                    <span class="consciencia">Consciencia</span>
-                    <span class="fitness">Fitness</span>
+                    <span class="consciencia">{% translate "Consciencia" %}</span>
+                    <span class="fitness">{% translate "Fitness" %}</span>
                 </span>
             </div>
             <nav>
-                <a href="#">Home</a>
-                <a href="#">About</a>
-                <a href="#">Services</a>
-                <a href="#">Contact</a>
+                <a href="#">{% translate "Home" %}</a>
+                <a href="#">{% translate "About" %}</a>
+                <a href="#">{% translate "Services" %}</a>
+                <a href="#">{% translate "Contact" %}</a>
             </nav> 
             <div class="active-language-display">
                 <img src="{% static 'img/flags/' %}{{ LANGUAGE_CODE }}.svg" alt="{{ LANGUAGE_CODE }} Flag" class="flag-icon active-language-flag">
