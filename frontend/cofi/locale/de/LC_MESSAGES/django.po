@@ -8,19 +8,61 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-15 14:20+0100\n"
+"POT-Creation-Date: 2025-03-15 14:26+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: home/templates/home/home.html:4 templates/base.html:25
+msgid "Home"
+msgstr "Startseite"
+
+#: home/templates/home/home.html:7
+msgid "Welcome to the Homepage!"
+msgstr "Willkommen auf der Startseite!"
+
+#: home/templates/home/home.html:8
+msgid "This is the content of your homepage."
+msgstr "Dies ist der Inhalt deiner Startseite."
+
+#: home/templates/home/home.html:10 home/templates/home/home.html:13
+#: home/templates/home/home.html:16 home/templates/home/home.html:19
+#: home/templates/home/home.html:22 home/templates/home/home.html:25
+#: home/templates/home/home.html:28 home/templates/home/home.html:31
+#: home/templates/home/home.html:34 home/templates/home/home.html:37
+#: home/templates/home/home.html:40 home/templates/home/home.html:43
+#: home/templates/home/home.html:46 home/templates/home/home.html:49
+msgid "List item 1"
+msgstr "Listenpunkt 1"
+
+#: home/templates/home/home.html:11 home/templates/home/home.html:14
+#: home/templates/home/home.html:17 home/templates/home/home.html:20
+#: home/templates/home/home.html:23 home/templates/home/home.html:26
+#: home/templates/home/home.html:29 home/templates/home/home.html:32
+#: home/templates/home/home.html:35 home/templates/home/home.html:38
+#: home/templates/home/home.html:41 home/templates/home/home.html:44
+#: home/templates/home/home.html:47 home/templates/home/home.html:50
+msgid "List item 2"
+msgstr "Listenpunkt 2"
+
+#: home/templates/home/home.html:12 home/templates/home/home.html:15
+#: home/templates/home/home.html:18 home/templates/home/home.html:21
+#: home/templates/home/home.html:24 home/templates/home/home.html:27
+#: home/templates/home/home.html:30 home/templates/home/home.html:33
+#: home/templates/home/home.html:36 home/templates/home/home.html:39
+#: home/templates/home/home.html:42 home/templates/home/home.html:45
+#: home/templates/home/home.html:48 home/templates/home/home.html:51
+msgid "List item 3"
+msgstr "Listenpunkt 3"
+
 #: templates/base.html:12
 msgid "ConsciousFit"
-msgstr "ConsciousFit"
+msgstr "BewusstFit"
 
 #: templates/base.html:20
 msgid "Consciencia"
@@ -30,17 +72,13 @@ msgstr "Bewusstsein"
 msgid "Fitness"
 msgstr "Fitness"
 
-#: templates/base.html:25
-msgid "Home"
-msgstr "Startseite"
-
 #: templates/base.html:26
 msgid "About"
-msgstr "About"
+msgstr "Über uns"
 
 #: templates/base.html:27
 msgid "Services"
-msgstr "Services"
+msgstr "Dienstleistungen"
 
 #: templates/base.html:28
 msgid "Contact"
