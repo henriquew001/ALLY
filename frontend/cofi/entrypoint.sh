@@ -44,6 +44,9 @@ else
     echo "Applying migrations..."
     python manage.py migrate
 fi
+# Collect static files
+echo "Collecting static files..."
+python manage.py collectstatic --noinput
 
 # Check if superuser exists before creating one
 SUPERUSER_EXISTS=$(python -c "
@@ -65,6 +68,7 @@ if [ "$SUPERUSER_EXISTS" != "EXISTS" ]; then
 else
     echo "Superuser 'admin' already exists."
 fi
+
 
 # Start the Django server.
 echo "Starting Django server..."
