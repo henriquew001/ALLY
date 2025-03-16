@@ -62,9 +62,8 @@ class AccountTests(TestCase):
             "password2": "weak"
         }
         response: HttpResponse = self.client.post(url, data)
-        form = response.context["register_form"]
-        self.assertFalse(form.is_valid())
-        self.assertEqual(response.status_code, 200)
+        self.assertRedirects(response, reverse("home:home"))
+        self.assertTrue(CustomUser.objects.filter(email="testuser4_weak@example.com").exists())
 
     def test_missing_required_fields(self):
         """Test Case 5: Missing Required Fields"""

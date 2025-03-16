@@ -4,20 +4,21 @@ from django.contrib import messages
 from django.contrib.auth.forms import AuthenticationForm
 from .forms import CustomUserCreationForm
 from .models import CustomUser
-from django.urls import reverse #add the import
+from django.urls import reverse
 
 def register_request(request):
     if request.method == "POST":
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user) #added this line to log in the user
-            return redirect(reverse("home:home")) #add the reverse
+            login(request, user)
+            return redirect(reverse("home:home"))
         else:
-            messages.error(request, "Unsuccessful registration. Invalid information.") #add the else
+            messages.error(request, "Unsuccessful registration. Invalid information.")
+            return render(request=request, template_name="accounts/register.html", context={"register_form": form})
     else:
-        form = CustomUserCreationForm() #add the else
-    return render (request=request, template_name="accounts/register.html", context={"register_form":form})
+        form = CustomUserCreationForm()
+    return render(request=request, template_name="accounts/register.html", context={"register_form": form})
 
 def login_request(request):
     if request.method == "POST":
