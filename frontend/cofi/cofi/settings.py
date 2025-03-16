@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'home',
     'accounts',
     'focoquiz',
+    'about',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

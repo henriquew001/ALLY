@@ -24,5 +24,6 @@ urlpatterns = i18n_patterns(
     path('', include('home.urls', namespace='home')),  # If you want the home view at the root
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('quiz/', include('focoquiz.urls')),
+    path('about/', include('about.urls')),
     # prefix_default_language=False,
 )
