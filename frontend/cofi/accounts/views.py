@@ -12,7 +12,6 @@ def register_request(request):
         if form.is_valid():
             user = form.save()
             login(request, user) #added this line to log in the user
-            messages.success(request, "Registration successful." )
             return redirect(reverse("home:home")) #add the reverse
         else:
             messages.error(request, "Unsuccessful registration. Invalid information.") #add the else
@@ -29,7 +28,6 @@ def login_request(request):
             user = authenticate(request, email=email, password=password) #we changed the authenticate call to email=email and add the request
             if user is not None:
                 login(request, user)
-                messages.info(request, f"You are now logged in as {email}.") #changed the message
                 return redirect(reverse("home:home")) #add the reverse
             else:
                 messages.error(request,"Invalid email or password.") #changed the message
@@ -41,5 +39,4 @@ def login_request(request):
 
 def logout_request(request):
     logout(request)
-    messages.info(request, "You have successfully logged out.") 
     return redirect(reverse("home:home")) #add the reverse
