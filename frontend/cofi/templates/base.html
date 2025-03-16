@@ -15,7 +15,7 @@
     <header>
         <div class="header-content">
             <div class="logo-container">
-                <a href="/"><img src="{% static 'img/cofi_logo_89x110.png' %}" alt="Cofi Logo" class="logo"></a>
+                <a href="{% url 'home:home' %}"><img src="{% static 'img/cofi_logo_89x110.png' %}" alt="Cofi Logo" class="logo"></a>
                 <span class="brand-text">
                     <span class="consciencia">Consciência</span>
                     <span class="fitness">Fitness</span>
@@ -24,6 +24,7 @@
             <nav>
                 <div class="main-nav">
                     <a href="{% url 'home:home' %}">{% translate "Home" %}</a>
+                    <a href="{% url 'focoquiz:quiz' %}">{% translate "Quiz" %}</a>
                     <a href="#">{% translate "About" %}</a>
                     <a href="#">{% translate "Services" %}</a>
                     <a href="#">{% translate "Contact" %}</a>
@@ -62,8 +63,6 @@
                     {% endif %}
                 </div>
             </div>
-
-
         </div>
     </header>
     <main>

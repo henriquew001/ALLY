@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-15 19:36+0100\n"
+"POT-Creation-Date: 2025-03-16 20:53+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Heinrich Weinz <weinzh@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: accounts/templates/accounts/login.html:5
-#: accounts/templates/accounts/login.html:9 templates/base.html:60
+#: accounts/templates/accounts/login.html:9 templates/base.html:61
 msgid "Login"
 msgstr "Entrar"
 
@@ -30,6 +30,26 @@ msgstr "Você não tem uma conta?"
 #: accounts/templates/accounts/login.html:11
 msgid "Register here"
 msgstr "Registre-se aqui"
+
+#: focoquiz/templates/focoquiz/quiz.html:5 templates/base.html:27
+msgid "Quiz"
+msgstr "Quiz"
+
+#: focoquiz/templates/focoquiz/quiz.html:21
+msgid "Send"
+msgstr "Enviar"
+
+#: focoquiz/templates/focoquiz/result.html:5
+msgid "Result"
+msgstr "Resultado"
+
+#: focoquiz/views.py:38
+msgid "No matching result found."
+msgstr "Nenhum resultado correspondente encontrado."
+
+#: focoquiz/views.py:43 focoquiz/views.py:47
+msgid "There are still questions missing for the quiz."
+msgstr "Ainda faltam perguntas para o quiz."
 
 #: home/templates/home/home.html:4 templates/base.html:26
 msgid "Home"
@@ -77,23 +97,23 @@ msgstr "Item da lista 3"
 msgid "ConsciousFit"
 msgstr "ConsciousFit"
 
-#: templates/base.html:27
+#: templates/base.html:28
 msgid "About"
 msgstr "Sobre"
 
-#: templates/base.html:28
+#: templates/base.html:29
 msgid "Services"
 msgstr "Serviços"
 
-#: templates/base.html:29
+#: templates/base.html:30
 msgid "Contact"
 msgstr "Contato"
 
-#: templates/base.html:55
+#: templates/base.html:56
 msgid "Settings"
 msgstr "Configurações"
 
-#: templates/base.html:56
+#: templates/base.html:57
 msgid "Logout"
 msgstr "Sair"
 
