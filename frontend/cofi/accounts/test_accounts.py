@@ -17,22 +17,20 @@ class AccountTests(TestCase):
         """Test Case 1: Successful User Registration"""
         url = reverse("accounts:register")  # accounts is the appname, register is the name in the url.py
         data = {
-            "username": "testuser1_reg",
             "email": "testuser1_reg@example.com",
             "password": "StrongP@$$wOrd1",
             "password2": "StrongP@$$wOrd1"
         }
         response = self.client.post(url, data)
         self.assertRedirects(response, reverse("home:home"))
-        self.assertTrue(CustomUser.objects.filter(username="testuser1_reg").exists()) #Changed to CustomUser
+        self.assertTrue(CustomUser.objects.filter(email="testuser1_reg@example.com").exists()) #Changed to email
     
     def test_duplicate_username_registration(self):
         """Test Case 2: Duplicate Username Registration"""
-        CustomUser.objects.create_user(username="testuser2_dup", email="testuser2_dup@example.com", password="AnotherP@$$wOrd") #Changed to CustomUser
+        CustomUser.objects.create_user(email="testuser2_dup@example.com", password="AnotherP@$$wOrd") #Changed to CustomUser and email
         url = reverse("accounts:register")
         data = {
-            "username": "testuser2_dup",
-            "email": "testuser2_other@example.com",
+            "email": "testuser2_dup@example.com",
             "password": "AnotherP@$$wOrd",
             "password2": "AnotherP@$$wOrd"
         }
@@ -43,10 +41,9 @@ class AccountTests(TestCase):
     
     def test_duplicate_email_registration(self):
         """Test Case 3: Duplicate Email Registration"""
-        CustomUser.objects.create_user(username="testuser3_other", email="testuser3_dup@example.com", password="YetAnotherP@$$wOrd") #Changed to CustomUser
+        CustomUser.objects.create_user(email="testuser3_dup@example.com", password="YetAnotherP@$$wOrd") #Changed to CustomUser and email
         url = reverse("accounts:register")
         data = {
-            "username": "testuser3_dup",
             "email": "testuser3_dup@example.com",
             "password": "YetAnotherP@$$wOrd",
             "password2": "YetAnotherP@$$wOrd"
@@ -60,7 +57,6 @@ class AccountTests(TestCase):
         """Test Case 4: Weak Password"""
         url = reverse("accounts:register")
         data = {
-            "username": "testuser4_weak",
             "email": "testuser4_weak@example.com",
             "password": "weak",
             "password2": "weak"
@@ -74,8 +70,7 @@ class AccountTests(TestCase):
         """Test Case 5: Missing Required Fields"""
         url = reverse("accounts:register")
         data = {
-            "username": "",
-            "email": "testuser5_missing@example.com",
+            "email": "",
             "password": "P@$$wOrd",
             "password2": "P@$$wOrd"
         }
@@ -88,7 +83,6 @@ class AccountTests(TestCase):
         """Test Case 6: Invalid Email format"""
         url = reverse("accounts:register")
         data = {
-            "username": "testuser6_invalid",
             "email": "testuser6_invalid_example.com",
             "password": "P@$$wOrd",
             "password2": "P@$$wOrd"
@@ -100,17 +94,17 @@ class AccountTests(TestCase):
 
     def test_successful_login(self):
         """Test Case 7: Successful Login"""
-        CustomUser.objects.create_user(username="testuser7_login", email="testuser7_login@example.com", password="StrongP@$$wOrd1") #Changed to CustomUser
+        CustomUser.objects.create_user(email="testuser7_login@example.com", password="StrongP@$$wOrd1") #Changed to CustomUser and email
         url = reverse("accounts:login")
-        data = {"username": "testuser7_login", "password": "StrongP@$$wOrd1"}
+        data = {"username": "testuser7_login@example.com", "password": "StrongP@$$wOrd1"} #changed the username to email
         response = self.client.post(url, data)
         self.assertRedirects(response, reverse("home:home"))
     
     def test_invalid_password(self):
         """Test Case 8: Invalid Password"""
-        CustomUser.objects.create_user(username="testuser8_wrongpwd", email="testuser8_wrongpwd@example.com", password="StrongP@$$wOrd1") #Changed to CustomUser
+        CustomUser.objects.create_user(email="testuser8_wrongpwd@example.com", password="StrongP@$$wOrd1") #Changed to CustomUser and email
         url = reverse("accounts:login")
-        data = {"username": "testuser8_wrongpwd", "password": "WrongP@$$wOrd"}
+        data = {"username": "testuser8_wrongpwd@example.com", "password": "WrongP@$$wOrd"} #changed the username to email
         response = self.client.post(url, data)
         form = response.context["login_form"]
         self.assertFalse(form.is_valid())
@@ -119,7 +113,7 @@ class AccountTests(TestCase):
     def test_non_existent_user(self):
         """Test Case 9: Non-Existent User"""
         url = reverse("accounts:login")
-        data = {"username": "testuser9_nonexistent", "password": "AnyP@$$wOrd"}
+        data = {"username": "testuser9_nonexistent@example.com", "password": "AnyP@$$wOrd"} #changed the username to email
         response = self.client.post(url, data)
         form = response.context["login_form"]
         self.assertFalse(form.is_valid())
@@ -127,11 +121,10 @@ class AccountTests(TestCase):
 
     def test_case_sensitivity_login(self):
         """Test Case 10: Case sensitivity"""
-        CustomUser.objects.create_user(username="testuser10_case", email="testuser10_case@example.com", password="StrongP@$$wOrd1") #Changed to CustomUser
+        CustomUser.objects.create_user(email="testuser10_case@example.com", password="StrongP@$$wOrd1") #Changed to CustomUser and email
         url = reverse("accounts:login")
-        data = {"username": "TESTUSER10_CASE", "password": "StrongP@$$wOrd1"}
+        data = {"username": "TESTUSER10_CASE@example.com", "password": "StrongP@$$wOrd1"} #changed the username to email
         response = self.client.post(url, data)
         form = response.context["login_form"]
         self.assertFalse(form.is_valid())
         self.assertEqual(response.status_code, 200)
-
