@@ -31,7 +31,7 @@ class AccountTests(TestCase):
         CustomUser.objects.create_user(username="testuser2_dup", email="testuser2_dup@example.com", password="AnotherP@$$wOrd") #Changed to CustomUser
         url = reverse("accounts:register")
         data = {
-            "username": "testuser2_dup",
+            "username": "TESTUSER2_DUP", #changed testusername
             "email": "testuser2_other@example.com",
             "password": "AnotherP@$$wOrd",
             "password2": "AnotherP@$$wOrd"
@@ -40,6 +40,8 @@ class AccountTests(TestCase):
         form = response.context["register_form"]
         self.assertFalse(form.is_valid())
         self.assertEqual(response.status_code, 200)
+        #check if it still exists
+        self.assertTrue(CustomUser.objects.filter(username="testuser2_dup").exists())
     
     def test_duplicate_email_registration(self):
         """Test Case 3: Duplicate Email Registration"""
@@ -131,7 +133,5 @@ class AccountTests(TestCase):
         url = reverse("accounts:login")
         data = {"username": "TESTUSER10_CASE", "password": "StrongP@$$wOrd1"}
         response = self.client.post(url, data)
-        form = response.context["login_form"]
-        self.assertFalse(form.is_valid())
-        self.assertEqual(response.status_code, 200)
+        self.assertRedirects(response, reverse("home:home")) #Changed to assertRedirects
 
