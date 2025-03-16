@@ -7,12 +7,12 @@ from django.core.exceptions import ValidationError
 class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = CustomUser
-        fields = ("username", "email")
-    
-    def clean_username(self):
-        username = self.cleaned_data.get("username")
-        if username:
-            username_lower = username.lower()
-            if CustomUser.objects.filter(username__iexact=username_lower).exists():
-                raise ValidationError("A user with that username already exists (case-insensitive).")
-        return username
+        fields = ("email",) # Only the email field is needed now.
+
+    def clean_email(self):
+      email = self.cleaned_data.get("email")
+      if email:
+            email_lower = email.lower()
+            if CustomUser.objects.filter(username__iexact=email_lower).exists():
+                raise ValidationError("A user with that email already exists (case-insensitive).")
+      return email
