@@ -1,7 +1,7 @@
 # Inside your_app/admin.py (e.g., focoquiz/admin.py)
 
 from django.contrib import admin
-from .models import Question, Choice  # Import your models
+from .models import Question, Choice, QuizResult  # Import your models
 from django.db import connection
 from django.http import HttpResponse  # Import HttpResponse
 
@@ -47,3 +47,6 @@ class QuestionAdmin(admin.ModelAdmin):
         # *** TEMPORARY DEBUGGING CODE - END ***
 
         return super().add_view(request, form_url, extra_context)
+@admin.register(QuizResult)
+class QuizResultAdmin(admin.ModelAdmin):
+    list_display = ['result_text', 'choice_1_count', 'choice_2_count', 'choice_3_count']
