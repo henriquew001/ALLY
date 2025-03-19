@@ -15,8 +15,9 @@ class Choice(models.Model):
 
 class QuizResult(models.Model):
     result_text = models.TextField()
-    choice_1_count = models.IntegerField(default=0)
-    choice_2_count = models.IntegerField(default=0)
-    choice_3_count = models.IntegerField(default=0)
+    is_choice_1_result = models.BooleanField(default=False)
+    is_choice_2_result = models.BooleanField(default=False)
+    is_choice_3_result = models.BooleanField(default=False)
+
     def __str__(self):
-      return self.result_text
+        return self.result_text

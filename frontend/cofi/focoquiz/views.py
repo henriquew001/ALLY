@@ -1,9 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from .models import Question, Choice, QuizResult
 from .forms import QuizForm
-from django.http import HttpResponse
-from django.db.models import Count
 from django.utils.translation import gettext as _
+from collections import Counter
 
 def quiz_view(request):
     if request.method == 'POST':
@@ -14,25 +13,23 @@ def quiz_view(request):
                 choice = Choice.objects.get(id=choice_id)
                 counts[choice.choice_number] += 1
 
-            results = QuizResult.objects.all()
+            # Find the most common choice type
+            most_common_choice_type = Counter(counts).most_common(1)[0][0]
 
-            best_match = None
-            highest_score = -1
+            # Get the corresponding result
+            try:
+                if most_common_choice_type == 1:
+                    best_match = QuizResult.objects.get(is_choice_1_result=True)
+                elif most_common_choice_type == 2:
+                    best_match = QuizResult.objects.get(is_choice_2_result=True)
+                elif most_common_choice_type == 3:
+                    best_match = QuizResult.objects.get(is_choice_3_result=True)
+                else:
+                    best_match = None
+            except QuizResult.DoesNotExist:
+                best_match = None
 
-            for result in results:
-                score = 0
-                if result.choice_1_count != 0:
-                    score = score + (counts[1] / result.choice_1_count)
-                if result.choice_2_count != 0:
-                    score = score + (counts[2] / result.choice_2_count)
-                if result.choice_3_count != 0:
-                    score = score + (counts[3] / result.choice_3_count)
-
-                if score > highest_score:
-                    highest_score = score
-                    best_match = result
-
-            if best_match is not None:
+            if best_match:
                 return render(request, 'focoquiz/result.html', {'result': best_match.result_text})
             else:
                 return render(request, 'focoquiz/error.html', {'error_message': _("No matching result found.")})
