@@ -258,11 +258,11 @@ footer {
     display: block;
     background-color: var(--color-primary); /* Hier wurde die Hintergrundfarbe geändert */
     color: white;
-    padding: 10px 20px;
+    padding: 10px 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin: 10px 0;
+    margin: 10px -10px;
     width: 100%;
     text-decoration: none;
   }
