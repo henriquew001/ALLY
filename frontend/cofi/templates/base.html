@@ -28,6 +28,13 @@
                     <a href="{% url 'about' %}">{% translate "About" %}</a>
                     <a href="#">{% translate "Services" %}</a>
                     <a href="#">{% translate "Contact" %}</a>
+                    {% if user.is_authenticated %}
+                        {% with administrator_group='Administrator' %}
+                            {% if administrator_group in user.groups.all|stringformat:"s" %}
+                                <a href="{% url 'admin:index' %}">{% translate "Users" %}</a>
+                            {% endif %}
+                        {% endwith %}
+                    {% endif %}
                 </div>
             </nav>
             <div class="header-actions">
@@ -53,6 +60,9 @@
                                 {{ user.email|first|upper }}
                             </div>
                             <div class="user-dropdown-content">
+                                {% if user.is_staff %}
+                                    <a href="{% url 'admin:index' %}">{% translate "Admin" %}</a>
+                                {% endif %}
                                 <a href="#">{% translate "Settings" %}</a>
                                 <a href="{% url 'accounts:logout' %}">{% translate "Logout" %}</a>
                             </div>

@@ -6,7 +6,7 @@ from django.urls import reverse
 from .forms import CustomUserCreationForm
 from django.http import HttpResponse
 from .models import CustomUser # Add the import of your CustomUser model
-
+from django.contrib.auth.models import Group
 
 class AccountTests(TestCase):
     def setUp(self):
@@ -136,3 +136,17 @@ class AccountTests(TestCase):
           self.assertEqual(response.status_code, 200)
         except:
           self.assertRedirects(response, reverse("home:home")) #If we get a redirect, the user does exist and is valid.
+
+    def test_user_added_to_user_group_on_registration(self):
+        """Test Case: User is added to the 'User' group upon registration."""
+        url = reverse("accounts:register")
+        data = {
+            "email": "testuser_group@example.com",
+            "password": "StrongP@$$wOrd1",
+            "password2": "StrongP@$$wOrd1"
+        }
+        response = self.client.post(url, data)
+        self.assertRedirects(response, reverse("home:home"))
+        user = CustomUser.objects.get(email="testuser_group@example.com")
+        user_group = Group.objects.get(name="User")
+        self.assertTrue(user_group in user.groups.all())
