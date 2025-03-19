@@ -10,6 +10,8 @@ services:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_CHARACTER_SET: ${MYSQL_CHARACTER_SET}
+      MYSQL_COLLATION_SERVER: ${MYSQL_COLLATION_SERVER}
     volumes:
       - consciousfit_data_dev:/var/lib/mysql
       - ./my.cnf:/etc/mysql/conf.d/my.cnf # Zum Testen, in Prod entfernen oder auf bestimmte Netzwerke beschränken, damit man direkt auf die Datenbnak zugreifen kann

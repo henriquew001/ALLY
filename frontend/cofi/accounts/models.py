@@ -34,7 +34,7 @@ class CustomUser(AbstractUser):
     # Füge hier zusätzliche Felder hinzu, falls benötigt
     # Beispiel:
     # profile_picture = models.ImageField(upload_to='profile_pics/', blank=True, null=True)
-    # birth_date = models.DateField(blank=True, null=True)
+    birth_date = models.DateField(blank=True, null=True)
     username = models.CharField(
         max_length=150,
         unique=False,  # Allow duplicate usernames
