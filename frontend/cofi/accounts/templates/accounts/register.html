@@ -4,7 +4,20 @@
 <h2>Register</h2>
 <form method="post">
     {% csrf_token %}
-    {{ register_form.as_p }}
+    <p>
+        <label for="id_email">Email:</label>
+        <input type="email" name="email" placeholder="Email" maxlength="254" required id="id_email" autocomplete="off">
+    </p>
+
+    <p>
+        <label for="id_password">Password:</label>
+        <input type="password" name="password" placeholder="Password" maxlength="128" required id="id_password" autocomplete="new-password">
+    </p>
+
+    <p>
+        <label for="id_password2">Password2:</label>
+        <input type="password" name="password2" placeholder="Confirm Password" required id="id_password2" autocomplete="new-password">
+    </p>
     <button type="submit">Register</button>
 </form>
 {% endblock %}
