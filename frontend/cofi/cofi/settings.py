@@ -22,12 +22,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-*ryw^4*an$ffr*g9ig&=t9!)!fhg*zv31nms4(b5i6y)3@t7_m'
+# Use environment variable for secret key.
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-*ryw^4*an$ffr*g9ig&=t9!)!fhg*zv31nms4(b5i6y)3@t7_m')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'  # Better way to handle boolean
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [h.strip() for h in os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')]
 
 
 # Application definition
@@ -35,6 +36,8 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'home',
     'accounts',
+    'focoquiz',
+    'about',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -55,7 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.locale.LocaleMiddleware', 
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'cofi.urls'
@@ -63,7 +66,7 @@ ROOT_URLCONF = 'cofi.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "templates")], # where to search for templates
+        'DIRS': [BASE_DIR / "templates"], # where to search for templates
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -85,12 +88,12 @@ AUTH_USER_MODEL = 'accounts.CustomUser'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 # Construct the database URL dynamically
-DB_ENGINE = os.environ.get("DB_ENGINE", "mysql")  # You can change this if you use a different database
-DB_USER = os.environ.get("DB_USER", "root")  # Default to "root" if not set
-DB_PASSWORD = os.environ.get("DB_PASSWORD", "testpw")  # Default to "example"
-DB_HOST = os.environ.get("DB_HOST", "db_dev")  # Default to "db_dev"
-DB_PORT = os.environ.get("DB_PORT", "3306")  # Default to "3306"
-DB_NAME = os.environ.get("DB_DATABASE", "conscious_fit_dev")  # Default to "cofi"
+DB_ENGINE = os.environ.get("DB_ENGINE", "mysql")
+DB_USER = os.environ.get("DB_USER", "app_user")  # Correct default user
+DB_PASSWORD = os.environ.get("DB_PASSWORD", "testpw") # Use environment variable
+DB_HOST = os.environ.get("DB_HOST", "db_dev")
+DB_PORT = os.environ.get("DB_PORT", "3306")
+DB_NAME = os.environ.get("DB_DATABASE", "conscious_fit_dev")
 
 DB_TEST_NAME = os.environ.get("DB_TEST_DATABASE", "conscious_fit_dev")
 
@@ -99,12 +102,18 @@ DATABASE_URL = f"{DB_ENGINE}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_N
 DATABASES = {
     "default": dj_database_url.parse(DATABASE_URL)
 }
-if "DB_ENGINE" in os.environ:
-    if os.environ["DB_ENGINE"] == "mysql":
-        DATABASES["default"]["TEST"] = {
-            "NAME": DB_TEST_NAME
-        }
 
+# Add OPTIONS *only* for MySQL.  Crucially important for character set.
+if DB_ENGINE == "mysql":
+    DATABASES["default"]["OPTIONS"] = {
+        'charset': 'utf8mb4',
+        'collation': 'utf8mb4_unicode_ci',  # Or utf8mb4_0900_ai_ci
+        'connect_timeout': 10,
+        'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+    }
+    DATABASES["default"]["TEST"] = { # Added comma here!
+        "NAME": DB_TEST_NAME
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -132,7 +141,7 @@ LANGUAGE_CODE = 'en'
 
 LANGUAGES = [
     ('en', 'English'),
-    ('de', 'German'),  # Füge hier weitere Sprachen hinzu, die du unterstützen möchtest
+    ('de', 'German'),
     ('pt-br', 'Spanish')
 ]
 TIME_ZONE = 'UTC'
@@ -149,11 +158,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # Ordner in dem alle statischen Dateien nach 'collectstatic' gesammelt werden.
+STATIC_ROOT = BASE_DIR / 'staticfiles' # Use pathlib
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'), # Ordner in dem sich die statischen Dateien des Projekts befinden.
-    # os.path.join(BASE_DIR, 'home', 'static'), # Ordner in dem sich die statischen Dateien des Projekts befinden.
+    BASE_DIR / 'static',
 ]
 
 # Default primary key field type

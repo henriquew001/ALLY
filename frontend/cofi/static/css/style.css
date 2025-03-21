@@ -235,3 +235,45 @@ footer {
     margin-right: 30px; 
 }
 
+/* about page */
+.about-container {
+    display: flex; /* Zeigt die Personen nebeneinander an */
+    flex-wrap: wrap; /* Ermöglicht Umbruch, wenn nicht genug Platz ist */
+    justify-content: space-around; /* Verteilt die Personen gleichmäßig */
+    max-width: 1200px; /* Begrenzt die maximale Breite des Containers */
+    margin: 0 auto; /* Zentriert den Container horizontal */
+    padding: 20px;
+  }
+  
+  .about-person {
+    flex: 1; /* Nimmt so viel Platz wie möglich ein */
+    min-width: 300px; /* Minimale Breite für jede Person */
+    margin: 10px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .purchase-button { /* Hier wurde about-button zu purchase-button geändert */
+    display: block;
+    background-color: var(--color-primary); /* Hier wurde die Hintergrundfarbe geändert */
+    color: white;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px -10px;
+    width: 100%;
+    text-decoration: none;
+  }
+  
+  .purchase-button:hover { /* Hier wurde about-button zu purchase-button geändert */
+    background-color: #0056b3; /* Dunklere Farbe beim Hover */
+  
+  /* Zusätzliches Styling für hr */
+  hr {
+    border: none;
+    border-top: 1px solid #ddd; /* Beispielhafte Farbe und Stil */
+    margin: 20px 0;
+  }
+  

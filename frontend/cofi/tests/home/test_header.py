@@ -15,7 +15,8 @@ class HeaderTest(TestCase):
 
         # Überprüft, ob die Navigationslinks vorhanden sind
         self.assertContains(response, f'<a href="{reverse("home:home")}">Home</a>')
-        self.assertContains(response, '<a href="#">About</a>')
+        self.assertContains(response, f'<a href="{reverse("focoquiz:quiz")}">Quiz</a>') #Anpassung!
+        self.assertContains(response, f'<a href="{reverse("about")}">About</a>') # Anpassung
         self.assertContains(response, '<a href="#">Services</a>')
         self.assertContains(response, '<a href="#">Contact</a>')
     

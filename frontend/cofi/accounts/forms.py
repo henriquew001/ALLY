@@ -1,18 +1,22 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import CustomUser
-from django.core.exceptions import ValidationError
 
+class CustomUserCreationForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput) #add the PasswordInput widget
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={
+        'placeholder': 'Confirm Password'
+    }))
 
-class CustomUserCreationForm(UserCreationForm):
-    class Meta(UserCreationForm.Meta):
+    class Meta:
         model = CustomUser
-        fields = ("email",) # Only the email field is needed now.
+        fields = ('email', 'password', 'password2')
 
-    def clean_email(self):
-      email = self.cleaned_data.get("email")
-      if email:
-            email_lower = email.lower()
-            if CustomUser.objects.filter(username__iexact=email_lower).exists():
-                raise ValidationError("A user with that email already exists (case-insensitive).")
-      return email
+    def clean(self):
+        cleaned_data = super().clean()
+        password = cleaned_data.get('password')
+        password2 = cleaned_data.get('password2')
+
+        if password != password2:
+            raise forms.ValidationError("Passwords do not match")
+
+        return cleaned_data

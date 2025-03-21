@@ -64,7 +64,7 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cofi.settings')
 django.setup()
 
 User = get_user_model()
-if User.objects.filter(username='admin').exists():
+if User.objects.filter(email='admin@example.com').exists():
     print('EXISTS')
 ")
 
@@ -84,4 +84,3 @@ echo "Superuser check completed."
 # Start Django server
 echo "Starting Django server..."
 exec python manage.py runserver 0.0.0.0:8000
-
