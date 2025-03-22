@@ -257,12 +257,12 @@ footer {
 
   .about-person-image {
     /* Hier kommen die Stilregeln für die Bilder */
-    width: 100%;
+    width: 250px;
     border-radius: 5px;
     margin-bottom: 10px;
-    max-width: 250px; /* Maximale Breite von 250 Pixeln */
+    max-width: 100%; /* Maximale Breite von 250 Pixeln */
     height: auto; /* Höhe wird proportional angepasst */
-    /*display: block; /* Macht das Bild zu einem Blockelement, damit es die volle Breite einnimmt */
+    display: block; /* Macht das Bild zu einem Blockelement, damit es die volle Breite einnimmt */
     margin: 0 auto; /* Zentriert das Bild horizontal */
   }
 
