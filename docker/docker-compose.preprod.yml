@@ -4,11 +4,15 @@ services:
     env_file:
       - ./.env
       - ./.env.preprod
+    environment:
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
     volumes:
       - consciousfit_data_preprod:/var/lib/mysql
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "mysql", "-u", "${DB_USER}", "-p${DB_PASSWORD}", "-e", "SELECT 1;"]
+      test: ["CMD", "mysql", "-u", "root", "-p${DB_ROOT_PASSWORD}", "-e", "SELECT 1;"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -17,7 +21,7 @@ services:
 
   # backend_preprod:
   #   build:
-  #     context: ../
+  #     context: ../do
   #     dockerfile: docker/Dockerfile_python
   #   env_file:
   #     - .env

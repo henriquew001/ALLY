@@ -5,8 +5,8 @@ services:
       - .env
       - .env.djangotest
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MYSQL_USER: ${DB_USER}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
       - consciousfit_data_djangotest:/var/lib/mysql
