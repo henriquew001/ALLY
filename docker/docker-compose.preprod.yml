@@ -54,8 +54,8 @@ services:
     env_file:
       - .env
       - .env.preprod
-    ports:
-      - "8000:8000"
+    # ports:
+    #   - "8000:8000"
     depends_on:
       # backend_preprod:
       #   condition: service_healthy
@@ -64,7 +64,7 @@ services:
     volumes:
       - ../frontend/cofi:/app # For development
       - ../.cache_cofi:/root/.cache
-    entrypoint: ["/app/entrypoint.sh"]
+    entrypoint: ["/app/entrypoint_prod.sh"]
     # command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
     restart: unless-stopped
     healthcheck:
@@ -74,6 +74,19 @@ services:
         retries: 3
     networks:
         - cofi-network_preprod
+        
+  web:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      frontend_preprod:
+        condition: service_healthy
+    networks:
+      - cofi-network_preprod
 
 volumes:
   consciousfit_data_preprod:

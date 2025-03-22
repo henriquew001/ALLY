@@ -6,3 +6,4 @@ dj-database-url
 django-allauth
 pyjwt
 cryptography
+gunicorn
