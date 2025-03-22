@@ -40,7 +40,7 @@ header {
     /*flex-direction: column; /* Elemente untereinander anordnen */
     align-items: center; /* Horizontale Zentrierung */
     justify-content: center; /* vertikale Zentrierung */
-    padding: 10px 20px; /* Innenabstand */
+    padding: 10px 15px; /* Innenabstand */
 }
 
 .header-content {
@@ -50,7 +50,11 @@ header {
     align-items: center;
     justify-content: space-between;
 }
-
+.header-actions{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
 .active-language-display {
     display: flex;
     align-items: center;
@@ -63,7 +67,7 @@ header {
 .active-language-flag {
     width: 30px; /* Adjust size as needed */
     height: auto; /* Adjust size as needed */
-    margin-right: 2rem;
+    /* margin-right: 2rem; */
     vertical-align: middle;
     border-radius: 2px;
     cursor: pointer; /* Add a pointer cursor on hover */
@@ -155,6 +159,11 @@ nav a:hover {
     text-decoration: underline;
 }
 
+.auth-nav {
+    display: flex;
+    /* margin-right: 20px;  Entfernt den Abstand da er nicht mehr benötigt wird */
+}
+
 main {
     width: 80%;
     margin: 5rem auto 2rem; /* Fügt Abstand hinzu, um den fixierten Header zu berücksichtigen */
@@ -171,3 +180,112 @@ footer {
     text-align: center;
     padding: 1rem 0;
 }
+
+/* User Avatar und Dropdown */
+.user-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.user-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-image: linear-gradient(to right, #a83f2a 50%, #231304 50%);
+    color: white;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.user-dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 120px;
+    box-shadow: var(--box-shadow-default);
+    z-index: 1;
+    right: 0;
+    border-radius: 2px;
+}
+
+.user-dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.user-dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.user-dropdown:hover .user-dropdown-content {
+    display: block;
+}
+
+.auth-section{
+    display: flex;
+    align-items: center;
+    margin-right: 30px; 
+}
+
+/* about page */
+.about-container {
+    display: flex; /* Zeigt die Personen nebeneinander an */
+    flex-wrap: wrap; /* Ermöglicht Umbruch, wenn nicht genug Platz ist */
+    justify-content: space-around; /* Verteilt die Personen gleichmäßig */
+    max-width: 1200px; /* Begrenzt die maximale Breite des Containers */
+    margin: 0 auto; /* Zentriert den Container horizontal */
+    padding: 20px;
+  }
+  
+  .about-person {
+    flex: 1; /* Nimmt so viel Platz wie möglich ein */
+    min-width: 300px; /* Minimale Breite für jede Person */
+    margin: 10px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .about-person-image {
+    /* Hier kommen die Stilregeln für die Bilder */
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    max-width: 250px; /* Maximale Breite von 250 Pixeln */
+    height: auto; /* Höhe wird proportional angepasst */
+    /*display: block; /* Macht das Bild zu einem Blockelement, damit es die volle Breite einnimmt */
+    margin: 0 auto; /* Zentriert das Bild horizontal */
+  }
+
+  .purchase-button { /* Hier wurde about-button zu purchase-button geändert */
+    display: block;
+    background-color: var(--color-primary); /* Hier wurde die Hintergrundfarbe geändert */
+    color: white;
+    padding: 10px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px -10px;
+    width: 100%;
+    text-decoration: none;
+  }
+  
+  .purchase-button:hover { /* Hier wurde about-button zu purchase-button geändert */
+    background-color: #0056b3; /* Dunklere Farbe beim Hover */
+  
+  /* Zusätzliches Styling für hr */
+  hr {
+    border: none;
+    border-top: 1px solid #ddd; /* Beispielhafte Farbe und Stil */
+    margin: 20px 0;
+  }
+  

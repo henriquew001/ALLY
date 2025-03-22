@@ -254,6 +254,18 @@ footer {
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
+
+  .about-person-image {
+    /* Hier kommen die Stilregeln für die Bilder */
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    max-width: 250px; /* Maximale Breite von 250 Pixeln */
+    height: auto; /* Höhe wird proportional angepasst */
+    /*display: block; /* Macht das Bild zu einem Blockelement, damit es die volle Breite einnimmt */
+    margin: 0 auto; /* Zentriert das Bild horizontal */
+  }
+
   .purchase-button { /* Hier wurde about-button zu purchase-button geändert */
     display: block;
     background-color: var(--color-primary); /* Hier wurde die Hintergrundfarbe geändert */

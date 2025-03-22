@@ -19,7 +19,7 @@ COPY docker/frontend/requirements_django.txt /app/requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the code
-COPY frontend/cofi /app/
+# COPY frontend/cofi /app/
 
 # Make the entrypoint script executable
 #COPY docker/frontend/entrypoint_django.sh /app/entrypoint.sh
