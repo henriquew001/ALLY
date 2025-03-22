@@ -2,14 +2,11 @@ services:
   db_djangotest:
     image: mariadb:10.11.6  # Use the official MariaDB image
     env_file:
-      - .env.dev
+      - .env.djangotest
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_CHARACTER_SET: ${MYSQL_CHARACTER_SET}
-      MYSQL_COLLATION_SERVER: ${MYSQL_COLLATION_SERVER}
     volumes:
       - consciousfit_data_djangotest:/var/lib/mysql
       - ./my.cnf:/etc/mysql/conf.d/my.cnf # Zum Testen, in Prod entfernen oder auf bestimmte Netzwerke beschränken, damit man direkt auf die Datenbnak zugreifen kann
@@ -29,18 +26,15 @@ services:
   #     context: ../
   #     dockerfile: docker/Dockerfile_python
   #   env_file:
-  #     - .env
+  #     - .env.djangotest
   #   ports:
   #     - "8001:8000"
   #   depends_on:
-  #     db_dev:
+  #     db_djangotest:
   #       condition: service_healthy
   #   environment:
   #     - PYTHONPATH=/app
-  #     - DATABASE_URL=mysql+pymysql://${DB_USER}:${DB_PASSWORD}@db_dev:3306/${DB_DATABASE} # Geändert zu db_dev
-  #     - SECRET_KEY=${SECRET_KEY}
-  #     - ENV=dev
-  #     - DEBUG=True
+  #     - DATABASE_URL=mysql+pymysql://${DB_USER}:${DB_PASSWORD}@db_djangotest:3306/${DB_DATABASE}
   #   volumes:
   #     - ../backend/app:/app  # Für Entwicklung
   #     - ../.cache:/root/.cache
@@ -59,19 +53,16 @@ services:
       context: ../
       dockerfile: docker/frontend/Dockerfile_djangotest
     env_file:
-      - .env.dev
+      - .env.djangotest
     ports:
       - "8003:8000"
     depends_on:
-      # backend_dev:
+      # backend_djangotest:
       #   condition: service_healthy
       db_djangotest:
         condition: service_healthy
     environment:
       - SECRET_KEY=${SECRET_KEY}
-      - DEBUG=True
-      - ENV=test
-      - DB_HOST=db_djangotest
     volumes:
       - ../frontend/cofi:/app # For development
       # - ../frontend/cofi_test:/app/test # For development

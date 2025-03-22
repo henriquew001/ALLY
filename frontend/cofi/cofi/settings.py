@@ -95,7 +95,7 @@ DB_HOST = os.environ.get("DB_HOST", "db_dev")
 DB_PORT = os.environ.get("DB_PORT", "3306")
 DB_NAME = os.environ.get("DB_DATABASE", "conscious_fit_dev")
 
-DB_TEST_NAME = os.environ.get("DB_TEST_DATABASE", "conscious_fit_dev")
+DB_TEST_NAME = os.environ.get("DB_TEST_DATABASE", "conscious_fit_testing")
 
 DATABASE_URL = f"{DB_ENGINE}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 

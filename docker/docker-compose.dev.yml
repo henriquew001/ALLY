@@ -1,5 +1,3 @@
-# version: "3.8"
-
 services:
   db_dev:
     image: mariadb:10.11.6  # Use the official MariaDB image
