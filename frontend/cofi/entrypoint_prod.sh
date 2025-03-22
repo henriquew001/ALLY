@@ -81,7 +81,6 @@ fi
 
 echo "Superuser check completed."
 
-# Start Django server
-echo "Starting Django server..."
-exec gunicorn --workers 3 --bind 0.0.0.0:8000 cofi.wsgi:application
-echo "Nach dem Start des Django Servers..."
+# Start Gunicorn server
+echo "Starting Gunicorn server..."
+exec gunicorn cofi.wsgi:application --bind 0.0.0.0:8000 --workers 3

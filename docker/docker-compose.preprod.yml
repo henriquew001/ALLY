@@ -54,7 +54,7 @@ services:
     env_file:
       - .env
       - .env.preprod
-    # ports:
+    # ports: # Port-Weiterleitung entfernt
     #   - "8000:8000"
     depends_on:
       # backend_preprod:
@@ -64,6 +64,7 @@ services:
     volumes:
       - ../frontend/cofi:/app # For development
       - ../.cache_cofi:/root/.cache
+      - static_volume:/app/staticfiles # hinzugefügt
     entrypoint: ["/app/entrypoint_prod.sh"]
     # command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
     restart: unless-stopped
@@ -74,22 +75,30 @@ services:
         retries: 3
     networks:
         - cofi-network_preprod
-        
+
   web:
-    image: nginx:latest
+    build:
+      context: .
+      dockerfile: Dockerfile_nginx
     ports:
       - "80:80"
-      - "443:443"
+      # - "443:443" # Port 443 entfernt
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - static_volume:/app/staticfiles # hinzugefügt
     depends_on:
       frontend_preprod:
         condition: service_healthy
     networks:
       - cofi-network_preprod
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost/"]
+        interval: 30s
+        timeout: 10s
+        retries: 3
 
 volumes:
   consciousfit_data_preprod:
+  static_volume: # hinzugefügt
 
 networks:
   cofi-network_preprod:
