@@ -52,8 +52,8 @@ services:
 
   frontend_preprod:
     build:
-      context: .
-      dockerfile: Dockerfile_django.preprod
+      context: ../
+      dockerfile: docker/Dockerfile_django.preprod
     env_file:
       - .env
       - .env.preprod

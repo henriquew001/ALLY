@@ -7,8 +7,9 @@ WORKDIR /app
 # Install necessary system packages
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-    build-essential libmariadb3 libmariadb-dev-compat \
-    libmariadb-dev \
+    build-essential \
+    curl \
+    libmariadb3 libmariadb-dev-compat libmariadb-dev \
     python3 python3-pip pkg-config && \
     rm -rf /var/lib/apt/lists/*
 

@@ -83,4 +83,5 @@ echo "Superuser check completed."
 
 # Start Django server
 echo "Starting Django server..."
-exec python manage.py runserver 0.0.0.0:8000
+exec python manage.py runserver 0.0.0.0:8000 --verbosity 3 --traceback
+echo "Nach dem Start des Django Servers..."
