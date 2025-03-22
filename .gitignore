@@ -43,3 +43,4 @@ Thumbs.db
 # Test results
 report.html
 backend/app/report.html
+.vscode/extensions.json

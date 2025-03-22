@@ -2,18 +2,11 @@ services:
   db_preprod:
     image: mariadb:10.11.6  # Use the official MariaDB image
     env_file:
-      - .env
-      - .env.preprod
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
+      - ./.env
+      - ./.env.preprod
     volumes:
       - consciousfit_data_preprod:/var/lib/mysql
-      - ./my.cnf:/etc/mysql/conf.d/my.cnf # Zum Testen, in Prod entfernen oder auf bestimmte Netzwerke beschränken, damit man direkt auf die Datenbnak zugreifen kann
     restart: unless-stopped
-    ports:
-      - "3306:3306"
     healthcheck:
       test: ["CMD", "mysql", "-u", "${DB_USER}", "-p${DB_PASSWORD}", "-e", "SELECT 1;"]
       interval: 30s

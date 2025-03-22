@@ -4,10 +4,6 @@ services:
     env_file:
       - .env
       - .env.dev
-    environment:
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
       - consciousfit_data_dev:/var/lib/mysql
       - ./my.cnf:/etc/mysql/conf.d/my.cnf # Zum Testen, in Prod entfernen oder auf bestimmte Netzwerke beschränken, damit man direkt auf die Datenbnak zugreifen kann
