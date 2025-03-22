@@ -1,40 +1,42 @@
 services:
-  db_djangotest:
+  db_preprod:
     image: mariadb:10.11.6  # Use the official MariaDB image
     env_file:
-      - .env.djangotest
+      - .env
+      - .env.preprod
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - consciousfit_data_djangotest:/var/lib/mysql
+      - consciousfit_data_preprod:/var/lib/mysql
       - ./my.cnf:/etc/mysql/conf.d/my.cnf # Zum Testen, in Prod entfernen oder auf bestimmte Netzwerke beschränken, damit man direkt auf die Datenbnak zugreifen kann
     restart: unless-stopped
-    # ports:
-    #   - "3306:3306"
+    ports:
+      - "3306:3306"
     healthcheck:
       test: ["CMD", "mysql", "-u", "${DB_USER}", "-p${DB_PASSWORD}", "-e", "SELECT 1;"]
       interval: 30s
       timeout: 10s
       retries: 3
     networks:
-      - cofi-network-djangotest
+      - cofi-network_preprod
 
-  # backend_djangotest:
+  # backend_preprod:
   #   build:
   #     context: ../
   #     dockerfile: docker/Dockerfile_python
   #   env_file:
-  #     - .env.djangotest
+  #     - .env
+  #     - .env.preprod
   #   ports:
   #     - "8001:8000"
   #   depends_on:
-  #     db_djangotest:
+  #     db_preprod:
   #       condition: service_healthy
   #   environment:
   #     - PYTHONPATH=/app
-  #     - DATABASE_URL=mysql+pymysql://${DB_USER}:${DB_PASSWORD}@db_djangotest:3306/${DB_DATABASE}
+  #     - DATABASE_URL=mysql+pymysql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:3306/${DB_DATABASE}
   #   volumes:
   #     - ../backend/app:/app  # Für Entwicklung
   #     - ../.cache:/root/.cache
@@ -46,42 +48,39 @@ services:
   #     timeout: 10s
   #     retries: 3
   #   networks:
-  #     - cofi-network-djangotest
+  #     - cofi-network_preprod
 
-  frontend_djangotest:
+  frontend_preprod:
     build:
-      context: ../
-      dockerfile: docker/frontend/Dockerfile_djangotest
+      context: .
+      dockerfile: Dockerfile_django.preprod
     env_file:
-      - .env.djangotest
+      - .env
+      - .env.preprod
     ports:
-      - "8003:8000"
+      - "8000:8000"
     depends_on:
-      # backend_djangotest:
+      # backend_preprod:
       #   condition: service_healthy
-      db_djangotest:
+      db_preprod:
         condition: service_healthy
-    environment:
-      - SECRET_KEY=${SECRET_KEY}
     volumes:
       - ../frontend/cofi:/app # For development
-      # - ../frontend/cofi_test:/app/test # For development
       - ../.cache_cofi:/root/.cache
-    command: ["sh", "-c", "sleep 5 && while true; do pytest /app/tests /app/accounts --html=/app/tests/report.html --self-contained-html; sleep 9; done"]
-    # command: ["ls", "-la"]
-    # command: ["sh", "entrypoint.sh"]
-    restart: on-failure
+    entrypoint: ["/app/entrypoint.sh"]
+    # command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+    restart: unless-stopped
     healthcheck:
         test: ["CMD", "curl", "-f", "http://localhost:8000/"]
         interval: 30s
         timeout: 10s
         retries: 3
     networks:
-        - cofi-network-djangotest
+        - cofi-network_preprod
 
 volumes:
-  consciousfit_data_djangotest:
+  consciousfit_data_preprod:
 
 networks:
-  cofi-network-djangotest:
+  cofi-network_preprod:
     driver: bridge
