@@ -25,6 +25,9 @@ def register_request(request):
     return render(request=request, template_name="accounts/register.html", context={"register_form": form})
 
 def login_request(request):
+    if request.user.is_authenticated:
+        return redirect(reverse("home:home"))  # Weiterleitung, wenn der Benutzer eingeloggt ist
+
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():

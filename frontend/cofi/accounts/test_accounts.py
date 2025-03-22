@@ -5,6 +5,7 @@ from django.urls import reverse
 from .models import CustomUser
 from django.contrib.auth.models import Group
 from django.http import HttpResponse
+from django.test import Client
 
 @pytest.mark.django_db
 def test_successful_user_registration(client):
@@ -201,3 +202,42 @@ def test_registration_form_fields_not_prefilled(client):
     # Check that the password fields are not displayed as text
     assert '<input type="text" name="password"' not in str(response.content)
     assert '<input type="text" name="password2"' not in str(response.content)
+
+@pytest.mark.django_db
+def test_logged_in_user_cannot_access_login_page(client: Client):
+    """
+    Testet, ob ein eingeloggter Benutzer nicht auf die Login-Seite zugreifen kann.
+    """
+    # 1. Erstelle einen Testbenutzer
+    user = CustomUser.objects.create_user(email="testuser_login@example.com", password="testpassword")
+
+    # 2. Logge den Benutzer ein
+    client.login(username="testuser_login@example.com", password="testpassword")
+
+    # 3. Rufe die Login-Seite auf
+    url = reverse("accounts:login")  # Ersetze "login" durch den Namen deiner Login-URL in urls.py
+    response = client.get(url)
+
+    # 4. Überprüfe, ob der Benutzer umgeleitet wurde (z.B. zu /)
+    assert response.status_code == 302  # 302 bedeutet "Found" (Weiterleitung)
+    assert response.url != url # Überprüfe, ob die Weiterleitung nicht auf die selbe Seite geht.
+    # Optional: Überprüfe, ob der Benutzer auf die Startseite umgeleitet wurde
+    assert response.url == reverse("home:home")
+
+    # 5. Überprüfe, ob die Login Seite nicht aufgerufen wurde.
+    response = client.get(url, follow=True)
+    assert response.status_code == 200
+    assert url not in response.request['PATH_INFO']
+
+@pytest.mark.django_db
+def test_logged_out_user_can_access_login_page(client: Client):
+    """
+    Testet, ob ein ausgeloggter Benutzer auf die Login-Seite zugreifen kann.
+    """
+    # 1. Rufe die Login-Seite auf
+    url = reverse("accounts:login")  # Ersetze "login" durch den Namen deiner Login-URL in urls.py
+    response = client.get(url)
+
+    # 2. Überprüfe, ob der Benutzer die Login-Seite sehen kann
+    assert response.status_code == 200
+    assert url in response.request['PATH_INFO']
