@@ -266,18 +266,22 @@ footer {
     margin: 0 auto; /* Zentriert das Bild horizontal */
   }
 
-  .purchase-button { /* Hier wurde about-button zu purchase-button geändert */
-    display: block;
-    background-color: var(--color-primary); /* Hier wurde die Hintergrundfarbe geändert */
+  .purchase-button {
+    display: inline-flex; /* Changed to inline-flex for better centering */
+    align-items: center; /* Vertically center the text */
+    justify-content: center; /* Horizontally center the text */
+    background-color: var(--color-primary);
     color: white;
-    padding: 10px 10px;
+    padding: 10px 20px; /* Increased horizontal padding for better spacing */
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin: 10px -10px;
-    width: 100%;
+    margin: 10px 0; /* Changed to 0 on the sides */
+    width: auto; /* Changed to auto to fit the content */
     text-decoration: none;
-  }
+    text-align: center; /* Keep this for text alignment */
+    transition: background-color 0.3s ease; /* Add a smooth transition for hover effect */
+    }
   
   .purchase-button:hover { /* Hier wurde about-button zu purchase-button geändert */
     background-color: #0056b3; /* Dunklere Farbe beim Hover */
