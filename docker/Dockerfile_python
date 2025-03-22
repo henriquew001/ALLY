@@ -1,15 +1,11 @@
-#FROM python:3.13.2-slim-bookworm
-FROM python:3.13.2-alpine AS base
+FROM python:3.13.2-slim-bookworm
 
 WORKDIR /app
 
-# Install necessary system packages
-RUN apk add --no-cache mariadb-connector-c-dev gcc musl-dev
-
 # Install build-essential (gcc and related tools) AND MariaDB client libraries
-# RUN apt-get update && \
-#    apt-get install -y --no-install-recommends build-essential libmariadb3 libmariadb-dev-compat && \
-#    rm -rf /var/lib/apt/lists/*
+ RUN apt-get update && \
+    apt-get install -y --no-install-recommends build-essential libmariadb3 libmariadb-dev-compat && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install Python dependencies
 COPY docker/requirements.txt ./

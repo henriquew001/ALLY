@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   db_test:
     image: mariadb:10.11.6  # Use the official MariaDB image
@@ -17,7 +15,7 @@ services:
       timeout: 10s
       retries: 3
     networks:
-      - app-network_test
+      - cofi-network_test
 
   backend_test:
     build:
@@ -45,11 +43,11 @@ services:
       timeout: 10s
       retries: 3
     networks:
-      - app-network_test
+      - cofi-network_test
 
 volumes:
   consciousfit_data_test:
 
 networks:
-  app-network_test:
+  cofi-network_test:
     driver: bridge

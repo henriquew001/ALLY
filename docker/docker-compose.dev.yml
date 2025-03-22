@@ -24,7 +24,7 @@ services:
       timeout: 10s
       retries: 3
     networks:
-      - app-network_dev
+      - cofi-network_dev
 
   backend_dev:
     build:
@@ -54,7 +54,7 @@ services:
       timeout: 10s
       retries: 3
     networks:
-      - app-network_dev
+      - cofi-network_dev
 
   frontend_dev:
     build:
@@ -89,11 +89,11 @@ services:
         timeout: 10s
         retries: 3
     networks:
-        - app-network_dev
+        - cofi-network_dev
 
 volumes:
   consciousfit_data_dev:
 
 networks:
-  app-network_dev:
+  cofi-network_dev:
     driver: bridge
