@@ -40,7 +40,7 @@ header {
     /*flex-direction: column; /* Elemente untereinander anordnen */
     align-items: center; /* Horizontale Zentrierung */
     justify-content: center; /* vertikale Zentrierung */
-    padding: 10px 20px; /* Innenabstand */
+    padding: 10px 15px; /* Innenabstand */
 }
 
 .header-content {
