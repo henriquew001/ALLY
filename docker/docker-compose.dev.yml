@@ -4,7 +4,7 @@ services:
   db_dev:
     image: mariadb:10.11.6  # Use the official MariaDB image
     env_file:
-      - .env
+      - .env.dev
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}
@@ -31,7 +31,7 @@ services:
       context: ../
       dockerfile: docker/Dockerfile_python
     env_file:
-      - .env
+      - .env.dev
     ports:
       - "8001:8000"
     depends_on:
@@ -41,8 +41,6 @@ services:
       - PYTHONPATH=/app
       - DATABASE_URL=mysql+pymysql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:3306/${DB_DATABASE} # Geändert zu db_dev
       - SECRET_KEY=${SECRET_KEY}
-      - ENV=dev
-      - DEBUG=True
     volumes:
       - ../backend/app:/app  # Für Entwicklung
       - ../.cache:/root/.cache
@@ -61,7 +59,7 @@ services:
       context: ../
       dockerfile: docker/Dockerfile_django.dev
     env_file:
-      - .env
+      - .env.dev
     ports:
       - "8000:8000"
     depends_on:
@@ -70,12 +68,6 @@ services:
       db_dev:
         condition: service_healthy
     environment:
-      - SECRET_KEY=${SECRET_KEY}
-      - DEBUG=True
-      - ENV=dev
-      - DJANGO_SUPERUSER_USERNAME=admin@example.com
-      - DJANGO_SUPERUSER_EMAIL=admin@example.com
-      - DJANGO_SUPERUSER_PASSWORD=admin
       - ALLOWED_HOSTS=192.168.2.*,localhost,127.0.0.1
     volumes:
       - ../frontend/cofi:/app # For development

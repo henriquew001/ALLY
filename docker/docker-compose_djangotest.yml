@@ -2,7 +2,7 @@ services:
   db_djangotest:
     image: mariadb:10.11.6  # Use the official MariaDB image
     env_file:
-      - .env
+      - .env.dev
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}
@@ -59,7 +59,7 @@ services:
       context: ../
       dockerfile: docker/frontend/Dockerfile_djangotest
     env_file:
-      - .env
+      - .env.dev
     ports:
       - "8003:8000"
     depends_on:
@@ -71,9 +71,6 @@ services:
       - SECRET_KEY=${SECRET_KEY}
       - DEBUG=True
       - ENV=test
-      - DJANGO_SUPERUSER_USERNAME=admin
-      - DJANGO_SUPERUSER_EMAIL=admin@example.com
-      - DJANGO_SUPERUSER_PASSWORD=admin
       - DB_HOST=db_djangotest
     volumes:
       - ../frontend/cofi:/app # For development
