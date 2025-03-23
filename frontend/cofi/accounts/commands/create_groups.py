@@ -12,27 +12,43 @@ class Command(BaseCommand):
         user_group, created = Group.objects.get_or_create(name='User')
         guest_group, created = Group.objects.get_or_create(name='Guest')
 
-        # Check if the database is empty (newly initialized)
-        if Permission.objects.count() == 0:
-            # Assign all permissions to the Administrator group
-            all_permissions = Permission.objects.all()
-            admin_group.permissions.set(all_permissions)
-            self.stdout.write(self.style.SUCCESS('Successfully added all permissions to the Administrator group (new database).'))
-        else:
-            self.stdout.write(self.style.SUCCESS('Database is not empty. Administrator permissions not modified.'))
+        # Assign all permissions to the Administrator group
+        all_permissions = Permission.objects.all()
+        admin_group.permissions.set(all_permissions)
+        self.stdout.write(self.style.SUCCESS('Successfully added all permissions to the Administrator group.'))
 
-        # Content Editor Permissions (Beispiel: Blog)
-        # Hier musst du ggf. deine Models einfügen!
-        # Das Beispiel ist angenommener weise blog.models.Post
-        try:
-            content_type_blog = ContentType.objects.get(app_label='blog', model='post')
-            add_post = Permission.objects.get(codename='add_post', content_type=content_type_blog)
-            change_post = Permission.objects.get(codename='change_post', content_type=content_type_blog)
-            delete_post = Permission.objects.get(codename='delete_post', content_type=content_type_blog)
-            view_post = Permission.objects.get(codename='view_post', content_type=content_type_blog)
+        # Content Editor Permissions for CMS
+        content_editor_permissions = []
+        cms_models = ['recipe', 'lesson', 'additionalmaterial']  # Add your CMS models here
 
-            content_editor_group.permissions.add(add_post, change_post, delete_post, view_post)
-            self.stdout.write(self.style.SUCCESS('Successfully added Content Editor permissions for Blog.'))
-        except Exception as e:
-            self.stdout.write(self.style.ERROR(f'Error adding Blog permissions. Ensure your models are correct! Details: {e}'))
+        for model_name in cms_models:
+            try:
+                content_type = ContentType.objects.get(app_label='cms', model=model_name) # Assuming your CMS models are in the 'cms' app
+                add_perm = Permission.objects.get(codename=f'add_{model_name}', content_type=content_type)
+                change_perm = Permission.objects.get(codename=f'change_{model_name}', content_type=content_type)
+                delete_perm = Permission.objects.get(codename=f'delete_{model_name}', content_type=content_type)
+                view_perm = Permission.objects.get(codename=f'view_{model_name}', content_type=content_type)
+
+                content_editor_permissions.extend([add_perm, change_perm, delete_perm, view_perm])
+                self.stdout.write(self.style.SUCCESS(f'Successfully added Content Editor permissions for {model_name}.'))
+            except Exception as e:
+                self.stdout.write(self.style.ERROR(f'Error adding Content Editor permissions for {model_name}. Ensure your models are correct! Details: {e}'))
+
+        content_editor_group.permissions.set(content_editor_permissions)
+        self.stdout.write(self.style.SUCCESS('Successfully added Content Editor permissions for CMS.'))
+
+        # Guest Permissions (View only for examples)
+        guest_view_permissions = []
+        guest_view_models = ['recipe', 'lesson', 'additionalmaterial'] # You can specify which models guests can view
+        for model_name in guest_view_models:
+            try:
+                content_type = ContentType.objects.get(app_label='cms', model=model_name)
+                view_perm = Permission.objects.get(codename=f'view_{model_name}', content_type=content_type)
+                guest_view_permissions.append(view_perm)
+                self.stdout.write(self.style.SUCCESS(f'Successfully added Guest view permission for {model_name}.'))
+            except Exception as e:
+                self.stdout.write(self.style.ERROR(f'Error adding Guest view permission for {model_name}. Ensure your models are correct! Details: {e}'))
+        guest_group.permissions.set(guest_view_permissions)
+        self.stdout.write(self.style.SUCCESS('Successfully added Guest permissions.'))
+
         self.stdout.write(self.style.SUCCESS('Successfully created or updated groups and permissions.'))
