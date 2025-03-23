@@ -7,3 +7,4 @@ django-allauth
 pyjwt
 cryptography
 gunicorn
+Pillow
