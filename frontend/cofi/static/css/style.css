@@ -26,7 +26,8 @@ body {
 }
 
 header {
-    background-color: #fff;
+    /* background-color: #fff; */
+    background-color: rgba(255, 255, 255, 0.8); /* Weiß mit 50% Transparenz */
     color: var(--text-color-main);
     position: fixed; /* Header fixieren */
     top: 0;
@@ -39,6 +40,7 @@ header {
     align-items: center;
     justify-content: center;
     padding: 10px 15px;
+    
 }
 
 .header-content {
