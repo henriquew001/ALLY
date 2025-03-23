@@ -35,6 +35,7 @@ ALLOWED_HOSTS = [h.strip() for h in os.environ.get('ALLOWED_HOSTS', 'localhost,1
 
 INSTALLED_APPS = [
     'home',
+    'cofi',
     'accounts',
     'focoquiz',
     'about',

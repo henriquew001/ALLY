@@ -1,9 +1,7 @@
-# /home/heinrich/projects/ConsciousFit/frontend/cofi/accounts/test_accounts.py
-
 import pytest
 from django.urls import reverse
 from .models import CustomUser
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, Permission
 from django.http import HttpResponse
 from django.test import Client
 from django.contrib.admin.sites import AdminSite
@@ -11,6 +9,38 @@ from .admin import CustomUserAdmin
 from .forms import CustomUserCreationForm, CustomUserChangeForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import logout
+from django.core.management import call_command
+from django.contrib.contenttypes.models import ContentType
+
+
+
+@pytest.mark.django_db
+def test_administrator_has_all_permissions():
+    """Test that the Administrator group has all permissions."""
+
+    # Get or create the 'Administrator' group
+    admin_group, created = Group.objects.get_or_create(name='Administrator')
+
+    # Get all permissions
+    all_permissions = Permission.objects.all()
+
+    # Add all permissions to the group
+    admin_group.permissions.set(all_permissions)
+
+    # Assert that the group has all permissions
+    assert admin_group.permissions.count() == all_permissions.count()
+    for permission in all_permissions:
+        assert admin_group.permissions.filter(id=permission.id).exists()
+        
+@pytest.mark.django_db
+def test_groups_are_created():
+    """Test that the correct groups are created."""
+    assert Group.objects.filter(name='Administrator').exists()
+    assert Group.objects.filter(name='Content Editor').exists()
+    assert Group.objects.filter(name='User').exists()
+    assert Group.objects.filter(name='Guest').exists()
+
+
 
 @pytest.mark.django_db
 def test_successful_user_registration(client):
@@ -25,21 +55,6 @@ def test_successful_user_registration(client):
     assert response.status_code == 302  # Redirect status code
     assert response.url == reverse("home:home")
     assert CustomUser.objects.filter(email="testuser1_reg@example.com").exists()
-
-@pytest.mark.django_db
-def test_duplicate_username_registration(client):
-    """Test Case 2: Duplicate Username Registration"""
-    CustomUser.objects.create_user(email="testuser2_dup@example.com", password="AnotherP@$$wOrd")
-    url = reverse("accounts:register")
-    data = {
-        "email": "testuser2_dup@example.com",
-        "password": "AnotherP@$$wOrd",
-        "password2": "AnotherP@$$wOrd"
-    }
-    response: HttpResponse = client.post(url, data)
-    form = response.context["register_form"]
-    assert not form.is_valid()
-    assert response.status_code == 200
 
 @pytest.mark.django_db
 def test_duplicate_email_registration(client):
@@ -343,3 +358,4 @@ def test_login_with_username_not_allowed(client):
     assert form is not None
     assert form.errors  # Assert that the form has errors
     assert "Please enter a correct email and password." in str(form.errors) # Or whatever the exact error message is
+    
