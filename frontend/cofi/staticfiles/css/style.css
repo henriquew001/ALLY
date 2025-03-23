@@ -224,8 +224,8 @@ footer {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
     background-image: linear-gradient(to right, #a83f2a 50%, #231304 50%);
     color: white;
@@ -414,5 +414,5 @@ hr {
 .logo-container {
     display: flex;
     align-items: center;
-    gap: 10px; /* Abstand zwischen Logo und Flagge */
+    gap: 5px; /* Abstand zwischen Logo und Flagge */
 }

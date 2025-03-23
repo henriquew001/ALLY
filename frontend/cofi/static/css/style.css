@@ -414,5 +414,5 @@ hr {
 .logo-container {
     display: flex;
     align-items: center;
-    gap: 10px; /* Abstand zwischen Logo und Flagge */
+    gap: 5px; /* Abstand zwischen Logo und Flagge */
 }
