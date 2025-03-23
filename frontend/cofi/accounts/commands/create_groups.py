@@ -1,3 +1,5 @@
+# frontend/cofi/accounts/commands/create_groups.py
+
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
@@ -19,7 +21,7 @@ class Command(BaseCommand):
 
         # Content Editor Permissions for CMS
         content_editor_permissions = []
-        cms_models = ['recipe', 'lesson', 'additionalmaterial']  # Add your CMS models here
+        cms_models = ['recipe', 'lesson', 'additionalmaterial', 'package']  # Add your CMS models here
 
         for model_name in cms_models:
             try:
@@ -39,7 +41,7 @@ class Command(BaseCommand):
 
         # Guest Permissions (View only for examples)
         guest_view_permissions = []
-        guest_view_models = ['recipe', 'lesson', 'additionalmaterial'] # You can specify which models guests can view
+        guest_view_models = ['recipe', 'lesson', 'additionalmaterial', 'package'] # You can specify which models guests can view
         for model_name in guest_view_models:
             try:
                 content_type = ContentType.objects.get(app_label='cms', model=model_name)

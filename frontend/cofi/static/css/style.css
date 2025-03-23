@@ -2,7 +2,7 @@
 :root {
     --color-primary: #a83f2a; /* CFFarbe1 - Primary color */
     --color-secondary: #231304; /* CFFarbe2 - Secondary color */
-    --header-height: 11px;
+    --header-height: 10px;
     /* --font-main: Arial, sans-serif; */
     --bg-body: #f4f4f4;
     --text-color-main: #333;
