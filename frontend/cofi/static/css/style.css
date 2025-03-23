@@ -390,12 +390,3 @@ hr {
     align-items: center;
     gap: 10px; /* Abstand zwischen Logo und Flagge */
 }
-
-/* Navigation wurde entfernt */
-
-/* Hide the main-nav on smaller screens */
-@media (max-width: 768px) {
-    .main-nav {
-        display: none;
-    }
-}
