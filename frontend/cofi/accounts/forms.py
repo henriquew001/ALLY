@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.forms import UserChangeForm
 from .models import CustomUser
 
 class CustomUserCreationForm(forms.ModelForm):
@@ -20,3 +21,9 @@ class CustomUserCreationForm(forms.ModelForm):
             raise forms.ValidationError("Passwords do not match")
 
         return cleaned_data
+    
+class CustomUserChangeForm(UserChangeForm):
+    class Meta:
+        model = CustomUser
+        fields = ('email', 'is_active', 'is_staff', 'is_superuser') # Include all the fields you want to edit in the admin.
+        # exclude = ('password',) # if you want to exclude password from the form
