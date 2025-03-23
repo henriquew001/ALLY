@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'focoquiz',
     'cms',
     'about',
+    'recipes',
+    'ingredients',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

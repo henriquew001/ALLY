@@ -3,14 +3,6 @@
 from django.db import models
 from django.utils.text import slugify
 
-class Recipe(models.Model):
-    title = models.CharField(max_length=255)
-    content = models.TextField()
-    is_example = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.title
-
 class Lesson(models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
@@ -46,7 +38,6 @@ class Package(models.Model):
     discount_end_date = models.DateField(blank=True, null=True)
     additional_materials = models.ManyToManyField(AdditionalMaterial, related_name='included_in_packages', blank=True)
     lessons = models.ManyToManyField('Lesson', related_name='included_in_packages', blank=True)
-    recipes = models.ManyToManyField('Recipe', related_name='included_in_packages', blank=True)
     is_lifetime = models.BooleanField(default=False)
 
     def __str__(self):
