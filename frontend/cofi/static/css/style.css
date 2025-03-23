@@ -39,7 +39,7 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px 15px;
+    padding: 5px 10px;
     
 }
 
@@ -48,13 +48,13 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between; /* Verteilt die Elemente gleichmäßig */
-    gap: 20px; /* Abstand zwischen Hamburger, Logo und Header-Aktionen */
+    gap: 10px; /* Abstand zwischen Hamburger, Logo und Header-Aktionen */
 }
 
 .header-actions {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
 }
 
 .active-language-display {
@@ -128,12 +128,12 @@ header {
 }
 
 .logo {
-    height: 40px;
+    height: 30px;
     width: auto;
 }
 
 .brand-text {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     font-weight: bold;
     display: flex;
     align-items: center;
@@ -177,8 +177,8 @@ footer {
 }
 
 .user-avatar {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
     background-image: linear-gradient(to right, #a83f2a 50%, #231304 50%);
     color: white;
@@ -189,7 +189,7 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 0.9rem;
+    font-size: 1.1rem;
 }
 
 .user-dropdown-content {
@@ -218,10 +218,34 @@ footer {
     display: block;
 }
 
+.login-icon-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-image: linear-gradient(to right, #a83f2a 50%, #231304 50%);
+    color: white;
+    text-align: center;
+    line-height: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.login-icon {
+    font-size: 1.1rem; /* Passe die Größe des Symbols an */
+    color: white; /* Passe die Farbe des Symbols an */
+}
+
 .auth-section {
     display: flex;
     align-items: center;
-    margin-right: 30px;
+    margin-right: 20px;
+    gap: 10px;
 }
 
 /* about page */
@@ -236,7 +260,7 @@ footer {
 
 .about-person {
     flex: 1;
-    min-width: 300px;
+    min-width: 280px;
     margin: 10px;
     padding: 20px;
     border: 1px solid #ddd;
@@ -245,7 +269,7 @@ footer {
 }
 
 .about-person-image {
-    width: 250px;
+    width: 240px;
     border-radius: 5px;
     margin-bottom: 10px;
     max-width: 100%;
@@ -383,8 +407,8 @@ hr {
     display: flex;
     align-items: center;
     justify-content: space-between; /* Verteilt die Elemente gleichmäßig */
-    padding: 10px 20px;
-    gap: 20px; /* Abstand zwischen Hamburger, Logo und Header-Aktionen */
+    padding: 5px 10px;
+    gap: 10px; /* Abstand zwischen Hamburger, Logo und Header-Aktionen */
 }
 
 .logo-container {
