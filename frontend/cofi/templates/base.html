@@ -14,6 +14,28 @@
 <body>
     <header>
         <div class="header-content">
+            <div class="hamburger-menu">
+                <input id="menu__toggle" type="checkbox" />
+                <label class="menu__btn" for="menu__toggle">
+                    <span></span>
+                </label>
+                <div class="menu__box">
+                    <ul>
+                        <li><a href="{% url 'home:home' %}" class="menu__item">{% translate "Home" %}</a></li>
+                        <li><a href="{% url 'focoquiz:quiz' %}" class="menu__item">{% translate "Quiz" %}</a></li>
+                        <li><a href="{% url 'about' %}" class="menu__item">{% translate "About" %}</a></li>
+                        <li><a href="#" class="menu__item">{% translate "Services" %}</a></li>
+                        <li><a href="#" class="menu__item">{% translate "Contact" %}</a></li>
+                        {% if user.is_authenticated %}
+                            {% with administrator_group='Administrator' %}
+                                {% if administrator_group in user.groups.all|stringformat:"s" %}
+                                    <li><a href="{% url 'admin:index' %}" class="menu__item">{% translate "Users" %}</a></li>
+                                {% endif %}
+                            {% endwith %}
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
             <div class="logo-container">
                 <a href="{% url 'home:home' %}"><img src="{% static 'img/cofi_logo_89x110.png' %}" alt="Cofi Logo" class="logo"></a>
                 <span class="brand-text">
@@ -21,22 +43,7 @@
                     <span class="fitness">Fitness</span>
                 </span>
             </div>
-            <nav>
-                <div class="main-nav">
-                    <a href="{% url 'home:home' %}">{% translate "Home" %}</a>
-                    <a href="{% url 'focoquiz:quiz' %}">{% translate "Quiz" %}</a>
-                    <a href="{% url 'about' %}">{% translate "About" %}</a>
-                    <a href="#">{% translate "Services" %}</a>
-                    <a href="#">{% translate "Contact" %}</a>
-                    {% if user.is_authenticated %}
-                        {% with administrator_group='Administrator' %}
-                            {% if administrator_group in user.groups.all|stringformat:"s" %}
-                                <a href="{% url 'admin:index' %}">{% translate "Users" %}</a>
-                            {% endif %}
-                        {% endwith %}
-                    {% endif %}
-                </div>
-            </nav>
+            
             <div class="header-actions">
                 <div class="active-language-display">
                     <img src="{% static 'img/flags/' %}{{ LANGUAGE_CODE }}.svg" alt="{{ LANGUAGE_CODE }} Flag" class="flag-icon active-language-flag">

@@ -14,6 +14,7 @@
     /* --border-radius-md: 5px; */
     /* --transition-default: background-color 0.3s ease; */
 }
+
 body {
     font-family: Arial, sans-serif;
     background-color: var(--bg-body);
@@ -27,50 +28,49 @@ body {
 header {
     background-color: #fff;
     color: var(--text-color-main);
-    /* padding: 1rem 0; */
-    /* text-align: center; */
     position: fixed; /* Header fixieren */
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 100;   
+    z-index: 100;
     box-shadow: var(--box-shadow-default);
-    height: auto; /* Header Höhe automatisch anpassen */
-    display: flex; /* Flexbox für Logo und Navigation */
-    /*flex-direction: column; /* Elemente untereinander anordnen */
-    align-items: center; /* Horizontale Zentrierung */
-    justify-content: center; /* vertikale Zentrierung */
-    padding: 10px 15px; /* Innenabstand */
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 15px;
 }
 
 .header-content {
     width: 100%;
     display: flex;
-    /*flex-direction: column; /* Elemente untereinander anordnen */
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-between; /* Verteilt die Elemente gleichmäßig */
+    gap: 20px; /* Abstand zwischen Hamburger, Logo und Header-Aktionen */
 }
-.header-actions{
+
+.header-actions {
     display: flex;
     align-items: center;
     gap: 20px;
 }
+
 .active-language-display {
     display: flex;
     align-items: center;
-    position: relative; /* Needed for absolute positioning of the picker */
+    position: relative;
 }
+
 .active-language-display:hover .language-picker {
     display: block;
 }
 
 .active-language-flag {
-    width: 30px; /* Adjust size as needed */
-    height: auto; /* Adjust size as needed */
-    /* margin-right: 2rem; */
+    width: 30px;
+    height: auto;
     vertical-align: middle;
     border-radius: 2px;
-    cursor: pointer; /* Add a pointer cursor on hover */
+    cursor: pointer;
 }
 
 .language-picker {
@@ -81,12 +81,13 @@ header {
     background-color: #fff;
     border: 1px solid #ccc;
     box-shadow: var(--box-shadow-default);
-    z-index: 10; /* Ensure it's above other elements */
+    z-index: 10;
     border-radius: 2px;
 }
-.language-picker ul{
-    list-style: none; /* Entfernt die Punkte vor den Links */
-    padding: 0; /*Entfernt die Innenabstände der Liste */
+
+.language-picker ul {
+    list-style: none;
+    padding: 0;
     margin: 0;
 }
 
@@ -100,7 +101,7 @@ header {
     color: #333;
     display: flex;
     align-items: center;
-    gap: 10px; /* Abstand zwischen Logo und Flagge */
+    gap: 10px;
     padding: 5px;
     width: 100%;
 }
@@ -109,21 +110,23 @@ header {
     width: 20px;
     height: auto;
 }
-.language-picker a:hover{
+
+.language-picker a:hover {
     background-color: #f0f0f0;
 }
-.language-name{
+
+.language-name {
     color: black;
 }
 
 .logo-container {
     display: flex;
     align-items: center;
-    gap: 10px; /* Abstand zwischen Logo und Flagge */
+    gap: 10px;
 }
 
 .logo {
-    height: 40px; /* Pass die Höhe nach Bedarf an */
+    height: 40px;
     width: auto;
 }
 
@@ -142,35 +145,19 @@ header {
     color: var(--color-secondary);
 }
 
-nav {
-    background-color: transparent;
-    padding: 0;
-    text-align: center; /* Zentriert die Links */
-    width: 100%;
-}
-
-nav a {
-    color: var(--text-color-main); /* Ändert die Farbe auf schwarz */
-    text-decoration: none;
-    margin: 0 1rem;
-}
-
-nav a:hover {
-    text-decoration: underline;
-}
+/* Navigation wurde entfernt */
 
 .auth-nav {
     display: flex;
-    /* margin-right: 20px;  Entfernt den Abstand da er nicht mehr benötigt wird */
 }
 
 main {
     width: 80%;
-    margin: 5rem auto 2rem; /* Fügt Abstand hinzu, um den fixierten Header zu berücksichtigen */
+    margin: 5rem auto 2rem;
     padding: 1rem;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    flex: 1; /* Nimmt den verfügbaren Platz zwischen Header und Footer ein */
+    flex: 1;
     padding-top: var(--header-height);
 }
 
@@ -229,67 +216,187 @@ footer {
     display: block;
 }
 
-.auth-section{
+.auth-section {
     display: flex;
     align-items: center;
-    margin-right: 30px; 
+    margin-right: 30px;
 }
 
 /* about page */
 .about-container {
-    display: flex; /* Zeigt die Personen nebeneinander an */
-    flex-wrap: wrap; /* Ermöglicht Umbruch, wenn nicht genug Platz ist */
-    justify-content: space-around; /* Verteilt die Personen gleichmäßig */
-    max-width: 1200px; /* Begrenzt die maximale Breite des Containers */
-    margin: 0 auto; /* Zentriert den Container horizontal */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    max-width: 1200px;
+    margin: 0 auto;
     padding: 20px;
-  }
-  
-  .about-person {
-    flex: 1; /* Nimmt so viel Platz wie möglich ein */
-    min-width: 300px; /* Minimale Breite für jede Person */
+}
+
+.about-person {
+    flex: 1;
+    min-width: 300px;
     margin: 10px;
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
+}
 
-  .about-person-image {
-    /* Hier kommen die Stilregeln für die Bilder */
+.about-person-image {
     width: 250px;
     border-radius: 5px;
     margin-bottom: 10px;
-    max-width: 100%; /* Maximale Breite von 250 Pixeln */
-    height: auto; /* Höhe wird proportional angepasst */
-    display: block; /* Macht das Bild zu einem Blockelement, damit es die volle Breite einnimmt */
-    margin: 0 auto; /* Zentriert das Bild horizontal */
-  }
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
 
-  .purchase-button {
-    display: inline-flex; /* Changed to inline-flex for better centering */
-    align-items: center; /* Vertically center the text */
-    justify-content: center; /* Horizontally center the text */
+.purchase-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background-color: var(--color-primary);
     color: white;
-    padding: 10px 20px; /* Increased horizontal padding for better spacing */
+    padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin: 10px 0; /* Changed to 0 on the sides */
-    width: auto; /* Changed to auto to fit the content */
+    margin: 10px 0;
+    width: auto;
     text-decoration: none;
-    text-align: center; /* Keep this for text alignment */
-    transition: background-color 0.3s ease; /* Add a smooth transition for hover effect */
-    }
-  
-  .purchase-button:hover { /* Hier wurde about-button zu purchase-button geändert */
-    background-color: #0056b3; /* Dunklere Farbe beim Hover */
-  
-  /* Zusätzliches Styling für hr */
-  hr {
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.purchase-button:hover {
+    background-color: #0056b3;
+}
+
+/* Zusätzliches Styling für hr */
+hr {
     border: none;
-    border-top: 1px solid #ddd; /* Beispielhafte Farbe und Stil */
+    border-top: 1px solid #ddd;
     margin: 20px 0;
-  }
-  
+}
+
+/* Hamburger Menu */
+.hamburger-menu {
+    position: relative;
+    z-index: 10;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.menu__box {
+    display: block;
+    position: fixed;
+    visibility: hidden;
+    top: 0;
+    left: -100%;
+    width: 300px;
+    height: 100%;
+    margin: 0;
+    padding: 80px 0;
+    list-style: none;
+    text-align: center;
+    background-color: #ECEFF1;
+    box-shadow: 1px 0px 6px rgba(0, 0, 0, 0.2);
+    transition: left 0.3s ease-in-out;
+}
+
+.menu__item {
+    display: block;
+    padding: 12px 24px;
+    color: #333;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.menu__item:hover {
+    background-color: #CFD8DC;
+}
+
+#menu__toggle {
+    opacity: 0;
+}
+
+#menu__toggle:checked ~ .menu__btn > span {
+    transform: rotate(45deg);
+}
+
+#menu__toggle:checked ~ .menu__btn > span::before {
+    top: 0;
+    transform: rotate(0deg);
+}
+
+#menu__toggle:checked ~ .menu__btn > span::after {
+    top: 0;
+    transform: rotate(90deg);
+}
+
+#menu__toggle:checked ~ .menu__box {
+    visibility: visible;
+    left: 0;
+}
+
+.menu__btn {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 26px;
+    height: 26px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.menu__btn > span,
+.menu__btn > span::before,
+.menu__btn > span::after {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #616161;
+    transition-duration: 0.25s;
+}
+
+.menu__btn > span::before {
+    content: '';
+    top: -8px;
+}
+
+.menu__btn > span::after {
+    content: '';
+    top: 8px;
+}
+
+/* Anpassung des Header-Layouts */
+.header-content {
+    display: flex;
+    align-items: left;
+    justify-content: space-between; /* Verteilt die Elemente gleichmäßig */
+    padding: 10px 20px;
+    gap: 20px; /* Abstand zwischen Hamburger, Logo und Header-Aktionen */
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Abstand zwischen Logo und Flagge */
+}
+
+/* Navigation wurde entfernt */
+
+/* Hide the main-nav on smaller screens */
+@media (max-width: 768px) {
+    .main-nav {
+        display: none;
+    }
+}
