@@ -2,18 +2,19 @@
 
 from django.db import models
 from django.utils.text import slugify
-from ingredients.models import Ingredient
+from ingredients.models import Ingredient, HouseholdMeasurement
+from django.utils.translation import gettext_lazy as _
 
 class Recipe(models.Model):
-    title = models.CharField(max_length=255)
-    slug = models.SlugField(max_length=200, unique=True, blank=True)
-    content = models.TextField()
-    is_example = models.BooleanField(default=False)
-    image = models.ImageField(upload_to='recipes/', blank=True, null=True)
-    preparation_time = models.IntegerField(blank=True, null=True)
-    cooking_time = models.IntegerField(blank=True, null=True)
-    servings = models.IntegerField(blank=True, null=True)
-    instructions = models.TextField(blank=True, null=True)
+    title = models.CharField(max_length=255, verbose_name=_("Title"))
+    slug = models.SlugField(max_length=200, unique=True, blank=True, verbose_name=_("Slug"))
+    content = models.TextField(verbose_name=_("Content"))
+    is_example = models.BooleanField(default=False, verbose_name=_("Is Example"))
+    image = models.ImageField(upload_to='recipes/', blank=True, null=True, verbose_name=_("Image"))
+    preparation_time = models.IntegerField(blank=True, null=True, verbose_name=_("Preparation Time"))
+    cooking_time = models.IntegerField(blank=True, null=True, verbose_name=_("Cooking Time"))
+    servings = models.IntegerField(blank=True, null=True, verbose_name=_("Servings"))
+    instructions = models.TextField(blank=True, null=True, verbose_name=_("Instructions"))
 
     def __str__(self):
         return self.title
@@ -47,9 +48,17 @@ class Recipe(models.Model):
         for dish_ingredient in self.dish_ingredients.all():
             ingredient = dish_ingredient.ingredient
             quantity = dish_ingredient.quantity
-            
+
             # Umrechnungsfaktor berechnen
-            if ingredient.reference_unit == dish_ingredient.unit:
+            if dish_ingredient.household_measurement:
+                # Haushaltsmaß verwenden
+                household_measurement = dish_ingredient.household_measurement
+                try:
+                    ingredient_household_measurement = ingredient.household_measurements.get(household_measurement=household_measurement)
+                    conversion_factor = quantity * (ingredient_household_measurement.quantity / ingredient.reference_quantity)
+                except Ingredient.household_measurements.RelatedObjectDoesNotExist:
+                    conversion_factor = 0
+            elif ingredient.reference_unit == dish_ingredient.unit:
                 conversion_factor = quantity / ingredient.reference_quantity
             else:
                 conversion_factor = 0 #TODO: Umrechnung von ml zu g
@@ -97,10 +106,21 @@ class Recipe(models.Model):
         }
 
 class DishIngredient(models.Model):
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='dish_ingredients')
-    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
-    quantity = models.DecimalField(max_digits=6, decimal_places=2)
-    unit = models.CharField(max_length=50, default='g')  # z.B. g, ml, Stück, TL, EL
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='dish_ingredients', verbose_name=_("Recipe"))
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE, verbose_name=_("Ingredient"))
+    quantity = models.DecimalField(max_digits=6, decimal_places=2, verbose_name=_("Quantity"))
+    unit = models.CharField(max_length=50, blank=True, null=True, verbose_name=_("Unit"), editable=False)  # z.B. g, ml
+    household_measurement = models.ForeignKey(HouseholdMeasurement, on_delete=models.SET_NULL, blank=True, null=True, verbose_name=_("Household Measurement"))
 
     def __str__(self):
-        return f"{self.quantity} {self.unit} {self.ingredient.name} in {self.recipe.title}"
+        if self.household_measurement:
+            return f"{self.quantity} {self.household_measurement.name} {self.ingredient.name} {_('in')} {self.recipe.title}"
+        else:
+            return f"{self.quantity} {self.unit} {self.ingredient.name} {_('in')} {self.recipe.title}"
+
+    def save(self, *args, **kwargs):
+        if self.household_measurement:
+            self.unit = None
+        else:
+            self.unit = self.ingredient.reference_unit
+        super().save(*args, **kwargs)
