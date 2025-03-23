@@ -12,10 +12,14 @@ class Command(BaseCommand):
         user_group, created = Group.objects.get_or_create(name='User')
         guest_group, created = Group.objects.get_or_create(name='Guest')
 
-        # Assign all permissions to the Administrator group
-        all_permissions = Permission.objects.all()
-        admin_group.permissions.set(all_permissions)
-        self.stdout.write(self.style.SUCCESS('Successfully added all permissions to the Administrator group.'))
+        # Check if the database is empty (newly initialized)
+        if Permission.objects.count() == 0:
+            # Assign all permissions to the Administrator group
+            all_permissions = Permission.objects.all()
+            admin_group.permissions.set(all_permissions)
+            self.stdout.write(self.style.SUCCESS('Successfully added all permissions to the Administrator group (new database).'))
+        else:
+            self.stdout.write(self.style.SUCCESS('Database is not empty. Administrator permissions not modified.'))
 
         # Content Editor Permissions (Beispiel: Blog)
         # Hier musst du ggf. deine Models einfügen!
