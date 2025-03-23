@@ -25,5 +25,5 @@ class CustomUserCreationForm(forms.ModelForm):
 class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = CustomUser
-        fields = ('email', 'is_active', 'is_staff', 'is_superuser') # Include all the fields you want to edit in the admin.
+        fields = ('email', 'is_active', 'is_staff', 'is_superuser','password') # Include all the fields you want to edit in the admin.
         # exclude = ('password',) # if you want to exclude password from the form

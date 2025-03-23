@@ -6,6 +6,11 @@ from .models import CustomUser
 from django.contrib.auth.models import Group
 from django.http import HttpResponse
 from django.test import Client
+from django.contrib.admin.sites import AdminSite
+from .admin import CustomUserAdmin
+from .forms import CustomUserCreationForm, CustomUserChangeForm
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import logout
 
 @pytest.mark.django_db
 def test_successful_user_registration(client):
@@ -241,3 +246,100 @@ def test_logged_out_user_can_access_login_page(client: Client):
     # 2. Überprüfe, ob der Benutzer die Login-Seite sehen kann
     assert response.status_code == 200
     assert url in response.request['PATH_INFO']
+
+@pytest.mark.django_db
+def test_password_mismatch_registration(client):
+    """Test Case: Password Mismatch on Registration"""
+    url = reverse("accounts:register")
+    data = {
+        "email": "testuser_mismatch@example.com",
+        "password": "StrongP@$$wOrd1",
+        "password2": "DifferentP@$$wOrd"
+    }
+    response: HttpResponse = client.post(url, data)
+    form = response.context["register_form"]
+    assert not form.is_valid()
+    assert "Passwords do not match" in form.errors["__all__"][0]
+    assert response.status_code == 200
+    assert not CustomUser.objects.filter(email="testuser_mismatch@example.com").exists()
+
+@pytest.mark.django_db
+def test_admin_custom_user_form_fields():
+    """Test Case: Check if the correct fields are displayed in the admin form."""
+    site = AdminSite()
+    user_admin = CustomUserAdmin(CustomUser, site)
+
+    # Check fields in CustomUserChangeForm
+    form = CustomUserChangeForm()
+    assert "email" in form.fields
+    assert "is_active" in form.fields
+    assert "is_staff" in form.fields
+    assert "is_superuser" in form.fields
+    assert "password" in form.fields  # Expect 'password' to be present
+
+    # Check fields in CustomUserCreationForm
+    form = CustomUserCreationForm()
+    assert "email" in form.fields
+    assert "password" in form.fields
+    assert "password2" in form.fields
+
+@pytest.mark.django_db
+def test_admin_add_fieldsets():
+    """Test Case: Check if the add_fieldsets are correct."""
+    site = AdminSite()
+    user_admin = CustomUserAdmin(CustomUser, site)
+    assert user_admin.add_fieldsets == (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'password', 'password2')}
+         ),
+    )
+
+@pytest.mark.django_db
+def test_admin_fieldsets():
+    """Test Case: Check if the fieldsets are correct."""
+    site = AdminSite()
+    user_admin = CustomUserAdmin(CustomUser, site)
+    assert user_admin.fieldsets == (
+        (None, {'fields': ('email', 'password')}),
+        ('Personal Info', {'fields': ('username', 'first_name', 'last_name')}),
+        ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser','groups', 'user_permissions')}),
+        ('Important dates', {'fields': ('last_login', 'date_joined')}),
+    )
+
+@pytest.mark.django_db
+def test_admin_list_display():
+    """Test Case: Check if the list_display is correct."""
+    site = AdminSite()
+    user_admin = CustomUserAdmin(CustomUser, site)
+    assert user_admin.list_display == ['email', 'is_active', 'is_staff', 'is_superuser']
+
+@pytest.mark.django_db
+def test_admin_search_fields():
+    """Test Case: Check if the search_fields is correct."""
+    site = AdminSite()
+    user_admin = CustomUserAdmin(CustomUser, site)
+    assert user_admin.search_fields == ['email']
+
+@pytest.mark.django_db
+def test_admin_ordering():
+    """Test Case: Check if the ordering is correct."""
+    site = AdminSite()
+    user_admin = CustomUserAdmin(CustomUser, site)
+    assert user_admin.ordering == ['email']
+
+@pytest.mark.django_db
+def test_login_with_username_not_allowed(client):
+    """Test Case: Login with username is not allowed"""
+    CustomUser.objects.create_user(username="testuser_username", email="testuser_username@example.com", password="StrongP@$$wOrd1")
+    url = reverse("accounts:login")
+    data = {"username": "testuser_username", "password": "StrongP@$$wOrd1"}
+    response = client.post(url, data)
+    
+    assert response.status_code == 200  # Expect the login page to be re-displayed
+    
+    # Check for form errors (adjust based on your actual error messages)
+    form = response.context.get('login_form')  
+    assert form is not None
+    assert form.errors  # Assert that the form has errors
+    assert "Please enter a correct email and password." in str(form.errors) # Or whatever the exact error message is
