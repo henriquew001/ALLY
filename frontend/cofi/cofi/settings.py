@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'cofi',
     'accounts',
     'focoquiz',
-    'cms',
     'about',
     'django.contrib.admin',
     'django.contrib.auth',

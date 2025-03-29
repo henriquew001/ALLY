@@ -59,28 +59,3 @@ class CustomUser(AbstractUser):
         super().clean()
         if not self.email:
             raise ValidationError({'email': 'This field cannot be blank.'})
-
-class UserPackage(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    package = models.ForeignKey('cms.Package', on_delete=models.CASCADE)
-    start_date = models.DateField(auto_now_add=True)
-    end_date = models.DateField(null=True, blank=True)
-    is_active = models.BooleanField(default=True)
-    canceled_at = models.DateTimeField(null=True, blank=True)
-    next_payment_at = models.DateField(null=True, blank=True)
-
-    def __str__(self):
-        return f"{self.user.email} - {self.package.name}"
-
-    def save(self, *args, **kwargs):
-        if not self.pk:  # Nur beim ersten Erstellen
-            if self.package.is_lifetime:
-                self.end_date = None
-            else:
-                if self.package.duration is not None and self.package.duration_unit is not None:
-                    if self.package.duration_unit == 'days':
-                        self.end_date = self.start_date + timedelta(days=self.package.duration)
-                    elif self.package.duration_unit == 'weeks':
-                        self.end_date = self.start_date + timedelta(weeks=self.package.duration)
-                    elif self.package.duration_unit == 'months':
-                        self.end_date = self.start_date + timedelta(days=self.package.duration * 30)  # Ungef
