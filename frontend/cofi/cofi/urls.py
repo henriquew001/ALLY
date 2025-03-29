@@ -4,6 +4,7 @@ from django.conf.urls.i18n import i18n_patterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')), # Add this line
 ]
 
 urlpatterns += i18n_patterns(

@@ -27,7 +27,9 @@
                         <p>{{ user.last_name|default:"-" }}</p>
                     </div>
                     <!-- Add more profile fields here as needed -->
-
+                    <div class="mt-4">
+                        <a href="{% url 'password_change' %}" class="btn btn-primary">{% translate "Change Password" %}</a>
+                    </div>
                 </div>
             </div>
         </div>
