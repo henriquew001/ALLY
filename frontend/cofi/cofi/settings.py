@@ -36,7 +36,7 @@ ALLOWED_HOSTS = [h.strip() for h in os.environ.get('ALLOWED_HOSTS', 'localhost,1
 INSTALLED_APPS = [
     'home',
     'cofi',
-    'accounts',
+    'authentication',
     'focoquiz',
     'about',
     'django.contrib.admin',
@@ -64,10 +64,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'cofi.urls'
 
+LOGOUT_REDIRECT_URL = '/'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"], # where to search for templates
+        'DIRS': [BASE_DIR / "templates", BASE_DIR / "authentication" / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -81,9 +83,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'cofi.wsgi.application'
-
-
-AUTH_USER_MODEL = 'accounts.CustomUser'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases

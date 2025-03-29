@@ -72,11 +72,14 @@
                                     <a href="{% url 'admin:index' %}">{% translate "Admin" %}</a>
                                 {% endif %}
                                 <a href="#">{% translate "Settings" %}</a>
-                                <a href="{% url 'accounts:logout' %}">{% translate "Logout" %}</a>
+                                <form method="post" action="{% url 'authentication:logout' %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="logout-link">{% translate "Logout" %}</button>
+                                </form>                                
                             </div>
                         </div>
                     {% else %}
-                        <a href="{% url 'accounts:login' %}" class="login-icon-link">
+                        <a href="{% url 'authentication:login' %}" class="login-icon-link">
                             <i class="fas fa-user login-icon"></i>
                         </a>
                     {% endif %}
