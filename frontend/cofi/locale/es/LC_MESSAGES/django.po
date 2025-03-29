@@ -10,14 +10,13 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-29 20:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Heinrich Weinz <weinzh@gmail.com>\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: pt_BR\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 #: about/templates/about/about.html:19
 msgid "!START NOW!"
 msgstr ""
@@ -27,10 +26,8 @@ msgid "Get your access to MCF now"
 msgstr ""
 
 #: about/views.py:5
-#, fuzzy
-#| msgid "About"
 msgid "About Us"
-msgstr "Sobre"
+msgstr ""
 
 #: authentication/templates/authentication/profile.html:10
 msgid "Your Profile"
@@ -58,37 +55,35 @@ msgstr ""
 
 #: focoquiz/templates/focoquiz/quiz.html:5 templates/base.html:26
 msgid "Quiz"
-msgstr "Quiz"
+msgstr ""
 
 #: focoquiz/templates/focoquiz/quiz.html:21
 msgid "Send"
-msgstr "Enviar"
+msgstr ""
 
 #: focoquiz/templates/focoquiz/result.html:5
 msgid "Result"
-msgstr "Resultado"
+msgstr ""
 
 #: focoquiz/views.py:35
 msgid "No matching result found."
-msgstr "Nenhum resultado correspondente encontrado."
+msgstr ""
 
 #: focoquiz/views.py:40 focoquiz/views.py:44
 msgid "There are still questions missing for the quiz."
-msgstr "Ainda faltam perguntas para o quiz."
+msgstr ""
 
 #: home/templates/home/home.html:4 templates/base.html:25
 msgid "Home"
-msgstr "Início"
+msgstr ""
 
 #: home/templates/home/home.html:7
-#, fuzzy
-#| msgid "Welcome to the Homepage!"
 msgid "Welcome to the Conscious Fitness!"
-msgstr "Bem-vindo à página inicial!"
+msgstr ""
 
 #: home/templates/home/home.html:8
 msgid "This is the content of your homepage."
-msgstr "Este é o conteúdo da sua página inicial."
+msgstr ""
 
 #: home/templates/home/home.html:11
 msgid "You don't need more willpower, you need direction!"
@@ -117,7 +112,7 @@ msgstr ""
 
 #: templates/base.html:12
 msgid "ConsciousFit"
-msgstr "ConsciousFit"
+msgstr ""
 
 #: templates/base.html:27
 msgid "Shop"
@@ -125,11 +120,11 @@ msgstr ""
 
 #: templates/base.html:28
 msgid "About"
-msgstr "Sobre"
+msgstr ""
 
 #: templates/base.html:29
 msgid "Contact"
-msgstr "Contato"
+msgstr ""
 
 #: templates/base.html:33
 msgid "Users"
@@ -141,35 +136,8 @@ msgstr ""
 
 #: templates/base.html:74
 msgid "Settings"
-msgstr "Configurações"
+msgstr ""
 
 #: templates/base.html:77
 msgid "Logout"
-msgstr "Sair"
-
-#~ msgid "Login"
-#~ msgstr "Entrar"
-
-#~ msgid "You dont have an Account?"
-#~ msgstr "Você não tem uma conta?"
-
-#~ msgid "Register here"
-#~ msgstr "Registre-se aqui"
-
-#~ msgid "List item 1"
-#~ msgstr "Item da lista 1"
-
-#~ msgid "List item 2"
-#~ msgstr "Item da lista 2"
-
-#~ msgid "List item 3"
-#~ msgstr "Item da lista 3"
-
-#~ msgid "Services"
-#~ msgstr "Serviços"
-
-#~ msgid "Consciencia"
-#~ msgstr "Consciência"
-
-#~ msgid "Fitness"
-#~ msgstr "Fitness"
+msgstr ""

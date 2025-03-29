@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-16 20:53+0100\n"
+"POT-Creation-Date: 2025-03-29 20:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Heinrich Weinz <weinzh@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,20 +18,45 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: accounts/templates/accounts/login.html:5
-#: accounts/templates/accounts/login.html:9 templates/base.html:61
-msgid "Login"
-msgstr "Anmelden"
+#: about/templates/about/about.html:19
+msgid "!START NOW!"
+msgstr ""
 
-#: accounts/templates/accounts/login.html:11
-msgid "You dont have an Account?"
-msgstr "Du hast noch kein Konto?"
+#: about/templates/about/about.html:30
+msgid "Get your access to MCF now"
+msgstr ""
 
-#: accounts/templates/accounts/login.html:11
-msgid "Register here"
-msgstr "Hier registrieren"
+#: about/views.py:5
+#, fuzzy
+#| msgid "About"
+msgid "About Us"
+msgstr "Über uns"
 
-#: focoquiz/templates/focoquiz/quiz.html:5 templates/base.html:27
+#: authentication/templates/authentication/profile.html:10
+msgid "Your Profile"
+msgstr ""
+
+#: authentication/templates/authentication/profile.html:14
+msgid "Username"
+msgstr "Benutzername"
+
+#: authentication/templates/authentication/profile.html:18
+msgid "Email"
+msgstr ""
+
+#: authentication/templates/authentication/profile.html:22
+msgid "First Name"
+msgstr "Vorname"
+
+#: authentication/templates/authentication/profile.html:26
+msgid "Last Name"
+msgstr ""
+
+#: focoquiz/templates/focoquiz/error.html:5
+msgid "Error"
+msgstr ""
+
+#: focoquiz/templates/focoquiz/quiz.html:5 templates/base.html:26
 msgid "Quiz"
 msgstr "Quiz"
 
@@ -43,79 +68,105 @@ msgstr "Senden"
 msgid "Result"
 msgstr "Ergebnis"
 
-#: focoquiz/views.py:38
+#: focoquiz/views.py:35
 msgid "No matching result found."
 msgstr "Kein passendes Ergebnis gefunden."
 
-#: focoquiz/views.py:43 focoquiz/views.py:47
+#: focoquiz/views.py:40 focoquiz/views.py:44
 msgid "There are still questions missing for the quiz."
 msgstr "Es fehlen noch Fragen für das Quiz."
 
-#: home/templates/home/home.html:4 templates/base.html:26
+#: home/templates/home/home.html:4 templates/base.html:25
 msgid "Home"
 msgstr "Startseite"
 
 #: home/templates/home/home.html:7
-msgid "Welcome to the Homepage!"
+#, fuzzy
+#| msgid "Welcome to the Homepage!"
+msgid "Welcome to the Conscious Fitness!"
 msgstr "Willkommen auf der Startseite!"
 
 #: home/templates/home/home.html:8
 msgid "This is the content of your homepage."
 msgstr "Dies ist der Inhalt deiner Startseite."
 
-#: home/templates/home/home.html:10 home/templates/home/home.html:13
-#: home/templates/home/home.html:16 home/templates/home/home.html:19
-#: home/templates/home/home.html:22 home/templates/home/home.html:25
-#: home/templates/home/home.html:28 home/templates/home/home.html:31
-#: home/templates/home/home.html:34 home/templates/home/home.html:37
-#: home/templates/home/home.html:40 home/templates/home/home.html:43
-#: home/templates/home/home.html:46 home/templates/home/home.html:49
-msgid "List item 1"
-msgstr "Listenpunkt 1"
+#: home/templates/home/home.html:11
+msgid "You don't need more willpower, you need direction!"
+msgstr ""
 
-#: home/templates/home/home.html:11 home/templates/home/home.html:14
-#: home/templates/home/home.html:17 home/templates/home/home.html:20
-#: home/templates/home/home.html:23 home/templates/home/home.html:26
-#: home/templates/home/home.html:29 home/templates/home/home.html:32
-#: home/templates/home/home.html:35 home/templates/home/home.html:38
-#: home/templates/home/home.html:41 home/templates/home/home.html:44
-#: home/templates/home/home.html:47 home/templates/home/home.html:50
-msgid "List item 2"
-msgstr "Listenpunkt 2"
+#: home/templates/home/home.html:12
+msgid ""
+"The Consciência Fitness Method gives you tools to create a system that works "
+"for you."
+msgstr ""
 
-#: home/templates/home/home.html:12 home/templates/home/home.html:15
-#: home/templates/home/home.html:18 home/templates/home/home.html:21
-#: home/templates/home/home.html:24 home/templates/home/home.html:27
-#: home/templates/home/home.html:30 home/templates/home/home.html:33
-#: home/templates/home/home.html:36 home/templates/home/home.html:39
-#: home/templates/home/home.html:42 home/templates/home/home.html:45
-#: home/templates/home/home.html:48 home/templates/home/home.html:51
-msgid "List item 3"
-msgstr "Listenpunkt 3"
+#: home/templates/home/home.html:17
+msgid ""
+"You will have access to tools validated by nutritionists that have already "
+"helped dozens of people build the ideal routine to achieve their goals "
+"definitively."
+msgstr ""
+
+#: home/templates/home/home.html:21
+msgid "Are you interested in such a result?"
+msgstr ""
+
+#: home/templates/home/home.html:23
+msgid "Spots are limited."
+msgstr ""
 
 #: templates/base.html:12
 msgid "ConsciousFit"
 msgstr "BewusstFit"
+
+#: templates/base.html:27
+msgid "Shop"
+msgstr ""
 
 #: templates/base.html:28
 msgid "About"
 msgstr "Über uns"
 
 #: templates/base.html:29
-msgid "Services"
-msgstr "Dienstleistungen"
-
-#: templates/base.html:30
 msgid "Contact"
 msgstr "Kontakt"
 
-#: templates/base.html:56
+#: templates/base.html:33
+msgid "Users"
+msgstr ""
+
+#: templates/base.html:72
+msgid "Admin"
+msgstr ""
+
+#: templates/base.html:74
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: templates/base.html:57
+#: templates/base.html:77
 msgid "Logout"
 msgstr "Abmelden"
+
+#~ msgid "Login"
+#~ msgstr "Anmelden"
+
+#~ msgid "You dont have an Account?"
+#~ msgstr "Du hast noch kein Konto?"
+
+#~ msgid "Register here"
+#~ msgstr "Hier registrieren"
+
+#~ msgid "List item 1"
+#~ msgstr "Listenpunkt 1"
+
+#~ msgid "List item 2"
+#~ msgstr "Listenpunkt 2"
+
+#~ msgid "List item 3"
+#~ msgstr "Listenpunkt 3"
+
+#~ msgid "Services"
+#~ msgstr "Dienstleistungen"
 
 #~ msgid "Consciencia"
 #~ msgstr "Bewusstsein"

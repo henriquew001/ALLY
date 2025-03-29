@@ -71,7 +71,7 @@
                                 {% if user.is_staff %}
                                     <a href="{% url 'admin:index' %}">{% translate "Admin" %}</a>
                                 {% endif %}
-                                <a href="#">{% translate "Settings" %}</a>
+                                <a href="{% url 'authentication:profile' %}">{% translate "Settings" %}</a>
                                 <form method="post" action="{% url 'authentication:logout' %}">
                                     {% csrf_token %}
                                     <button type="submit" class="logout-link">{% translate "Logout" %}</button>
