@@ -1,0 +1,33 @@
+# Verwenden eines Python-Images als Basis
+FROM python:3.13.2-slim-bookworm
+
+# Arbeitsverzeichnis im Container setzen
+WORKDIR /app
+
+# Install necessary system packages
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    build-essential libmariadb3 libmariadb-dev-compat \
+    libmariadb-dev \
+    python3 python3-pip pkg-config && \
+    rm -rf /var/lib/apt/lists/*
+
+# Abhängigkeiten kopieren und installieren
+COPY requirements_django.txt .
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r requirements_django.txt
+
+# Abhängigkeiten kopieren und installieren
+COPY requirements_djangotest.txt .
+RUN pip install --no-cache-dir -r requirements_djangotest.txt
+
+# restlichen Code kopieren
+# COPY ../frontend/cofi /app
+COPY . .
+
+# Umgebungsvariablen für Django einrichten
+ENV DJANGO_SETTINGS_MODULE=cofi.settings
+
+# Befehl zum Ausführen der Tests
+# CMD ["python", "cofi/manage.py", "test", "django_tests"]
+# CMD ["ls"]

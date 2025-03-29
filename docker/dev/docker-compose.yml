@@ -1,0 +1,99 @@
+# version: "3.8"
+
+services:
+  db_dev:
+    image: mariadb:10.11.6  # Use the official MariaDB image
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_CHARACTER_SET: ${MYSQL_CHARACTER_SET}
+      MYSQL_COLLATION_SERVER: ${MYSQL_COLLATION_SERVER}
+    volumes:
+      - consciousfit_data_dev:/var/lib/mysql
+      - ./my.cnf:/etc/mysql/conf.d/my.cnf # Zum Testen, in Prod entfernen oder auf bestimmte Netzwerke beschränken, damit man direkt auf die Datenbnak zugreifen kann
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysql", "-u", "${DB_USER}", "-p${DB_PASSWORD}", "-e", "SELECT 1;"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - cofi-network
+
+  backend_dev:
+    build:
+      context: .
+      dockerfile: Dockerfile_python
+    env_file:
+      - .env
+    ports:
+      - "8001:8000"
+    depends_on:
+      db_dev:
+        condition: service_healthy
+    environment:
+      - PYTHONPATH=/app
+      - DATABASE_URL=mysql+pymysql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:3306/${DB_DATABASE}
+      - SECRET_KEY=${SECRET_KEY}
+      - ENV=dev
+      - DEBUG=True
+    volumes:
+      - ../../backend/app:/app  # Für Entwicklung
+      - ../../.cache:/root/.cache
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+    # restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - cofi-network
+
+  frontend_dev:
+    build:
+      context: .
+      dockerfile: Dockerfile_django.dev
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      # backend_dev:
+      #   condition: service_healthy
+      db_dev:
+        condition: service_healthy
+    environment:
+      - SECRET_KEY=${SECRET_KEY}
+      - DEBUG=True
+      - ENV=dev
+      - DJANGO_SUPERUSER_USERNAME=admin@example.com
+      - DJANGO_SUPERUSER_EMAIL=admin@example.com
+      - DJANGO_SUPERUSER_PASSWORD=admin
+      - ALLOWED_HOSTS=192.168.2.*,localhost,127.0.0.1
+    volumes:
+      - ../../frontend/cofi:/app # For development
+      - ../../.cache_cofi:/root/.cache
+    entrypoint: ["/app/entrypoint.sh"] # zum Aufbau der Datenbank
+    # command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+    restart: unless-stopped
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+        interval: 30s
+        timeout: 10s
+        retries: 3
+    networks:
+        - cofi-network
+
+volumes:
+  consciousfit_data_dev:
+
+networks:
+  cofi-network:
+    driver: bridge
