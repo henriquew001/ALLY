@@ -1,0 +1,12 @@
+uvicorn
+python-multipart
+SQLAlchemy
+fastapi
+python-jose
+pymysql
+python-dotenv
+passlib
+python-jose[cryptography] # Hinzugefügt
+bcrypt
+#mysqlclient
+#mariadb
