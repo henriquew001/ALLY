@@ -1,15 +1,30 @@
+<!-- cofi/authentication/templates/authentication/login.html -->
 {% extends 'base.html' %}
+{% load i18n %}
 
 {% block content %}
-  <h2>Login</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-  </form>
-
-  <p>
-    {% load i18n %}
-    {% translate "Don't have an account?" %} <a href="{% url 'authentication:register' %}">{% translate "Register here" %}</a>
-  </p>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card mt-5">
+                <div class="card-header">
+                    <h3 class="text-center">{% translate "Login" %}</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-primary">{% translate "Login" %}</button>
+                    </form>
+                    <div class="mt-3">
+                        <a href="{% url 'password_reset' %}">{% translate "Forgot your password?" %}</a>
+                    </div>
+                    <div class="mt-3">
+                        {% translate "Don't have an account?" %} <a href="{% url 'authentication:register' %}">{% translate "Register here" %}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
