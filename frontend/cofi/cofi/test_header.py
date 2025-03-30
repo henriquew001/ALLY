@@ -1,6 +1,7 @@
+# cofi/cofi/test_header.py
 from django.test import TestCase, Client
 from django.urls import reverse
-from django.contrib.auth.models import User
+from authentication.models import CustomUser
 from django.utils.translation import gettext as _
 from django.utils import translation
 from django.utils.translation import get_language
@@ -9,7 +10,7 @@ from django.utils.translation import get_language
 class HeaderTest(TestCase):
     def setUp(self):
         self.client = Client()
-        self.user = User.objects.create_user(username='testuser', password='testpassword')
+        self.user = CustomUser.objects.create_user(email='testuser@example.com', password='testpassword')
 
     def test_navigation_links_exist(self):
         """Testet, ob die Navigationslinks vorhanden sind."""
@@ -37,7 +38,7 @@ class HeaderTest(TestCase):
     def test_logout_link_exists_when_logged_in(self):
         """Testet, ob der Logout-Link angezeigt wird, wenn der Benutzer angemeldet ist."""
         with translation.override('en'):
-            self.client.login(username='testuser', password='testpassword')
+            self.client.login(username='testuser@example.com', password='testpassword')
             response = self.client.get(reverse('home:home'))
             self.assertEqual(response.status_code, 200)
             self.assertContains(response, f'<form method="post" action="{reverse("authentication:logout")}">')
