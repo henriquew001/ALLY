@@ -216,6 +216,10 @@ footer {
     -webkit-appearance: none; /* Für Safari und Chrome */
     -moz-appearance: none; /* Für Firefox */
 }
+.user-dropdown-content form {
+    padding: 12px 16px;
+}
+
 .logout-link {
     padding: 0;
 }
@@ -256,6 +260,24 @@ footer {
     align-items: center;
     margin-right: 20px;
     gap: 10px;
+}
+
+ /* Password Toggle */
+ .password-input-container {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+}
+
+.form-group {
+    margin-bottom: 1rem;
 }
 
 /* about page */

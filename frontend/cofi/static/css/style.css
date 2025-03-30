@@ -262,6 +262,24 @@ footer {
     gap: 10px;
 }
 
+ /* Password Toggle */
+ .password-input-container {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
 /* about page */
 .about-container {
     display: flex;
