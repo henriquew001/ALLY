@@ -65,7 +65,7 @@ services:
       - ../../frontend/cofi:/app # For development
       # - ../frontend/cofi_test:/app/test # For development
       - ../../.cache_cofi:/root/.cache
-    command: ["sh", "-c", "sleep 5 && while true; do pytest /app/cofi /app/home /app/authentication --html=/app/tests/report.html --self-contained-html; sleep 9; done"]
+    command: ["sh", "-c", "sleep 5 && while true; do pytest /app/home /app/cofi /app/authentication --html=/app/tests/report.html --self-contained-html; sleep 9; done"]
     # command: ["ls", "-la"]
     # command: ["sh", "entrypoint.sh"]
     restart: on-failure

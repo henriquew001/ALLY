@@ -7,4 +7,9 @@
     {{ form.as_p }}
     <button type="submit">Login</button>
   </form>
+
+  <p>
+    {% load i18n %}
+    {% translate "Don't have an account?" %} <a href="{% url 'authentication:register' %}">{% translate "Register here" %}</a>
+  </p>
 {% endblock %}
