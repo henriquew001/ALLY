@@ -22,11 +22,12 @@
                 </label>
                 <div class="menu__box">
                     <ul>
-                        <li><a href="{% url 'home:home' %}" class="menu__item">{% translate "Home" %}</a></li>
-                        <li><a href="{% url 'focoquiz:quiz' %}" class="menu__item">{% translate "Quiz" %}</a></li>
                         <li><a href="#" class="menu__item">{% translate "Shop" %}</a></li>
+                        <li><a href="{% url 'focoquiz:quiz' %}" class="menu__item">{% translate "Quiz" %}</a></li>
+                        <li><a href="#" class="menu__item">{% translate "Recipes" %}</a></li>
+                        <li><a href="#" class="menu__item">{% translate "Lessons" %}</a></li>
+                        <li><a href="#" class="menu__item">{% translate "Support material" %}</a></li>
                         <li><a href="{% url 'about:about' %}" class="menu__item">{% translate "About" %}</a></li>
-                        <li><a href="#" class="menu__item">{% translate "Contact" %}</a></li>
                         {% if user.is_authenticated %}
                             {% with administrator_group='Administrator' %}
                                 {% if administrator_group in user.groups.all|stringformat:"s" %}
