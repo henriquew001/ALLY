@@ -12,5 +12,5 @@ urlpatterns += i18n_patterns(
     path('accounts/', include('django.contrib.auth.urls')),
     path('quiz/', include('focoquiz.urls')),
     path('about/', include('about.urls')),
-    path('', include('recipes.urls')),
+    path('recipes/', include('recipes.urls')),
 )

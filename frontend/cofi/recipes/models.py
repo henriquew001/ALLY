@@ -15,10 +15,10 @@ class Recipe(models.Model):
         return self.name
 
 class Ingredient(models.Model):
-    name = models.CharField(max_length=200)
-    quantity = models.CharField(max_length=50, blank=True, null=True) # z.B. "1 Tasse", "200g"
+    name = models.CharField(max_length=200, default="")
+    quantity = models.CharField(max_length=50, blank=True, null=True)
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='ingredients')
-    openfoodfacts_id = models.CharField(max_length=50, blank=True, null=True) # Hinzugefügt
+    openfoodfacts_id = models.CharField(max_length=50, blank=True, null=True)
 
     def __str__(self):
         return self.name

@@ -1,37 +1,92 @@
-<label for="ingredient_name">Zutat:</label>
-<input type="text" id="ingredient_name" name="ingredient_name" autocomplete="off">
-<ul id="ingredient_suggestions"></ul>
-<input type="hidden" id="ingredient_openfoodfacts_id" name="openfoodfacts_id">
-<label for="ingredient_quantity">Menge:</label>
-<input type="text" id="ingredient_quantity" name="quantity">
+{% extends 'base.html' %}
+{% load i18n %}
 
-<script>
-const ingredientNameInput = document.getElementById('ingredient_name');
-const ingredientSuggestions = document.getElementById('ingredient_suggestions');
-const ingredientOpenfoodfactsId = document.getElementById('ingredient_openfoodfacts_id');
+{% block content %}
+    <h1>{% translate "Neues Rezept erstellen" %}</h1>
 
-ingredientNameInput.addEventListener('input', async () => {
-    const inputValue = ingredientNameInput.value;
-    if (inputValue.length >= 3) {
-        const response = await fetch(`/recipes/ingredients/autocomplete/?query=${inputValue}`);
-        const results = await response.json();
-        displaySuggestions(results);
-    } else {
-        ingredientSuggestions.innerHTML = '';
-    }
-});
+    <form id="recipe-form" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
 
-function displaySuggestions(results) {
-    ingredientSuggestions.innerHTML = '';
-    results.forEach(result => {
-        const li = document.createElement('li');
-        li.textContent = result.name;
-        li.addEventListener('click', () => {
-            ingredientNameInput.value = result.name;
-            ingredientOpenfoodfactsId.value = result.id; // Oder result._id, je nachdem, wie deine IDs in MongoDB heißen
-            ingredientSuggestions.innerHTML = '';
+        <div id="ingredients-container">
+            {% for ingredient_form in ingredient_formset %}
+                <div class="ingredient-entry">
+                    <label for="{{ ingredient_form.name.id_for_label }}">Zutat:</label>
+                    <input type="text" class="ingredient_name" name="{{ ingredient_form.prefix }}-name" id="{{ ingredient_form.prefix }}-name" autocomplete="off">
+                    <ul class="ingredient_suggestions"></ul>
+                    <label for="{{ ingredient_form.prefix }}-quantity">Menge:</label>
+                    <input type="text" name="{{ ingredient_form.prefix }}-quantity" id="{{ ingredient_form.prefix }}-quantity">
+                    <button type="button" class="remove-ingredient">Entfernen</button>
+                </div>
+            {% endfor %}
+        </div>
+        <button type="button" id="add-ingredient">Weitere Zutat hinzufügen</button>
+
+        <button type="submit">Rezept speichern</button>
+    </form>
+
+    <script>
+        // ... dein bestehender JavaScript-Code ...
+
+        const ingredientsContainer = document.getElementById('ingredients-container');
+        const addIngredientButton = document.getElementById('add-ingredient');
+        const recipeForm = document.getElementById('recipe-form');
+        let ingredientCount = {{ ingredient_formset|length }};
+
+        addIngredientButton.addEventListener('click', () => {
+            ingredientCount++;
+            const newIngredientEntry = document.querySelector('.ingredient-entry').cloneNode(true);
+            // Leere die Felder im neuen Eintrag
+            newIngredientEntry.querySelectorAll('input').forEach(input => input.value = '');
+            newIngredientEntry.querySelector('.ingredient_suggestions').innerHTML = '';
+            // Event Listener für die neuen Felder hinzufügen
+            const newIngredientNameInput = newIngredientEntry.querySelector('.ingredient_name');
+            const newIngredientSuggestions = newIngredientEntry.querySelector('.ingredient_suggestions');
+            newIngredientNameInput.name = `ingredients-${ingredientCount}-name`;
+            newIngredientNameInput.id = `ingredients-${ingredientCount}-name`;
+            newIngredientEntry.querySelector('label[for]').setAttribute('for', `ingredients-${ingredientCount}-name`);
+            newIngredientEntry.querySelector('input[name$="quantity"]').name = `ingredients-${ingredientCount}-quantity`;
+            newIngredientEntry.querySelector('input[name$="quantity"]').id = `ingredients-${ingredientCount}-quantity`;
+            newIngredientEntry.querySelector('label[for$="quantity"]').setAttribute('for', `ingredients-${ingredientCount}-quantity`);
+
+            newIngredientNameInput.addEventListener('input', async () => {
+                const inputValue = newIngredientNameInput.value;
+                if (inputValue.length >= 3) {
+                    const response = await fetch(`/recipes/ingredients/autocomplete/?query=${inputValue}`, {
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    });
+                    const results = await response.json();
+                    displaySuggestions(results, newIngredientNameInput, newIngredientSuggestions);
+                } else {
+                    newIngredientSuggestions.innerHTML = '';
+                }
+            });
+            newIngredientEntry.querySelector('.remove-ingredient').addEventListener('click', () => {
+                newIngredientEntry.remove();
+            });
+            ingredientsContainer.appendChild(newIngredientEntry);
         });
-        ingredientSuggestions.appendChild(li);
-    });
-}
-</script>
+
+        function displaySuggestions(results, inputField, suggestionsList) {
+            suggestionsList.innerHTML = '';
+            results.forEach(result => {
+                const li = document.createElement('li');
+                li.textContent = result.name;
+                li.addEventListener('click', () => {
+                    inputField.value = result.name;
+                    suggestionsList.innerHTML = '';
+                });
+                suggestionsList.appendChild(li);
+            });
+        }
+
+        // Event Listener für das Entfernen einer Zutat
+        document.querySelectorAll('.remove-ingredient').forEach(button => {
+            button.addEventListener('click', (event) => {
+                event.target.closest('.ingredient-entry').remove();
+            });
+        });
+    </script>
+{% endblock %}
