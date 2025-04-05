@@ -1,0 +1,11 @@
+# Use the official MongoDB image as a base
+FROM mongo:latest
+
+# Set the entrypoint to restore the dump and then start MongoDB
+ENTRYPOINT [ "/bin/bash", "-c" ]
+CMD [ \
+    "mongorestore /dump && mongod --quiet --bind_ip_all --port 27017" \
+]
+
+# Expose the MongoDB port
+EXPOSE 27017

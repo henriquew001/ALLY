@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Rezept löschen</h1>
+    <p>Möchtest du das Rezept "{{ recipe.name }}" wirklich löschen?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Ja, löschen</button>
+        <a href="{% url 'recipe_detail' recipe_id=recipe.id %}">Nein, zurück zum Rezept</a>
+    </form>
+{% endblock %}

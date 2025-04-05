@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{{ recipe.name }}</h1>
+    <p>{{ recipe.description }}</p>
+
+    <h2>Zutaten:</h2>
+    <ul>
+        {% for ingredient in ingredients %}
+            <li>{{ ingredient.quantity }} - {{ ingredient.name }}</li>
+        {% endfor %}
+    </ul>
+
+    <p>Zubereitungszeit: {{ recipe.prep_time }} Minuten</p>
+    <p>Kochzeit: {{ recipe.cook_time }} Minuten</p>
+
+    <a href="{% url 'recipe_edit' recipe_id=recipe.id %}">Rezept bearbeiten</a>
+{% endblock %}

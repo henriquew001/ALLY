@@ -1,0 +1,37 @@
+<label for="ingredient_name">Zutat:</label>
+<input type="text" id="ingredient_name" name="ingredient_name" autocomplete="off">
+<ul id="ingredient_suggestions"></ul>
+<input type="hidden" id="ingredient_openfoodfacts_id" name="openfoodfacts_id">
+<label for="ingredient_quantity">Menge:</label>
+<input type="text" id="ingredient_quantity" name="quantity">
+
+<script>
+const ingredientNameInput = document.getElementById('ingredient_name');
+const ingredientSuggestions = document.getElementById('ingredient_suggestions');
+const ingredientOpenfoodfactsId = document.getElementById('ingredient_openfoodfacts_id');
+
+ingredientNameInput.addEventListener('input', async () => {
+    const inputValue = ingredientNameInput.value;
+    if (inputValue.length >= 3) {
+        const response = await fetch(`/recipes/ingredients/autocomplete/?query=${inputValue}`);
+        const results = await response.json();
+        displaySuggestions(results);
+    } else {
+        ingredientSuggestions.innerHTML = '';
+    }
+});
+
+function displaySuggestions(results) {
+    ingredientSuggestions.innerHTML = '';
+    results.forEach(result => {
+        const li = document.createElement('li');
+        li.textContent = result.name;
+        li.addEventListener('click', () => {
+            ingredientNameInput.value = result.name;
+            ingredientOpenfoodfactsId.value = result.id; // Oder result._id, je nachdem, wie deine IDs in MongoDB heißen
+            ingredientSuggestions.innerHTML = '';
+        });
+        ingredientSuggestions.appendChild(li);
+    });
+}
+</script>

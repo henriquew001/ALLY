@@ -1,3 +1,4 @@
+# recipes/models.py
 from django.db import models
 
 class Recipe(models.Model):
@@ -14,10 +15,10 @@ class Recipe(models.Model):
         return self.name
 
 class Ingredient(models.Model):
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='ingredients')
     name = models.CharField(max_length=200)
     quantity = models.CharField(max_length=50, blank=True, null=True) # z.B. "1 Tasse", "200g"
-    # Hier könnten wir später eine Verknüpfung zu OpenFoodFacts hinzufügen
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE, related_name='ingredients')
+    openfoodfacts_id = models.CharField(max_length=50, blank=True, null=True) # Hinzugefügt
 
     def __str__(self):
         return self.name

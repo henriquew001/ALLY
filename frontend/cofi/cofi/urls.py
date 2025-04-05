@@ -9,7 +9,8 @@ urlpatterns = [
 urlpatterns += i18n_patterns(
     path('', include('home.urls')),
     path('accounts/', include('authentication.urls')),
-    path('accounts/', include('django.contrib.auth.urls')), # Add this line
+    path('accounts/', include('django.contrib.auth.urls')),
     path('quiz/', include('focoquiz.urls')),
     path('about/', include('about.urls')),
+    path('', include('recipes.urls')),
 )

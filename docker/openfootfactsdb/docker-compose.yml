@@ -1,0 +1,28 @@
+services:
+  openfoodfactsmongo:
+    image: mongo
+    restart: always
+    volumes:
+      - /home/heinrich/projects/openfootfacts_db:/dump # Zum einspielen der Daten aus der openfoodfacts datenbank
+      - mongodb_data:/data/db # Mounten Sie das Volume in den Standard-Datenpfad von MongoDB
+    ports:
+      - "27017:27017"
+    container_name: openfoodfacts-mongo
+    healthcheck:
+      test:
+        - "CMD"
+        - "bash"
+        - "-c"
+        - |
+          /usr/bin/mongosh --eval "db.adminCommand('ping')" || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: mongopw # IMPORTANT: Replace this!
+
+
+volumes:
+  mongodb_data: # Definition des Named Volumes

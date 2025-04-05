@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
+import pymongo
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -119,6 +120,33 @@ if DB_ENGINE == "mysql":
     DATABASES["default"]["TEST"] = { # Added comma here!
         "NAME": DB_TEST_NAME
     }
+
+# openfoodfactsdatabase
+MONGO_HOST = os.environ.get("MONGO_HOST", "localhost")
+MONGO_PORT = int(os.environ.get("MONGO_PORT", 27017))
+MONGO_DB_NAME = os.environ.get("MONGO_DB_NAME", "openfoodfacts")
+MONGO_USER = os.environ.get("MONGO_USER", "root")
+MONGO_PASSWORD = os.environ.get("MONGO_PASSWORD")
+
+
+# Verbindung zur MongoDB aufbauen
+try:
+    if MONGO_USER and MONGO_PASSWORD:
+        mongo_client = pymongo.MongoClient(
+            f"mongodb://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_HOST}:{MONGO_PORT}/"
+        )
+    else:
+        mongo_client = pymongo.MongoClient(
+            f"mongodb://{MONGO_HOST}:{MONGO_PORT}/"
+        )
+    db = mongo_client[MONGO_DB_NAME]
+    MONGO_CONNECTION_SUCCESS = True
+except pymongo.errors.ConnectionFailure as e:
+    print(f"Verbindung zur MongoDB fehlgeschlagen: {e}")
+    MONGO_CONNECTION_SUCCESS = False
+
+MONGO_CLIENT = mongo_client
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
