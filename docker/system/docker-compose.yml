@@ -1,7 +1,5 @@
-# version: "3.8"
-
 services:
-  db_system:
+  db_ally:
     image: mariadb:10.11.6  # Use the official MariaDB image
     env_file:
       - .env
@@ -13,7 +11,7 @@ services:
       MYSQL_CHARACTER_SET: ${MYSQL_CHARACTER_SET}
       MYSQL_COLLATION_SERVER: ${MYSQL_COLLATION_SERVER}
     volumes:
-      - consciousfit_data_system:/var/lib/mysql
+      - ally_data:/var/lib/mysql
       - ./my.cnf:/etc/mysql/conf.d/my.cnf # Zum Testen, in Prod entfernen oder auf bestimmte Netzwerke beschränken, damit man direkt auf die Datenbnak zugreifen kann
     restart: unless-stopped
     ports:
@@ -24,9 +22,9 @@ services:
       timeout: 10s
       retries: 3
     networks:
-      - cofi-network-system
+      - ally-network-system
 
-  backend_system:
+  backend_ally:
     build:
       context: .
       dockerfile: Dockerfile_python
@@ -35,7 +33,7 @@ services:
     ports:
       - "8041:8000"
     depends_on:
-      db_system:
+      db_ally:
         condition: service_healthy
     environment:
       - PYTHONPATH=/app
@@ -52,9 +50,9 @@ services:
       timeout: 10s
       retries: 3
     networks:
-      - cofi-network-system
+      - ally-network-system
 
-  frontend_system:
+  frontend_ally:
     build:
       context: .
       dockerfile: Dockerfile_django
@@ -65,13 +63,13 @@ services:
     depends_on:
       # backend_djangotest:
       #   condition: service_healthy
-      db_system:
+      db_ally:
         condition: service_healthy
     volumes:
-      - ../../frontend/cofi:/app # For development
-      # - ../frontend/cofi_test:/app/test # For development
-      - ../../.cache_cofi:/root/.cache
-    command: ["sh", "-c", "sleep 5 && while true; do pytest /app/home /app/cofi /app/authentication --html=/app/tests/report.html --self-contained-html; sleep 9; done"]
+      - ../../frontend/ally:/app # For development
+      # - ../frontend/ally_test:/app/test # For development
+      - ../../.cache_ally:/root/.cache
+    command: ["sh", "-c", "sleep 5 && while true; do pytest /app/home /app/recipes /app/ally /app/authentication --html=/app/tests/report.html --self-contained-html; sleep 9; done"]
     # command: ["ls", "-la"]
     # command: ["sh", "entrypoint.sh"]
     restart: on-failure
@@ -81,11 +79,11 @@ services:
         timeout: 10s
         retries: 3
     networks:
-        - cofi-network-system
+        - ally-network-system
 
 volumes:
-  consciousfit_data_system:
+  ally_data:
 
 networks:
-  cofi-network-system:
+  ally-network-system:
     driver: bridge

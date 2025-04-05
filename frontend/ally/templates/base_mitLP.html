@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
+{% get_language_info_list for LANGUAGES as languages %}
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <title>ConsciousFit</title>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo-container">
+                <a href="/"><img src="{% static 'img/ally_logo.png' %}" alt="Ally Logo" class="logo"></a>
+                                <span class="brand-text">
+                    <span class="consciencia">Consciencia</span>
+                    <span class="fitness">Fitness</span>
+                </span>
+            </div>
+            <nav>
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">Services</a>
+                <a href="#">Contact</a>
+            </nav> 
+            <div class="active-language-display">
+                <img src="{% static 'img/flags/' %}{{ LANGUAGE_CODE }}.svg" alt="{{ LANGUAGE_CODE }} Flag" class="flag-icon active-language-flag">
+            </div>
+            <div class="language-picker">
+                {% for language in languages %}
+                <a href="/{{ language.code }}/" class="language-link {% if language.code == LANGUAGE_CODE %}active{% endif %}" hreflang="{{ language.code }}">
+                    <img src="{% static 'img/flags/' %}{{ language.code }}.svg" alt="{{ language.name_local }} Flag" class="flag-icon">
+                    <span class="language-name">{{ language.name_local }}</span>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        <p>&copy; 2024 ConsciousFit</p>
+    </footer>
+</body>
+</html>

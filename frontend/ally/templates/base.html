@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+{% load static %}
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
+{% get_language_info_list for LANGUAGES as languages %}
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <title>{% translate "A L L Y" %}</title>
+</head>
+<body>
+    <header>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <div class="header-content">
+            <div class="hamburger-menu">
+                <input id="menu__toggle" type="checkbox" />
+                <label class="menu__btn" for="menu__toggle">
+                    <span></span>
+                </label>
+                <div class="menu__box">
+                    <ul>
+                        <li><a href="#" class="menu__item">{% translate "Shop" %}</a></li>
+                        <li><a href="{% url 'focoquiz:quiz' %}" class="menu__item">{% translate "Quiz" %}</a></li>
+                        <li><a href="{% url 'recipes:recipe_list' %}" class="menu__item">{% translate "Recipes" %}</a></li>
+                        <li><a href="#" class="menu__item">{% translate "Lessons" %}</a></li>
+                        <li><a href="#" class="menu__item">{% translate "Support material" %}</a></li>
+                        <li><a href="{% url 'about:about' %}" class="menu__item">{% translate "About" %}</a></li>
+                        {% if user.is_authenticated %}
+                            {% with administrator_group='Administrator' %}
+                                {% if administrator_group in user.groups.all|stringformat:"s" %}
+                                    <li><a href="{% url 'admin:index' %}" class="menu__item">{% translate "Users" %}</a></li>
+                                {% endif %}
+                            {% endwith %}
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            <div class="logo-container">
+                <a href="{% url 'home:home' %}"><img src="{% static 'img/ally_logo.png' %}" alt="ALLY Logo" class="logo"></a>
+                <span class="brand-text">
+                    <span class="ally">A L L Y</span>
+                </span>
+            </div>
+            
+            <div class="header-actions">
+                <div class="active-language-display">
+                    <img src="{% static 'img/flags/' %}{{ LANGUAGE_CODE }}.svg" alt="{{ LANGUAGE_CODE }} Flag" class="flag-icon active-language-flag">
+                    <div class="language-picker">
+                        <ul>
+                            {% for language in languages %}
+                            <li>
+                                <a href="/{{ language.code }}/" class="language-link {% if language.code == LANGUAGE_CODE %}active{% endif %}" hreflang="{{ language.code }}">
+                                    <img src="{% static 'img/flags/' %}{{ language.code }}.svg" alt="{{ language.name_local }} Flag" class="flag-icon">
+                                    <span class="language-name">{{ language.name_local }}</span>
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="auth-section">
+                    {% if user.is_authenticated %}
+                        <div class="user-dropdown">
+                            <div class="user-avatar">
+                                {{ user.email|first|upper }}
+                            </div>
+                            <div class="user-dropdown-content">
+                                {% if user.is_staff %}
+                                    <a href="{% url 'admin:index' %}">{% translate "Admin" %}</a>
+                                {% endif %}
+                                <a href="{% url 'authentication:profile' %}">{% translate "Settings" %}</a>
+                                <form method="post" action="{% url 'authentication:logout' %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="logout-link">{% translate "Logout" %}</button>
+                                </form>                                
+                            </div>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'authentication:login' %}" class="login-icon-link">
+                            <i class="fas fa-user login-icon"></i>
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+    <footer>
+        <p>© 2025 A L L Y. All rights reserved.</p>
+    </footer>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

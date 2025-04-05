@@ -11,3 +11,4 @@ pytest-html
 tblib
 pytest
 pytest-django
+beautifulsoup4
