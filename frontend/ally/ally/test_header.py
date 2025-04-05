@@ -21,7 +21,7 @@ class HeaderTest(TestCase):
 
             # Überprüft, ob die Navigationslinks vorhanden sind
             # Home link is now in the logo
-            self.assertContains(response, f'<a href="/en/"><img src="/static/img/ally_logo_89x110.png" alt="Ally Logo" class="logo"></a>')
+            self.assertContains(response, '<a href="/en/"><img src="/static/img/ally_logo.png" alt="ALLY Logo" class="logo"></a>')
             # other links are in the hamburger menu
             self.assertContains(response, f'<a href="/en/quiz/" class="menu__item">Quiz</a>')
             self.assertContains(response, f'<a href="/en/about/" class="menu__item">About</a>')

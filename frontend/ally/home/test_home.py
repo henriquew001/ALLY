@@ -19,7 +19,7 @@ class TestHomeView(TestCase):  # Inherit from TestCase
         response = client.get(reverse('home:home'), HTTP_ACCEPT_LANGUAGE='en')  # Set the language in get
         response_content = response.content.decode('utf-8')
         assert response.status_code == 200
-        assert "Welcome to the Conscious Fitness!" in response_content
+        assert "Welcome to the A L L Y!" in response_content
 
     def test_home_view_status_code(self):
         """
@@ -49,7 +49,7 @@ class TestHomeView(TestCase):  # Inherit from TestCase
         assert "Are you interested in such a result?" in response_content
         assert "I want to take advantage of this opportunity" in response_content
         assert "Spots are limited." in response_content
-        assert "Consciência Fitness" in response_content
+        assert "A L L Y" in response_content
 
     def test_home_view_language_de(self):
         """
@@ -76,7 +76,7 @@ class TestHomeView(TestCase):  # Inherit from TestCase
             assert _("Are you interested in such a result?") in response_content
             assert _("I want to take advantage of this opportunity") in response_content
             assert _("Spots are limited.") in response_content
-            assert "Consciência Fitness" in response_content
+            assert "A L L Y" in response_content
 
     def test_home_view_language_pt_br(self):
         """
@@ -100,4 +100,4 @@ class TestHomeView(TestCase):  # Inherit from TestCase
             assert _("Are you interested in such a result?") in response_content
             assert _("I want to take advantage of this opportunity") in response_content
             assert _("Spots are limited.") in response_content
-            assert "Consciência Fitness" in response_content
+            assert "A L L Y" in response_content
