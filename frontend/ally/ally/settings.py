@@ -93,14 +93,14 @@ WSGI_APPLICATION = 'ally.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 # Construct the database URL dynamically
-DB_ENGINE = os.environ.get("DB_ENGINE", "mysql")
+DB_ENGINE = os.environ.get("DB_ENGINE", "postgresql")
 DB_USER = os.environ.get("DB_USER", "app_user")  # Correct default user
 DB_PASSWORD = os.environ.get("DB_PASSWORD", "testpw") # Use environment variable
-DB_HOST = os.environ.get("DB_HOST", "db_dev")
-DB_PORT = os.environ.get("DB_PORT", "3306")
-DB_NAME = os.environ.get("DB_DATABASE", "conscious_fit_dev")
+DB_HOST = os.environ.get("DB_HOST", "db_ally")
+DB_PORT = os.environ.get("DB_PORT", "5432")
+DB_NAME = os.environ.get("DB_DATABASE", "ally_db")
 
-DB_TEST_NAME = os.environ.get("DB_TEST_DATABASE", "conscious_fit_testing")
+DB_TEST_NAME = os.environ.get("DB_TEST_DATABASE", "ally_testing")
 
 if DB_ENGINE == "sqlite3":
     DATABASE_URL = f"sqlite:///{BASE_DIR / 'db.sqlite3'}"

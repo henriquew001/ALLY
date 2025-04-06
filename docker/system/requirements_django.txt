@@ -9,3 +9,5 @@ cryptography
 gunicorn
 Pillow
 pymongo
+# psycopg2 # For PostgreSQL prod
+psycopg2-binary # For PostgreSQL testing
