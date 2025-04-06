@@ -485,3 +485,63 @@ hr {
  #add-ingredient:hover, .button:hover {
     background-color: #e0e0e0;
  }
+
+ .ingredient-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+ }
+
+ .ingredient-row label {
+    margin-bottom: 0.2em;
+    display: block;
+    font-size: 0.9em;
+ }
+
+ .ingredient-row input[type="text"] {
+    width: 150px;
+    margin-right: 10px;
+    box-sizing: border-box;
+ }
+
+ .ingredient-row input[type="checkbox"] {
+    margin-right: 10px;
+ }
+
+ #add-ingredient, .button, button[type="submit"] { /* Apply to submit buttons too */
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+    border-radius: 5px;
+    font-family: inherit; /* Ensure font consistency */
+    font-size: inherit;
+    -webkit-appearance: none; /* Reset default button styles (Safari) */
+    -moz-appearance: none;    /* Reset default button styles (Firefox) */
+    appearance: none;
+ }
+
+ #add-ingredient:hover, .button:hover, button[type="submit"]:hover {
+    background-color: #e0e0e0;
+ }
+
+ .errorlist {
+    color: red;
+    margin-top: 0.2em;
+ }
+
+ .form-errors {
+     border: 1px solid red;
+     padding: 10px;
+     margin-bottom: 10px;
+ }
+
+ .form-actions {
+     display: flex;
+     justify-content: flex-start;
+     gap: 10px;
+ }

@@ -65,7 +65,7 @@ services:
       - ../../frontend/ally:/app # For development
       # - ../frontend/ally_test:/app/test # For development
       - ../../.cache_ally:/root/.cache
-    command: ["sh", "-c", "sleep 5 && while true; do pytest -m unit -n 4 /app/home /app/ally /app/authentication /app/focoquiz /app/recipes --html=/app/tests/unitreport.html --self-contained-html; sleep 9; done"]
+    command: ["sh", "-c", "sleep 5 && while true; do pytest -m unit -n 4 /app/home /app/ally /app/products /app/authentication /app/focoquiz /app/recipes --html=/app/tests/unitreport.html --self-contained-html; sleep 9; done"]
     # command: ["ls", "-la"]
     # command: ["sh", "entrypoint.sh"]
     restart: on-failure
