@@ -6,6 +6,6 @@
     <form method="post">
         {% csrf_token %}
         <button type="submit">Ja, löschen</button>
-        <a href="{% url 'recipe_detail' recipe_id=recipe.id %}">Nein, zurück zum Rezept</a>
+        <a href="{% url 'recipes:recipe_detail' recipe_id=recipe.id %}">Nein, zurück zum Rezept</a>
     </form>
 {% endblock %}

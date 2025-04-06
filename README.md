@@ -1,6 +1,6 @@
-# ConsciousFit (CoFi)
+# Ally
 
-ConsciousFit (CoFi) is a platform designed to empower users with the knowledge and tools to achieve their fitness goals through informed nutritional choices.
+A L L Y is a platform designed to empower users with the knowledge and tools to achieve their fitness goals through informed nutritional choices.
 
 ## Features
 

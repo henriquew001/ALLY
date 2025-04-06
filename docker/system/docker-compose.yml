@@ -24,6 +24,21 @@ services:
     networks:
       - ally-network-system
 
+  openfoodfactsmongo:
+    image: mongo
+    restart: always
+    volumes:
+      - /home/heinrich/projects/openfootfacts_db:/dump # Zum einspielen der Daten aus der openfoodfacts datenbank
+      - mongodb_data:/data/db # Mounten Sie das Volume in den Standard-Datenpfad von MongoDB
+    ports:
+      - "27017:27017"
+    container_name: openfoodfacts-mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    networks:
+      - ally-network-system
+
   backend_ally:
     build:
       context: .
@@ -83,6 +98,7 @@ services:
 
 volumes:
   ally_data:
+  mongodb_data:
 
 networks:
   ally-network-system:

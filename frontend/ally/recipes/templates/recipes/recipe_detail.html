@@ -14,5 +14,5 @@
     <p>Zubereitungszeit: {{ recipe.prep_time }} Minuten</p>
     <p>Kochzeit: {{ recipe.cook_time }} Minuten</p>
 
-    <a href="{% url 'recipe_edit' recipe_id=recipe.id %}">Rezept bearbeiten</a>
+    <a href="{% url 'recipes:recipe_edit' recipe_id=recipe.id %}">Rezept bearbeiten</a>
 {% endblock %}

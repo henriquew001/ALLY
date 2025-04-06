@@ -121,32 +121,40 @@ if DB_ENGINE == "mysql":
         "NAME": DB_TEST_NAME
     }
 
+
 # openfoodfactsdatabase
 MONGO_HOST = os.environ.get("MONGO_HOST", "localhost")
 MONGO_PORT = int(os.environ.get("MONGO_PORT", 27017))
-MONGO_DB_NAME = os.environ.get("MONGO_DB_NAME", "openfoodfacts")
+MONGO_DB_NAME = os.environ.get("MONGO_DB_NAME", "mydatabase")
 MONGO_USER = os.environ.get("MONGO_USER", "root")
 MONGO_PASSWORD = os.environ.get("MONGO_PASSWORD")
 
+MONGO_CLIENT = None
+MONGO_CONNECTION_SUCCESS = False
 
-# Verbindung zur MongoDB aufbauen
+
+# Initialize MongoDB client on startup
 try:
     if MONGO_USER and MONGO_PASSWORD:
-        mongo_client = pymongo.MongoClient(
-            f"mongodb://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_HOST}:{MONGO_PORT}/"
+        MONGO_CLIENT = pymongo.MongoClient(
+            f"mongodb://{MONGO_USER}:{MONGO_PASSWORD}@{MONGO_HOST}:{MONGO_PORT}/",
+            serverSelectionTimeoutMS=3000,
         )
     else:
-        mongo_client = pymongo.MongoClient(
-            f"mongodb://{MONGO_HOST}:{MONGO_PORT}/"
+        MONGO_CLIENT = pymongo.MongoClient(
+            f"mongodb://{MONGO_HOST}:{MONGO_PORT}/",
+            serverSelectionTimeoutMS=3000,
         )
-    db = mongo_client[MONGO_DB_NAME]
+    MONGO_CLIENT.admin.command('ping')
     MONGO_CONNECTION_SUCCESS = True
+    print("Successfully connected to MongoDB")
 except pymongo.errors.ConnectionFailure as e:
-    print(f"Verbindung zur MongoDB fehlgeschlagen: {e}")
-    MONGO_CONNECTION_SUCCESS = False
-
-MONGO_CLIENT = mongo_client
-
+    print(f"Failed to connect to MongoDB: {e}")
+except pymongo.errors.ServerSelectionTimeoutError as e:
+    print(f"Timeout connecting to MongoDB: {e}")
+except pymongo.errors.ConfigurationError as e:
+    print(f"MongoDB configuration error: {e}")
+    
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

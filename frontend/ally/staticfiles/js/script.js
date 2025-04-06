@@ -1,4 +1,4 @@
-// cofi/static/js/script.js
+// ally/static/js/script.js
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOMContentLoaded event fired');
     const passwordToggles = document.querySelectorAll('.password-toggle');

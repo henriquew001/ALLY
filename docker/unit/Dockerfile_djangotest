@@ -22,12 +22,12 @@ COPY requirements_djangotest.txt .
 RUN pip install --no-cache-dir -r requirements_djangotest.txt
 
 # restlichen Code kopieren
-# COPY ../frontend/cofi /app
+# COPY ../frontend/ally /app
 COPY . .
 
 # Umgebungsvariablen für Django einrichten
-ENV DJANGO_SETTINGS_MODULE=cofi.settings
+ENV DJANGO_SETTINGS_MODULE=ally.settings
 
 # Befehl zum Ausführen der Tests
-# CMD ["python", "cofi/manage.py", "test", "django_tests"]
+# CMD ["python", "ally/manage.py", "test", "django_tests"]
 # CMD ["ls"]

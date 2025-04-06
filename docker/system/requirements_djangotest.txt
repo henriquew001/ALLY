@@ -12,3 +12,4 @@ tblib
 pytest
 pytest-django
 beautifulsoup4
+pytest-xdist

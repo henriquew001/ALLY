@@ -8,7 +8,7 @@ services:
   #     MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
   #     MYSQL_PASSWORD: ${DB_PASSWORD}
   #   volumes:
-  #     - consciousfit_data_djangotest:/var/lib/mysql
+  #     - ally_data_djangotest:/var/lib/mysql
   #     - ./my.cnf:/etc/mysql/conf.d/my.cnf # Zum Testen, in Prod entfernen oder auf bestimmte Netzwerke beschränken, damit man direkt auf die Datenbnak zugreifen kann
   #   restart: unless-stopped
   #   # ports:
@@ -19,7 +19,7 @@ services:
   #     timeout: 10s
   #     retries: 3
   #   networks:
-  #     - cofi-network-djangotest
+  #     - ally-network-djangotest
 
   # backend_djangotest:
   #   build:
@@ -46,7 +46,7 @@ services:
   #     timeout: 10s
   #     retries: 3
   #   networks:
-  #     - cofi-network-djangotest
+  #     - ally-network-djangotest
 
   frontend_djangotest:
     build:
@@ -62,10 +62,10 @@ services:
       # db_unit:
       #   condition: service_healthy
     volumes:
-      - ../../frontend/cofi:/app # For development
-      # - ../frontend/cofi_test:/app/test # For development
-      - ../../.cache_cofi:/root/.cache
-    command: ["sh", "-c", "sleep 5 && while true; do pytest /app/home /app/cofi /app/authentication --html=/app/tests/report.html --self-contained-html; sleep 9; done"]
+      - ../../frontend/ally:/app # For development
+      # - ../frontend/ally_test:/app/test # For development
+      - ../../.cache_ally:/root/.cache
+    command: ["sh", "-c", "sleep 5 && while true; do pytest -m unit -n 4 /app/home /app/ally /app/authentication /app/focoquiz /app/recipes --html=/app/tests/unitreport.html --self-contained-html; sleep 9; done"]
     # command: ["ls", "-la"]
     # command: ["sh", "entrypoint.sh"]
     restart: on-failure
@@ -75,11 +75,11 @@ services:
         timeout: 10s
         retries: 3
     networks:
-        - cofi-network-djangotest
+        - ally-network-djangotest
 
 volumes:
-  consciousfit_data_djangotest:
+  ally_data_djangotest:
 
 networks:
-  cofi-network-djangotest:
+  ally-network-djangotest:
     driver: bridge

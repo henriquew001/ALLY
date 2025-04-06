@@ -8,7 +8,7 @@ import os
 from django.db import connection
 from django.db.utils import OperationalError
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cofi.settings')  # Replace 'cofi.settings' with your project's settings
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ally.settings')
 django.setup()
 
 try:
@@ -51,7 +51,7 @@ import django
 import os
 from django.contrib.auth import get_user_model
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cofi.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ally.settings')
 django.setup()
 
 User = get_user_model()

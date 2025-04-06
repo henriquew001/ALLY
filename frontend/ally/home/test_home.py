@@ -11,6 +11,9 @@ from django.utils.translation import activate, gettext as _
 
 @pytest.mark.django_db
 class TestHomeView(TestCase):  # Inherit from TestCase
+    @pytest.mark.unit
+    @pytest.mark.system
+    @pytest.mark.integration
     def test_home_view_has_content(self):
         """
         Test if home view returns a html file with specific content.
@@ -21,6 +24,9 @@ class TestHomeView(TestCase):  # Inherit from TestCase
         assert response.status_code == 200
         assert "Welcome to the A L L Y!" in response_content
 
+    @pytest.mark.unit
+    @pytest.mark.system
+    @pytest.mark.integration
     def test_home_view_status_code(self):
         """
         Test if home view returns a 200 status code.
@@ -29,6 +35,9 @@ class TestHomeView(TestCase):  # Inherit from TestCase
         response = client.get(reverse('home:home'), HTTP_ACCEPT_LANGUAGE='en')
         assert response.status_code == 200
 
+    @pytest.mark.unit
+    @pytest.mark.system
+    @pytest.mark.integration
     def test_home_view_language_en(self):
         """
         Test if home view returns a html file with specific content for english.
@@ -51,6 +60,9 @@ class TestHomeView(TestCase):  # Inherit from TestCase
         assert "Spots are limited." in response_content
         assert "A L L Y" in response_content
 
+    @pytest.mark.unit
+    @pytest.mark.system
+    @pytest.mark.integration
     def test_home_view_language_de(self):
         """
         Test if home view returns a html file with specific content for german.
@@ -78,6 +90,9 @@ class TestHomeView(TestCase):  # Inherit from TestCase
             assert _("Spots are limited.") in response_content
             assert "A L L Y" in response_content
 
+    @pytest.mark.unit
+    @pytest.mark.system
+    @pytest.mark.integration
     def test_home_view_language_pt_br(self):
         """
         Test if home view returns a html file with specific content for portuguese.

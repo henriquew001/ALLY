@@ -76,18 +76,23 @@ def recipe_delete(request, recipe_id):
 def ingredient_autocomplete(request):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         query = request.GET.get('query', '')
-        try:
-            # Try to connect to MongoDB
-            client = settings.MONGO_CLIENT
-            client.admin.command('ping')  # Check connection
-            db = client[settings.MONGO_DB_NAME]
-            collection = db['ingredients']
-            ingredients = collection.find({'name': {'$regex': query, '$options': 'i'}})
-            results = [{'id': str(ingredient['_id']), 'name': ingredient['name']} for ingredient in ingredients]
-        except ConnectionFailure:
-            # MongoDB not available, use placeholder
+        if settings.MONGO_CLIENT is not None:
+            try:
+                # Try to connect to MongoDB
+                client = settings.MONGO_CLIENT
+                client.admin.command('ping')  # Check connection
+                db = client[settings.MONGO_DB_NAME]
+                collection = db['ingredients']
+                ingredients = collection.find({'name': {'$regex': query, '$options': 'i'}})
+                results = [{'id': str(ingredient['_id']), 'name': ingredient['name']} for ingredient in ingredients]
+                return JsonResponse(results, safe=False)
+            except ConnectionFailure:
+                # MongoDB not available, use placeholder
+                results = [{'id': 'placeholder1', 'name': 'Placeholder Ingredient 1'},
+                           {'id': 'placeholder2', 'name': 'Placeholder Ingredient 2'}]
+                return JsonResponse(results, safe=False)
+        else:
             results = [{'id': 'placeholder1', 'name': 'Placeholder Ingredient 1'},
                        {'id': 'placeholder2', 'name': 'Placeholder Ingredient 2'}]
-            return JsonResponse(results, safe=False) # add return
-        return JsonResponse(results, safe=False)
+            return JsonResponse(results, safe=False)
     return JsonResponse([], safe=False)
