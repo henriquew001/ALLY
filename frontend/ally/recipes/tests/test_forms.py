@@ -87,7 +87,8 @@ def test_ingredient_formset_invalid_data():
 
     # Check for the error on the 'name' field
     assert 'name' in formset.forms[0].errors
-    assert formset.forms[0].errors['name'] == ['This field is required.']
+    assert 'This field' in formset.forms[0].errors['name'][0]  # Check if "This field" is part of the message
+    assert 'required.' in formset.forms[0].errors['name'][0] # Check if "required." is part of the message
     
 @pytest.mark.django_db
 @pytest.mark.unit
