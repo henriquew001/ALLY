@@ -25,7 +25,13 @@ def recipe_new(request):
     if request.method == "POST":
         form = RecipeForm(request.POST)
         ingredient_formset = IngredientFormSet(request.POST, prefix='ingredients')
+
+        is_form_valid = form.is_valid()
+        is_formset_valid = ingredient_formset.is_valid()
+        print(f">>> recipe_new POST: form.is_valid() = {is_form_valid}")
+        print(f">>> recipe_new POST: ingredient_formset.is_valid() = {is_formset_valid}")
         if form.is_valid() and ingredient_formset.is_valid():
+            print(">>> SAVING RECIPE (This should NOT happen in the failing test)")
             recipe = form.save(commit=False) # add commit=False
             recipe.author = request.user
             recipe.save()
@@ -33,6 +39,7 @@ def recipe_new(request):
             ingredient_formset.save()
             return redirect('recipes:recipe_list')  # Redirect on success
         else:
+            print(">>> NOT SAVING RECIPE (This SHOULD happen in the failing test)")
             print("Form errors:")
             print(form.errors)
             print("Ingredient formset errors:")
