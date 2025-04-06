@@ -29,32 +29,100 @@
                 {% endif %}
             </div>
         {% endfor %}
+
         <h3>Ingredients</h3>
         {{ ingredient_formset.management_form }}
-        {% for form in ingredient_formset %}
-            {% if form.errors %}
-                <ul class="errorlist">
-                    {% for error in form.errors.values %}
-                        {% for e in error %}
-                            <li>{{ e }}</li>
-                        {% endfor %}
-                    {% endfor %}
-                </ul>
-            {% endif %}
-            {% for field in form %}
-                <div class="form-group">
-                    {{ field.label_tag }}
-                    {{ field }}
-                    {% if field.errors %}
+        <div id="ingredient-container">
+            {% for form in ingredient_formset.forms %}
+                <div class="ingredient-row" style="display: flex; align-items: center; margin-bottom: 10px;">
+                    {% if form.errors %}
                         <ul class="errorlist">
-                            {% for error in field.errors %}
-                                <li>{{ error }}</li>
+                            {% for error in form.errors.values %}
+                                {% for e in error %}
+                                    <li>{{ e }}</li>
+                                {% endfor %}
                             {% endfor %}
                         </ul>
                     {% endif %}
+                    <div style="margin-right: 10px;">
+                        {{ form.name.label_tag }}
+                        {{ form.name }}
+                    </div>
+                    <div style="margin-right: 10px;">
+                        {{ form.quantity.label_tag }}
+                        {{ form.quantity }}
+                    </div>
+                    {% if form.instance.pk %}
+                        <div style="margin-right: 10px;">
+                            {{ form.id.label_tag }}
+                            {{ form.id }}
+                        </div>
+                    {% endif %}
+                    <button type="button" class="remove-ingredient">X</button>
                 </div>
             {% endfor %}
-        {% endfor %}
-        <button type="submit">Save</button>
+        </div>
+        <button type="button" id="add-ingredient">Add Ingredient</button>
+        <div class="form-actions" style="margin-top: 10px;">
+            <button type="submit">Save</button>
+            <a href="{% url 'recipes:recipe_list' %}" class="button">Back to Recipes</a>
+        </div>
     </form>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        const ingredientContainer = document.getElementById('ingredient-container');
+        const addIngredientButton = document.getElementById('add-ingredient');
+        const totalForms = document.getElementById('id_ingredients-TOTAL_FORMS');
+        let formNum = parseInt(totalForms.value);
+
+        addIngredientButton.addEventListener('click', function() {
+            const newForm = document.createElement('div');
+            newForm.classList.add('ingredient-row');
+            newForm.style.display = 'flex';
+            newForm.style.alignItems = 'center';
+            newForm.style.marginBottom = '10px';
+
+            newForm.innerHTML = `
+                <div style="margin-right: 10px;">
+                    <label for="id_ingredients-${formNum}-name">Name:</label>
+                    <input type="text" name="ingredients-${formNum}-name" id="id_ingredients-${formNum}-name">
+                </div>
+                <div style="margin-right: 10px;">
+                    <label for="id_ingredients-${formNum}-quantity">Quantity:</label>
+                    <input type="text" name="ingredients-${formNum}-quantity" id="id_ingredients-${formNum}-quantity">
+                </div>
+                <div style="margin-right: 10px;">
+                    <label for="id_ingredients-${formNum}-id">ID:</label>
+                    <input type="text" name="ingredients-${formNum}-id" id="id_ingredients-${formNum}-id" readonly>
+                </div>
+                <button type="button" class="remove-ingredient">X</button>
+            `;
+
+            ingredientContainer.appendChild(newForm);
+            formNum++;
+            totalForms.value = formNum;
+            initializeRemoveButtons();
+        });
+
+        function initializeRemoveButtons() {
+            const removeButtons = document.querySelectorAll('.remove-ingredient');
+            removeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const ingredientRow = this.parentNode;
+                    ingredientContainer.removeChild(ingredientRow);
+
+                    // Update TOTAL_FORMS
+                    const totalForms = document.getElementById('id_ingredients-TOTAL_FORMS');
+                    let currentTotal = parseInt(totalForms.value);
+                    if (currentTotal > 0) {
+                        totalForms.value = currentTotal - 1;
+                    }
+                });
+            });
+        }
+
+        initializeRemoveButtons();
+    </script>
 {% endblock %}

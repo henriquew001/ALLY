@@ -95,5 +95,7 @@
         <p>© 2025 A L L Y. All rights reserved.</p>
     </footer>
     <script src="{% static 'js/script.js' %}"></script>
+    {% block extra_js %}  {# This is the important part! #}
+    {% endblock %}
 </body>
 </html>

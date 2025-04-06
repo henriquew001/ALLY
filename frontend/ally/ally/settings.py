@@ -31,6 +31,7 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'  # Better way to handle boole
 
 ALLOWED_HOSTS = [h.strip() for h in os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')]
 
+ENV = os.getenv('ENV', 'prod')
 
 # Application definition
 

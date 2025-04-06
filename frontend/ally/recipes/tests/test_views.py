@@ -1,12 +1,10 @@
 import pytest
 from django.urls import reverse
-from .models import Recipe, Ingredient
-from authentication.models import CustomUser
-from .forms import RecipeForm, IngredientFormSet
-from bs4 import BeautifulSoup
+from recipes.models import Recipe, Ingredient
 from unittest.mock import patch, MagicMock
+from recipes.forms import RecipeForm, IngredientFormSet
+from bs4 import BeautifulSoup
 
-# Fixtures (no change needed - these are still useful for setup)
 @pytest.fixture
 def user(django_user_model):
     return django_user_model.objects.create_user(
@@ -30,7 +28,7 @@ def recipe(user):
     Ingredient.objects.create(recipe=recipe, name='Ingredient 2', quantity='2 tbsp')
     return recipe
 
-# Mock MongoDB Function (Keep this if you still need to test the autocomplete view)
+# Mock MongoDB Function (same as before)
 def mock_mongo_client():
     mock_client = MagicMock()
     mock_collection = MagicMock()
@@ -39,7 +37,6 @@ def mock_mongo_client():
     mock_client.food_data.ingredients_en = mock_collection
     return mock_client
 
-# Helper function to apply the MongoDB mock
 def apply_mongo_mock(test_function):
     def wrapper(*args, **kwargs):
         with patch('recipes.views.settings.MONGO_CLIENT', new=mock_mongo_client()):
@@ -47,13 +44,45 @@ def apply_mongo_mock(test_function):
     return wrapper
 
 @pytest.mark.django_db
-@pytest.mark.integration
-@pytest.mark.system
-def test_recipe_creation_integration(client, user):
-    """
-    Integration test for recipe creation.
-    Tests the interaction between the view, form, and model.
-    """
+@pytest.mark.unit
+def test_recipe_list_view(client, user, recipe):
+    client.login(username='testuser@example.com', password='testpassword')
+    url = reverse('recipes:recipe_list')
+    response = client.get(url)
+    assert response.status_code == 200
+    assert 'recipes' in response.context
+    assert len(response.context['recipes']) == 1
+
+@pytest.mark.django_db
+@pytest.mark.unit
+def test_recipe_detail_view(client, user, recipe):
+    client.login(username='testuser@example.com', password='testpassword')
+    url = reverse('recipes:recipe_detail', kwargs={'recipe_id': recipe.pk})
+    response = client.get(url)
+    assert response.status_code == 200
+    assert 'recipe' in response.context
+    assert 'ingredients' in response.context
+    assert response.context['recipe'] == recipe
+    assert len(response.context['ingredients']) == 2
+
+@pytest.mark.django_db
+@pytest.mark.unit
+@patch('recipes.views.settings')
+def test_ingredient_autocomplete_mongo_placeholder(mock_settings, client, user):
+    client.login(username='testuser@example.com', password='testpassword')
+    mock_collection = MagicMock()
+    mock_collection.find.return_value = []
+    mock_settings.MONGO_CLIENT.food_data.ingredients_en = mock_collection
+
+    url = reverse('recipes:ingredient_autocomplete')
+    response = client.get(url, {'query': 'test'}, follow=True)  # Add follow=True
+    assert response.status_code == 200
+    data = response.json()
+    assert len(data) == 0
+
+@pytest.mark.django_db
+@pytest.mark.unit
+def test_recipe_creation_view(client, user):
     client.login(username='testuser@example.com', password='testpassword')
     url = reverse('recipes:recipe_new')
     data = {
@@ -82,13 +111,8 @@ def test_recipe_creation_integration(client, user):
     assert recipe.ingredients.count() == 2
 
 @pytest.mark.django_db
-@pytest.mark.integration
-@pytest.mark.system
-def test_recipe_edit_integration(client, user, recipe):
-    """
-    Integration test for recipe editing.
-    Tests the interaction between the view, form, and model during edit.
-    """
+@pytest.mark.unit
+def test_recipe_edit_view(client, user, recipe):
     client.login(username='testuser@example.com', password='testpassword')
     url = reverse('recipes:recipe_edit', kwargs={'recipe_id': recipe.pk})
     data = {
@@ -117,13 +141,8 @@ def test_recipe_edit_integration(client, user, recipe):
     assert recipe.ingredients.all()[0].name == 'Edited Ingredient 1'
 
 @pytest.mark.django_db
-@pytest.mark.integration
-@pytest.mark.system
-def test_recipe_delete_integration(client, user, recipe):
-    """
-    Integration test for recipe deletion.
-    Tests the delete view and its effect on the model.
-    """
+@pytest.mark.unit
+def test_recipe_delete_view(client, user, recipe):
     client.login(username='testuser@example.com', password='testpassword')
     url = reverse('recipes:recipe_delete', kwargs={'recipe_id': recipe.pk})
     response = client.post(url, follow=True)
@@ -132,65 +151,8 @@ def test_recipe_delete_integration(client, user, recipe):
     assert Ingredient.objects.count() == 0
 
 @pytest.mark.django_db
-@pytest.mark.integration
-@pytest.mark.system
-def test_recipe_list_view_integration(client, user, recipe):
-    """
-    Integration test for the recipe list view.
-    Checks if the view correctly retrieves and displays recipes.
-    """
-    client.login(username='testuser@example.com', password='testpassword')
-    url = reverse('recipes:recipe_list')
-    response = client.get(url)
-    assert response.status_code == 200
-    assert 'recipes' in response.context
-    assert len(response.context['recipes']) == 1
-
-@pytest.mark.django_db
-@pytest.mark.integration
-@pytest.mark.system
-def test_recipe_detail_view_integration(client, user, recipe):
-    """
-    Integration test for the recipe detail view.
-    Checks if the view correctly retrieves and displays a single recipe.
-    """
-    client.login(username='testuser@example.com', password='testpassword')
-    url = reverse('recipes:recipe_detail', kwargs={'recipe_id': recipe.pk})
-    response = client.get(url)
-    assert response.status_code == 200
-    assert 'recipe' in response.context
-    assert 'ingredients' in response.context
-    assert response.context['recipe'] == recipe
-    assert len(response.context['ingredients']) == 2
-
-@pytest.mark.django_db
-@pytest.mark.integration
-@pytest.mark.system
-@patch('recipes.views.settings')
-def test_ingredient_autocomplete_mongo_integration(mock_settings, client, user):
-    """
-    Integration test for ingredient autocomplete.
-    Tests the view's interaction with the MongoDB (or mock).
-    """
-    client.login(username='testuser@example.com', password='testpassword')
-    mock_collection = MagicMock()
-    mock_collection.find.return_value = []  # Simulate no results
-    mock_settings.MONGO_CLIENT.food_data.ingredients_en = mock_collection
-
-    url = reverse('recipes:ingredient_autocomplete')
-    response = client.get(url, {'query': 'test'})
-    assert response.status_code == 200
-    data = response.json()
-    assert len(data) == 0
-
-@pytest.mark.django_db
-@pytest.mark.integration
-@pytest.mark.system
-def test_recipe_creation_validation_integration(client, user):
-    """
-    Integration test for recipe creation with validation errors.
-    Ensures that validation errors are correctly handled and displayed.
-    """
+@pytest.mark.unit
+def test_recipe_creation_validation_view(client, user):
     client.login(username='testuser@example.com', password='testpassword')
     url = reverse('recipes:recipe_new')
     data = {
@@ -207,25 +169,23 @@ def test_recipe_creation_validation_integration(client, user):
         'ingredients-0-name': '',
         'ingredients-0-quantity': '',
     }
-    response = client.post(url, data, follow=True)
+    response = client.post(url, data)  # Remove follow=True
     assert response.status_code == 200
     assert Recipe.objects.count() == 0
     assert Ingredient.objects.count() == 0
     soup = BeautifulSoup(response.content, 'html.parser')
-    error_list = soup.find('ul', class_='errorlist')
-    assert error_list is not None
-    assert "Bitte fülle alle Felder aus." in error_list.text
-    form = soup.find('form')
-    assert form is not None
+    form_element = soup.find('form')
+    assert form_element is not None
+
+    # Check for ingredient form errors specifically
+    ingredient_form_errors = soup.find(attrs={'id': 'id_ingredients-0-name'})
+    assert ingredient_form_errors is not None
+    assert ingredient_form_errors.find_next_sibling('ul', class_='errorlist') is not None
+    assert "All fields are required." in ingredient_form_errors.find_next_sibling('ul', class_='errorlist').text
 
 @pytest.mark.django_db
-@pytest.mark.integration
-@pytest.mark.system
-def test_recipe_creation_validation_quantity_integration(client, user):
-    """
-    Integration test for recipe creation with missing quantity.
-    Specifically tests the ingredient form validation.
-    """
+@pytest.mark.unit
+def test_recipe_creation_validation_quantity_view(client, user):
     client.login(username='testuser@example.com', password='testpassword')
     url = reverse('recipes:recipe_new')
     data = {
@@ -242,13 +202,13 @@ def test_recipe_creation_validation_quantity_integration(client, user):
         'ingredients-0-name': 'test',
         'ingredients-0-quantity': '',
     }
-    response = client.post(url, data, follow=False)
+    response = client.post(url, data, follow=True)
     assert response.status_code == 200
-    assert Recipe.objects.count() == 0
-    assert Ingredient.objects.count() == 0
+    assert Recipe.objects.count() == 0  # Recipe should not be created
+    assert Ingredient.objects.count() == 0  # Ingredients should not be created
     soup = BeautifulSoup(response.content, 'html.parser')
-    error_list = soup.find('ul', class_='errorlist')
-    assert error_list is not None
-    assert "Bitte fülle alle Felder aus." in error_list.text
     form = soup.find('form')
     assert form is not None
+    error_list = soup.find('ul', class_='errorlist')
+    assert error_list is not None
+    assert "All fields are required." in error_list.text

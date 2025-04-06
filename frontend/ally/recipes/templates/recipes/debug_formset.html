@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Formset Debug</title>
+</head>
+<body>
+    <h1>Formset Debug</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <h2>Zutaten</h2>
+        {{ formset.management_form }}
+
+        {% for form in formset.forms %}
+            <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+                {{ form.as_p }}
+                {% if form.errors %}
+                    <div style="color: red;">
+                        <strong>Fehler:</strong> {{ form.errors }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+
+        {% if formset.non_form_errors %}
+            <div style="color: red;">
+                <strong>Formset-Fehler:</strong> {{ formset.non_form_errors }}
+            </div>
+        {% endif %}
+
+        <button type="submit">Absenden</button>
+    </form>
+</body>
+</html>

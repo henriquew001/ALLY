@@ -1,4 +1,3 @@
-# recipes/views.py
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Recipe, Ingredient
 from .forms import RecipeForm, IngredientFormSet
@@ -30,14 +29,16 @@ def recipe_new(request):
             recipe = form.save(commit=False) # add commit=False
             recipe.author = request.user
             recipe.save()
-            ingredient_formset.instance = recipe
+            ingredient_formset.instance = recipe # set instance before saving
             ingredient_formset.save()
-            return redirect('recipes:recipe_list')
+            return redirect('recipes:recipe_list')  # Redirect on success
         else:
             print("Form errors:")
             print(form.errors)
             print("Ingredient formset errors:")
             print(ingredient_formset.errors)
+            # Render the template with errors - CORRECTED
+            return render(request, 'recipes/recipe_edit.html', {'form': form, 'ingredient_formset': ingredient_formset, 'errors': form.errors, 'ingredient_errors': ingredient_formset.errors})
     else:
         form = RecipeForm()
         ingredient_formset = IngredientFormSet(prefix='ingredients')
@@ -60,6 +61,8 @@ def recipe_edit(request, recipe_id):
             print(form.errors)
             print("Ingredient formset errors:")
             print(ingredient_formset.errors)
+            # Render the template with errors - CORRECTED
+            return render(request, 'recipes/recipe_edit.html', {'form': form, 'ingredient_formset': ingredient_formset, 'errors': form.errors, 'ingredient_errors': ingredient_formset.errors})
     else:
         form = RecipeForm(instance=recipe)
         ingredient_formset = IngredientFormSet(instance=recipe, prefix='ingredients')
@@ -94,5 +97,38 @@ def ingredient_autocomplete(request):
         else:
             results = [{'id': 'placeholder1', 'name': 'Placeholder Ingredient 1'},
                        {'id': 'placeholder2', 'name': 'Placeholder Ingredient 2'}]
-            return JsonResponse(results, safe=False)
-    return JsonResponse([], safe=False)
+            return JsonResponse([], safe=False)
+    return JsonResponse([], safe=False) # Ensure a response is always returned
+
+
+def debug_formset_view(request):
+    # Überprüfe, ob die aktuelle Umgebung eine der erlaubten ist
+    allowed_envs = ['dev', 'system', 'integration', 'unit', 'UAT']
+    if settings.ENV not in allowed_envs:
+        return HttpResponseForbidden("Debugging ist in dieser Umgebung nicht verfügbar.")
+
+    # Wenn die Umgebung erlaubt ist, setze den Debugging-Workflow fort
+    recipe = Recipe.objects.first() or Recipe.objects.create(
+        name='Debug-Rezept',
+        description='Nur zum Testen',
+        instructions='Alles vermischen',
+        prep_time=10,
+        cook_time=15,
+        servings=2,
+    )
+
+    if request.method == 'POST':
+        form = RecipeForm(request.POST, instance=recipe)
+        formset = IngredientFormSet(request.POST, instance=recipe, prefix='form')
+
+        if form.is_valid() and formset.is_valid():
+            form.save()
+            formset.save()
+    else:
+        form = RecipeForm(instance=recipe)
+        formset = IngredientFormSet(instance=recipe, prefix='form')
+
+    return render(request, 'recipes/debug_formset.html', {
+        'form': form,
+        'formset': formset,
+    })

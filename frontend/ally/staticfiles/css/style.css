@@ -469,3 +469,19 @@ hr {
 #ingredient_suggestions li:hover {
     background-color: #f0f0f0;
 }
+
+#add-ingredient, .button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    text-decoration: none; /* Remove underline from link */
+    color: black;
+    cursor: pointer;
+    border-radius: 5px;
+ }
+
+ #add-ingredient:hover, .button:hover {
+    background-color: #e0e0e0;
+ }

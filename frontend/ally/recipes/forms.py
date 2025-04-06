@@ -1,8 +1,7 @@
-# recipes/forms.py
 from django import forms
 from django.forms import inlineformset_factory
-from .models import Recipe, Ingredient
 from django.forms.models import BaseInlineFormSet
+from .models import Recipe, Ingredient
 
 class RecipeForm(forms.ModelForm):
     class Meta:
@@ -14,17 +13,33 @@ class IngredientForm(forms.ModelForm):
         model = Ingredient
         fields = ['name', 'quantity']
 
+    def clean(self):
+        cleaned_data = super().clean()
+        name = cleaned_data.get('name')
+        quantity = cleaned_data.get('quantity')
+
+        if not name:
+            raise forms.ValidationError({'name': ['This field is required.']})
+
+        if not quantity:
+            raise forms.ValidationError({'quantity': ['This field is required.']})
+
+        return cleaned_data
+
+
 class BaseIngredientFormSet(BaseInlineFormSet):
     def clean(self):
         super().clean()
-        for form in self.forms:
-            if form.cleaned_data and not form.cleaned_data.get('name') and not form.cleaned_data.get('quantity'):
-                continue # ignore empty forms
-            if form.cleaned_data and not form.cleaned_data.get('name'):
-                raise forms.ValidationError("Bitte fülle alle Felder aus.")
-            if form.cleaned_data and not form.cleaned_data.get('quantity'):
-                raise forms.ValidationError("Bitte fülle alle Felder aus.")
+        # Here you can add additional formset-level validation if needed
+        # For example, to ensure no empty ingredients are allowed
+        pass
 
-IngredientFormSet = inlineformset_factory(Recipe, Ingredient,
-                                        form=IngredientForm,
-                                        extra=1, formset=BaseIngredientFormSet)
+# InlineFormSet for the Recipe model and Ingredient model
+IngredientFormSet = inlineformset_factory(
+    Recipe,
+    Ingredient,
+    form=IngredientForm,
+    formset=BaseIngredientFormSet,
+    extra=1,  # One extra form for adding new ingredients
+    can_delete=False,  # Changed to False
+)
