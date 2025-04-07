@@ -42,6 +42,6 @@ db.sqlite3
 *.kate-swp
 
 # Test results
-report.html
-backend/app/report.html
+*testreport.html
+unittestreport.html
 .vscode/extensions.json

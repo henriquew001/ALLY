@@ -6,7 +6,9 @@ export $(grep -v '^#' .env | xargs)
 # jump to the venv folder
 cd ../../frontend
 
-source venv_dev/bin/activate
+source venv_unit/bin/activate
+pip install -r ../docker/unit/requirements_django.txt
+pip install -r ../docker/unit/requirements_djangotest.txt
 cd ally
 # Function to check database connection
 check_db_connection() {
@@ -85,7 +87,7 @@ while true; do
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] Führe pytest aus..."
 
     # Dein pytest-Befehl
-    pytest -m unit -n 4 ally/home ally/ally ally/products ally/authentication ally/focoquiz ally/recipes --html=tests/unittestreport.html --self-contained-html
+    pytest -m unit -n 3 ally/home ally/ally ally/products ally/authentication ally/focoquiz ally/recipes --html=tests/unittestreport.html --self-contained-html
 
     # Prüfung des Exit-Codes von pytest (optional, falls du den Status sehen willst)
     if [ $? -eq 0 ]; then
