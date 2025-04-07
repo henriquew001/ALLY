@@ -13,4 +13,3 @@ pytest
 pytest-django
 beautifulsoup4
 pytest-xdist
-psycopg2-binary
