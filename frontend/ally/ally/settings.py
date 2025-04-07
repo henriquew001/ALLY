@@ -104,7 +104,7 @@ DB_TEST_NAME = os.environ.get("DB_TEST_DATABASE", "ally_testing")
 
 if DB_ENGINE == "sqlite3":
     DATABASE_URL = f"sqlite:///{BASE_DIR / 'db.sqlite3'}"
-else:  # Assume MySQL/MariaDB if not SQLite
+else:  # Assume MySQL/MariaDB/Postres if not SQLite
      DATABASE_URL = f"{DB_ENGINE}://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
 DATABASES = {
