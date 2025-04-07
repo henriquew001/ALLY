@@ -290,7 +290,7 @@ footer {
     padding: 10px;
 }
 
-.about-person {
+.about-text {
     flex: 1;
     min-width: 280px;
     margin: 10px;
@@ -298,16 +298,6 @@ footer {
     border: 1px solid #ddd;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.about-person-image {
-    width: 230px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
 }
 
 .purchase-button {
