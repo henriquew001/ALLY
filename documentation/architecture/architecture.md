@@ -8,7 +8,7 @@ Dieses Dokument beschreibt die Architektur unseres Projekts, das einen Dienst be
 
 * **Backend-Server:**
     * **Programmiersprache:** Python (mit Django oder Flask)
-    * **Datenbank:** MariaDB
+    * **Datenbank:** PostgreSQL
     * **API:** RESTful API
     * **Dokumentation:** Sphinx
 * **Webanwendung:**
@@ -30,7 +30,7 @@ Hier finden Sie eine Übersicht über unsere Systemarchitektur.
 
 Der Backend-Server bildet das Herzstück des Dienstes. Er ist verantwortlich für:
 
-* Datenhaltung (MariaDB)
+* Datenhaltung (PostgreSQL)
 * Verarbeitung der Geschäftslogik (Python)
 * Bereitstellung einer RESTful API für die Kommunikation mit der Webanwendung und den mobilen Apps
 
@@ -59,7 +59,7 @@ Es wird darauf geachtet, dass alle verwendeten Komponenten LGPL oder kompatible 
 
 ## Entscheidungen
 
-* **Datenbank:** MariaDB wurde aufgrund der geringen Komplexität des Projekts ausgewählt.
+* **Datenbank:** PostgreSQL wurde aufgrund der Komplexität des Projekts ausgewählt.
 * **API:** RESTful APIs wurden aufgrund ihrer Einfachheit und weiten Verbreitung gewählt.
 * **Dokumentation:** Sphinx und Markdown wurden aufgrund ihrer Leistungsfähigkeit und Benutzerfreundlichkeit gewählt.
 
