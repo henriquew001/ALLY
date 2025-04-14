@@ -1,0 +1,37 @@
+@startuml
+title Detail: Analyze Data Process
+
+start
+
+:Receive Validated User Data\n(Weight, Height, Age, Gender, Activity Level, Goal);
+note left: Input from previous step
+
+:Calculate Body Mass Index (BMI);
+
+:Determine Weight Category\n(e.g., Underweight, Normal, Overweight)\n(based on BMI);
+
+:Calculate Basal Metabolic Rate (BMR)\n(e.g., using Mifflin-St Jeor formula)\n[[detail_bmr_calculation.svg]];
+note right: Requires Weight, Height, Age, Gender
+
+:Calculate Total Daily Energy Expenditure (TDEE)\n(BMR * Activity Factor);
+note right: Requires BMR, Activity Level
+
+' Entscheidung basierend auf dem Ziel des Benutzers
+if (User Goal?) then (Weight Loss)
+  :Adjust TDEE for Caloric Deficit\n(e.g., TDEE - 500 kcal);
+  note right: Set Target Calories = Adjusted TDEE
+else if (Muscle Gain) then (yes)
+  :Adjust TDEE for Caloric Surplus\n(e.g., TDEE + 300 kcal);
+  note right: Set Target Calories = Adjusted TDEE
+else (Maintain Weight)
+  :Use TDEE as Target Calories;
+endif
+
+:Calculate Target Macronutrients\n(Protein, Carbs, Fat based on Goal & Target Calories)\n[[detail_macro_calculation.svg]];
+
+:Package Results;
+note right: Output for next steps:\nAnalyzed Profile (BMI, Category, BMR, TDEE),\nTarget Calories,\nTarget Macros
+
+stop
+
+@enduml

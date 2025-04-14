@@ -1,0 +1,182 @@
+@startuml
+title Class Diagram: Application Data Structure (with Subscription)
+
+' --- Aufzählungstypen (Enums) ---
+' KORRIGIERT: Alle Enums im Multi-Line Format
+enum GenderEnum {
+   MALE
+   FEMALE
+   OTHER
+}
+enum ActivityLevelEnum {
+   SEDENTARY
+   LIGHTLY_ACTIVE
+   MODERATELY_ACTIVE
+   VERY_ACTIVE
+   EXTRA_ACTIVE
+}
+enum UserGoalEnum {
+   WEIGHT_LOSS
+   MUSCLE_GAIN
+   EAT_HEALTHY
+   BETTER_HEALTH_SITUATION
+   MAINTAIN_WEIGHT
+}
+enum MedicalConditionEnum {
+   DIABETES_TYPE_1
+   DIABETES_TYPE_2
+   HYPERTENSION        ' Bluthochdruck
+   HYPOTHYROIDISM      ' Schilddrüsenunterfunktion
+   CELIAC_DISEASE      ' Zöliakie
+   LACTOSE_INTOLERANCE ' Laktoseintoleranz
+   KIDNEY_DISEASE      ' Nierenerkrankung
+   ' --- Füge hier deine tatsächliche Liste vordefinierter Erkrankungen ein ---
+}
+' Enum für Abo-Modell / Produkt-Tier (war bereits korrekt)
+enum PlanTierEnum {
+   FREE     ' Kostenloser Plan
+   PREMIUM  ' Bezahlter Basis-Plan
+   PRO      ' Erweiterter Bezahlplan
+   ' ... weitere mögliche Pläne ...
+}
+
+' --- Hauptklassen ---
+' Klasse für Account-/Abo-Informationen (wie im letzten Schritt)
+class SubscriptionInfo {
+   + planTier: PlanTierEnum ' Welcher Plan ist aktiv?
+   + isActive: boolean
+   + expiryDate: Date ' oder String als Alternative für Datumstyp
+   ' + purchasedFeatures: List<String> ' Falls Features einzeln kaufbar sind
+}
+
+class UserProfile {
+ + weight: float
+ + height: float
+ + age: int
+ + gender: GenderEnum
+ + waterConsumption: int ' in liter (Aktuelle Eingabe des Users)
+ + activityLevel: ActivityLevelEnum
+ + goal: UserGoalEnum
+ + sportInputs: List<SportInput>     ' Eingabe der aktuellen Sportaktivitäten
+ + medicalConditions: List<MedicalConditionEnum> ' Optionale Liste ausgewählter Erkrankungen aus vordefinierter Enum
+ ' Aktuelle Essgewohnheiten (Allgemein):
+ + dietaryPreferences: List<String> ' Ernährungspräferenzen (z.B. ["Vegetarisch", "Glutenfrei"])
+ + typicalMealTimings: String       ' Typische Mahlzeitenzeiten (z.B. "Frühes Frühstück, spätes Abendessen")
+ + typicalSnackingHabits: String    ' Typisches Snackverhalten (z.B. "Snackt Obst zwischen Mahlzeiten")
+ + typicalMealsInfo: String         ' Allgemeine Beschreibung typischer Mahlzeiten (z.B. "Meist Hühnchen/Fisch mit Gemüse")
+ ' --- Beziehung zur Subscription Info wird unten definiert ---
+}
+
+class SportInput {
+' Separate Klasse für Sport-Eingaben
+ + type: String  ' z.B. "Jogging", "Weightlifting"
+ + durationMinutes: int
+ + frequencyPerWeek: int
+}
+
+class AnalyzedData {
+    ' Ergebnisse der Analyse-Phase
+     + bmi: float            ' Body Mass Index (Ergebnis)
+     + weightCategory: String ' z.B. Untergewicht, Normal, Übergewicht (oft vom BMI abgeleitet)
+     + bmr: float            ' Basal Metabolic Rate
+     + tdee: float           ' Total Daily Energy Expenditure
+     + targetCalories: float ' Zielkalorien basierend auf Ziel
+     + targetProtein: float
+     + targetCarbs: float
+     + targetFat: float
+
+     ' --- Methoden (repräsentieren Fähigkeiten der Klasse) ---
+
+     ' Diese Methode zeigt, DASS der BMI berechnet werden kann.
+     ' Die Formel selbst gehört in den Code der Methode.
+     + calculateBMI(userProfile: UserProfile): float ' Berechnet BMI aus UserProfile & gibt ihn zurück (aktualisiert auch das bmi Attribut hier)
+
+     ' Hier könnten Signaturen für weitere Berechnungen stehen:
+     ' + calculateBMR(userProfile: UserProfile): float
+     ' + calculateTDEE(bmr: float, activityLevel: ActivityLevelEnum): float
+     ' + determineWeightCategory(bmi: float): String
+     ' + calculateTargetMacros(targetCalories: float, goal: UserGoalEnum): void
+    }
+
+class Recommendation {
+' Container für die Ergebnisse
+ ' Die Art/Detailtiefe der Pläne hängt von UserProfile & SubscriptionInfo ab
+ ' Kann leer sein, dient als Verbindungspunkt
+ ' Enthält WorkoutPlan und DietPlan
+}
+
+class WorkoutPlan {
+ ' Detaillierungsgrad kann auch von SubscriptionInfo abhängen
+ + description: String
+ + frequencyPerWeek: int ' Wie oft pro Woche
+}
+
+class Exercise {
+' Einzelne Übung/Aktivität im Plan
+ + name: String
+ + type: String ' z.B. Cardio, Strength
+ + durationMinutes: int
+ + sets: int
+ + reps: String ' z.B. "8-12"
+ + notes: String
+}
+
+class DietPlan {
+' Empfohlener Diätplan (Detaillierungsgrad hängt von Subscription ab)
+ + targetCalories: float ' Zur Referenz im Plan
+ + recommendedWaterLitersTrainingDay: float    ' Empfohlene Wasseraufnahme (Liter) an Trainingstagen (evtl. nur Premium/Pro)
+ + recommendedWaterLitersNonTrainingDay: float ' Empfohlene Wasseraufnahme (Liter) an trainingsfreien Tagen (evtl. nur Premium/Pro)
+ + notes: String ' Allgemeine Hinweise zur Diät (kann Erkrankungen & Gewohnheiten berücksichtigen)
+ ' Die Befüllung der Mahlzeiten (via Beziehung unten) hängt stark von SubscriptionInfo ab
+}
+
+class Meal {
+' Einzelne Mahlzeit (im empfohlenen DietPlan, Detaillierung von Subscription abhängig)
+ + name: String ' z.B. "Frühstück", "Post-Workout Snack"
+ + timeOfDay: String ' z.B. "Morning", "Evening"
+}
+
+class FoodItem {
+' Einzelnes Lebensmittel in einer Mahlzeit (im empfohlenen DietPlan, Detaillierung von Subscription abhängig)
+ + name: String
+ + quantity: String ' z.B. "100g", "1 cup", "1 Stück"
+ + calories: float
+ + protein: float
+ + carbs: float
+ + fat: float
+}
+
+' --- Beziehungen ---
+
+' UserProfile uses MedicalConditionEnum
+UserProfile --> MedicalConditionEnum : uses >
+
+' NEU: UserProfile hat eine Subscription/Account-Status
+UserProfile "1" -- "1" SubscriptionInfo : has >
+
+' SubscriptionInfo uses PlanTierEnum (implizit via Attribut)
+' SubscriptionInfo --> PlanTierEnum : uses > ' Optional zur Verdeutlichung
+
+' Benutzerprofil hat Sport-Eingaben (Komposition)
+UserProfile "1" *-- "*" SportInput : has >
+
+' Empfehlung besteht aus genau einem Workout- und Diätplan (Komposition)
+Recommendation "1" *-- "1" WorkoutPlan : contains >
+Recommendation "1" *-- "1" DietPlan : contains >
+
+' Pläne bestehen aus Übungen bzw. Mahlzeiten (Komposition)
+WorkoutPlan "1" *-- "*" Exercise : includes >
+DietPlan "1" *-- "*" Meal : includes > ' Detaillierte Mahlzeiten evtl. nur bei höheren Plänen (0..* impliziert dies)
+
+' Mahlzeit besteht aus Lebensmitteln (Komposition)
+Meal "1" *-- "*" FoodItem : includes >
+
+' Analysierte Daten gehören zu einem Benutzerprofil (Assoziation)
+UserProfile "1" -- "1" AnalyzedData : has >
+
+' Empfehlung wird generiert basierend auf Profil, Analyse und Abo-Status (Abhängigkeit)
+Recommendation ..> UserProfile : generated from
+Recommendation ..> AnalyzedData : generated from
+Recommendation ..> SubscriptionInfo : influenced by > ' Explizite Abhängigkeit vom Abo-Status
+
+@enduml

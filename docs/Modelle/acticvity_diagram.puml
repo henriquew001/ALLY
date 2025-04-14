@@ -1,0 +1,47 @@
+@startuml
+title Diet recomendation Activity Diagram with Explicit I/O
+
+start
+
+:Receive Data;
+note left
+  **Input:**
+  * Raw user data
+  (Weight, Height, etc.)
+end note
+
+:Analyze Data
+[[analyze_data_activity_diagramm.svg]];
+note left
+  **Input:**
+  * Validated user data
+end note
+note right
+  **Output:**
+  * Analyzed Profile
+  * Calculated Needs
+end note
+
+:Generate Recommendations;
+note left
+  **Input:**
+  * Analyzed Profile
+  * Calculated Needs
+  * Sport Preference
+end note
+note right
+  **Output:**
+  * Workout Plan
+  * Diet Plan
+end note
+
+:Output Recommendations;
+note left
+  **Input:**
+  * Workout Plan
+  * Diet Plan
+end note
+
+stop
+
+@enduml
