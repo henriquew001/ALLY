@@ -3,5 +3,7 @@ sphinxcontrib-mermaid
 myst-parser
 sphinxcontrib-plantuml
 sphinx-rtd-theme
+furo
+sphinx-intl
 # Füge hier sphinx_rtd_theme hinzu, falls nicht schon durch Sphinx installiert
 # Füge hier weitere benötigte Pakete hinzu
