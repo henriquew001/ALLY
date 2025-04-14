@@ -7,15 +7,16 @@ sys.path.insert(0, os.path.abspath('./_ext'))
 
 sys.path.insert(0, os.path.abspath('.'))
 
-project = 'Dein Projektname'
-copyright = '2025, Dein Name'
-author = 'Dein Name'
+project = 'A L L Y'
+copyright = '2025, Heinrich Weinz'
+author = 'Heinrich Weinz'
 
 extensions = [
     'sphinxcontrib.mermaid',
     'sphinx.ext.autodoc',
     'sphinx.ext.viewcode',
     'myst_parser',
+    'sphinxcontrib.plantuml',
 ]
 
 
@@ -49,3 +50,5 @@ myst_enable_extensions = [
 
 # Aktiviere die Verarbeitung von Umlauten in HTML
 html_use_smartypants = True
+
+plantuml_output_format = 'svg'

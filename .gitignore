@@ -2,6 +2,7 @@
 *.pyc
 __pycache__/
 .venv/
+.*venv/
 
 # Node.js
 node_modules/
@@ -9,8 +10,6 @@ node_modules/
 # Docker
 .dockerenv
 .env
-.env.dev
-.env.testing
 .env.preprod
 .env.prod
 
@@ -19,14 +18,14 @@ node_modules/
 *.err
 
 # PostgreSQL
-# *.log
-# *.pid
-# *.conf.swp
-# *.sql.swp
-# pg_hba.conf.swp
-# pg_ident.conf.swp
-# pg_stat_tmp/
-# postgresql.conf.swp
+*.log
+*.pid
+*.conf.swp
+*.sql.swp
+pg_hba.conf.swp
+pg_ident.conf.swp
+pg_stat_tmp/
+postgresql.conf.swp
 
 # OS generated files #
 .DS_Store
@@ -44,4 +43,8 @@ db.sqlite3
 # Test results
 *testreport.html
 unittestreport.html
-.vscode/extensions.json
+
+# generated docs
+# Sphinx build output
+_build/
+docs/_build/
