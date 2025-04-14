@@ -1,5 +1,6 @@
 # docs/requirements.txt
 sphinxcontrib-mermaid
 myst-parser
+sphinx-rtd-theme
 # Füge hier sphinx_rtd_theme hinzu, falls nicht schon durch Sphinx installiert
 # Füge hier weitere benötigte Pakete hinzu
